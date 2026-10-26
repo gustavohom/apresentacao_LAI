@@ -15,10 +15,10 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,600&family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css?v=b6af53488722" />
-  <link rel="stylesheet" href="projector-theme.css?v=232de52a0da0" />
+  <link rel="stylesheet" href="style.css?v=7e74a5b8c8cc" />
+  <link rel="stylesheet" href="projector-theme.css?v=c33d8f79fad0" />
   <link rel="stylesheet" href="slide-overview.css?v=95177ca3dce3" />
-  <link rel="stylesheet" href="foliage-intro.css?v=7a3719aab9d1" />
+  <link rel="stylesheet" href="foliage-intro.css?v=7b7d1d5a8e81" />
 </head>
 <body class="no-captions">
 <main id="wrap" inert aria-busy="true">
@@ -256,7 +256,7 @@
             <line x1="185" y1="628" x2="905" y2="820" stroke="#ffd76e" stroke-width="3" />
             <text x="530" y="768" text-anchor="middle" transform="rotate(14.9, 530, 768)" class="svgHuge gold">12 km</text>
             <line x1="935" y1="794" x2="1030" y2="722" stroke="#ffd76e" stroke-width="3" />
-            <text x="995" y="805" text-anchor="start" class="svgBig gold">300 m</text>
+            <text x="995" y="805" text-anchor="start" class="svgHuge gold">300 m</text>
           </g>
         </g>
 
@@ -264,7 +264,7 @@
         <g id="airplane">
           <!-- Cone de varredura laser do avião até o transecto -->
           <polygon id="planeBeam" points="0,12 -52,225 48,150" fill="url(#laserCone)" />
-          <line x1="-52" y1="225" x2="48" y2="150" stroke="#ff4d6d" stroke-width="4" filter="url(#glow)" />
+          <line id="planeScanLine" x1="-52" y1="225" x2="48" y2="150" stroke="#ff4d6d" stroke-width="4" filter="url(#glow)" />
           <!-- Corpo do avião bimotor de pesquisa -->
           <g transform="rotate(14.9)">
             <polygon points="-14,-4 8,-4 -12,-46 -26,-44" fill="#b8c7d9" />
@@ -430,18 +430,16 @@
       <section id="foliageArrangementSlide" class="bookend foliageIntro fx" aria-label="Mesmo LAI, diferentes distribuições de LAD" data-arrangement="equal">
         <header class="foliageHeader"><h2>Mesmo <em>LAI</em>, diferentes distribuições de <em>LAD</em></h2></header>
         <svg id="arrangementDiagram" viewBox="0 0 1920 1080" role="img" aria-label="Duas árvores com a mesma área foliar e diferentes distribuições verticais de folhas"><g id="arrangementArtwork"></g></svg>
-        <p class="arrangementLabel arrangementLeft">Folhas no topo</p>
-        <p class="arrangementLabel arrangementRight">Folhas nos estratos</p>
-        <p class="arrangementTakeaway">Mesma área foliar. Mesma área de solo.</p>
+        <p class="foliageTreeLabel arrangementLabel arrangementLeft">Folhas no topo</p>
+        <p class="foliageTreeLabel arrangementLabel arrangementRight">Folhas nos estratos</p>
       </section>
 
       <section id="foliageSizeSlide" class="bookend foliageIntro fx" aria-label="Mesmo LAI, diferentes alturas" data-size-phase="equal">
         <header class="foliageHeader"><h2>Mesmo <em>LAI</em>, diferentes alturas</h2></header>
         <svg id="sizeDiagram" viewBox="0 0 1920 1080" role="img" aria-label="Três árvores de mesma largura, área de solo e área foliar, com alturas diferentes e seus perfis verticais de LAD na mesma escala"><g id="sizeArtwork"></g></svg>
-        <p class="sizeLabel sizeLow">Menor altura</p>
-        <p class="sizeLabel sizeMiddle">Intermediária</p>
-        <p class="sizeLabel sizeTall">Maior altura</p>
-        <p class="sizeTakeaway">Mesma área foliar. Mesma área de solo.</p>
+        <p class="foliageTreeLabel sizeLabel sizeLow">Altura menor</p>
+        <p class="foliageTreeLabel sizeLabel sizeMiddle">Altura média</p>
+        <p class="foliageTreeLabel sizeLabel sizeTall">Altura maior</p>
       </section>
 
       <section id="researchContributionSlide" class="bookend researchIntro fx" aria-label="Propósito e contribuições da pesquisa">
@@ -449,9 +447,9 @@
         <h2>Propósito da pesquisa</h2>
         <div class="researchHeadingRule" aria-hidden="true"></div>
         <div class="researchBenefits">
-          <article class="researchBenefit"><span class="benefitNumber">01</span><p><strong>Avançar</strong> na caracterização estrutural das florestas e nas relações entre área foliar e condições ambientais.</p></article>
-          <article class="researchBenefit"><span class="benefitNumber">02</span><p><strong>Gerar</strong> informações para a modelagem de processos ecossistêmicos e a avaliação das respostas das florestas às mudanças ambientais.</p></article>
-          <article class="researchBenefit"><span class="benefitNumber">03</span><p><strong>Disponibilizar</strong> produtos espaciais de LAI que poderão ser utilizados como dados de entrada em novas análises.</p></article>
+          <article class="researchBenefit"><span class="benefitNumber">01</span><p><strong>Avançar</strong> na caracterização estrutural das florestas e na compreensão das relações entre área foliar e ambiente.</p></article>
+          <article class="researchBenefit"><span class="benefitNumber">02</span><p><strong>Gerar</strong> informações para modelar processos ecossistêmicos e avaliar a resposta das florestas às mudanças ambientais.</p></article>
+          <article class="researchBenefit"><span class="benefitNumber">03</span><p><strong>Disponibilizar</strong> mapas de LAI como dados de entrada para novas análises ambientais.</p></article>
         </div>
       </section>
 
@@ -661,9 +659,9 @@
         <p class="bigNote">O modelo <b>Random Forest</b> estima o <b>LAI</b> em cada pixel da <b>Amazônia</b>.</p>
       </div>
 
-      <div id="captions"></div>
+      <div id="captions"><div id="presentationCaption" class="caption" hidden></div></div>
 
-      <div id="slideNum">1 / 50</div>
+      <div id="slideNum">1 / 54</div>
       <div id="hint" title="Clique ou aperte Espaço / → para avançar"><span>▶</span></div>
     </div>
 
@@ -683,7 +681,7 @@
       <button id="btnTheme" type="button" aria-label="Mudar para tema claro" aria-pressed="false" title="Mudar para tema claro">
         <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.4 1.4m11.2 11.2L19 19M5 19l1.4-1.4M17.6 6.4L19 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
       </button>
-      <button id="btnCC" type="button" aria-label="Ativar/Desativar legendas" title="Ativar/Desativar legendas (C)">CC</button>
+      <button id="btnCC" type="button" aria-label="Ativar/Desativar legendas" aria-pressed="false" title="Ativar/Desativar legendas (C)">CC</button>
       <button id="btnFs" type="button" aria-label="Tela cheia" title="Tela cheia (F)">
         <svg viewBox="0 0 24 24"><path d="M4 4h6v2H6v4H4zM14 4h6v6h-2V6h-4zM4 14h2v4h4v2H4zM18 14h2v6h-6v-2h4z" fill="currentColor"/></svg>
       </button>
@@ -715,10 +713,10 @@
 <script src="cover-ambient.js?v=c1a9720e78ee"></script>
 <script src="people-clock.js?v=1d56be0c2baa"></script>
 <script src="closing-guest.js?v=9906f52ab47b"></script>
-<script src="foliage-intro.js?v=17bf16b2dddb"></script>
-<script src="bookends.js?v=3345d456de26"></script>
+<script src="foliage-intro.js?v=beaa0df02c16"></script>
+<script src="bookends.js?v=10c9e34ed564"></script>
 <script src="projector-theme.js?v=d73ce17c23a6"></script>
-<script src="slide-overview.js?v=e727b04e974a"></script>
-<script src="main.js?v=5b30786be0e6"></script>
+<script src="slide-overview.js?v=4b7146eea065"></script>
+<script src="main.js?v=2a9c5075ab5b"></script>
 </body>
 </html>

@@ -316,6 +316,17 @@
     return g;
   });
 
+  // Três copas recebem as árvores da comparação na entrada do transecto.
+  const seedTargets = [isoPos(.18, .52), isoPos(.49, .5), isoPos(.8, .47)];
+  const seedIndices = seedTargets.map((target, seed) => {
+    const index = treeList.reduce((best, item, i) =>
+      Math.hypot(item.x - target.x, item.y - target.y) < Math.hypot(treeList[best].x - target.x, treeList[best].y - target.y) ? i : best, 0);
+    Object.assign(isoTreeEls[index].dataset, { forestSeed: seed, anchorX: treeList[index].x - 80, anchorY: treeList[index].y + 3, crownRadius: treeList[index].r });
+    return index;
+  });
+  const forestSeedTrees = seedIndices.map(index => isoTreeEls[index]);
+  const remainingForestTrees = isoTreeEls.filter((_, index) => !seedIndices.includes(index));
+
   // Pontos LiDAR que surgem dentro do retângulo do transecto conforme o avião passa
   const transectPtsG = $('#transectPts');
   const tPts = [];
@@ -2006,6 +2017,7 @@
   gsap.set('.zl', { strokeDasharray: 1, strokeDashoffset: 1 });
   gsap.set('#drone', { x: 2150, y: DRONE_Y });
   gsap.set('#airplane', { x: -120, y: 260, autoAlpha: 0 });
+  gsap.set(['#planeBeam', '#planeScanLine'], { autoAlpha: 0 });
 
   // animações ambientes (fora da timeline)
   gsap.fromTo('#sway', { rotation: -0.7 }, { rotation: 0.7, duration: 3.2, repeat: -1, yoyo: true, ease: 'sine.inOut', transformOrigin: '50% 100%' });
@@ -2033,14 +2045,10 @@
     const inner = el.querySelector('.callout') ? el.querySelector('.callout').children : el.children;
     tl.fromTo(inner, { autoAlpha: 0, y: 18 }, { autoAlpha: 1, y: 0, duration: 0.6, stagger: 0.35, ease: 'power3.out' }, a + 0.1);
   }
-  const capWrap = $('#captions');
+  // Uma única legenda é atualizada pela cena atual, inclusive após saltos na ordem.
+  const scientificCaptions = [];
   function caption(html, a, b) {
-    const d = document.createElement('div');
-    d.className = 'caption fx';
-    d.innerHTML = html;
-    capWrap.appendChild(d);
-    tl.fromTo(d, { autoAlpha: 0, y: 18, filter: 'blur(6px)' }, { autoAlpha: 1, y: 0, filter: 'blur(0px)', duration: 0.7, ease: 'power3.out' }, a);
-    if (b != null) tl.to(d, { autoAlpha: 0, y: -12, filter: 'blur(4px)', duration: 0.45, ease: 'power2.in' }, b - 0.45);
+    scientificCaptions.push({ html, start: a, end: b ?? Infinity });
   }
   const home = (key) => (i, el) => el._d[key];
 
@@ -2252,18 +2260,23 @@
   inOut('#h6', 183.6, 207, { x: -30 });
   tl.fromTo('#ebaScene', { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.8 }, 183.6)
     .fromTo('#forestSlab', { scale: 0.7, y: 80, transformOrigin: '50% 65%' }, { scale: 1, y: 0, duration: 1.1, ease: 'power3.out' }, 183.6)
-    .fromTo(isoTreeEls, { scale: 0, transformOrigin: '50% 100%' }, { scale: 1, duration: 0.6, stagger: { amount: 0.9 }, ease: 'back.out(1.7)' }, 183.9);
+    .fromTo(remainingForestTrees, { scale: 0, transformOrigin: '50% 100%' }, { scale: 1, duration: .6, stagger: { amount: .9 }, ease: 'back.out(1.5)' }, 185.0)
+    .fromTo(forestSeedTrees, { autoAlpha: 0 }, { autoAlpha: 1, duration: .6, ease: 'sine.inOut' }, 185.25);
 
-  // Avião sobrevoa coletando o transecto LiDAR de 12 km x 300 m (compensando o x -80 da laje)
-  tl.fromTo('#transectBox', { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.6 }, 185)
-    .fromTo('#airplane', { autoAlpha: 0, x: 100, y: 340 }, { autoAlpha: 1, x: 880, y: 545, duration: 4.4, ease: 'none' }, 185.2)
-    .to(tPtEls, { scale: 1, duration: 0.25, stagger: { amount: 4.0 }, ease: 'back.out(2.5)' }, 185.4)
-    .to('#airplane', { autoAlpha: 0, x: 1100, y: 600, duration: 0.8, ease: 'power1.in' }, 189.6);
+  // Primeiro entram a faixa, as dimensões e o avião em espera, com o laser desligado.
+  tl.fromTo('#transectBox', { autoAlpha: 0 }, { autoAlpha: 1, duration: .6 }, 185.9)
+    .fromTo('#airplane', { autoAlpha: 0, x: -140, y: 270 },
+      { autoAlpha: 1, x: 100, y: 340, duration: .7, ease: 'power2.out' }, 186.8);
+  inOut('#transectDims', 186.0, 196.5, { y: 14 });
+  block('#fEBA1', 185.9, 196.5);
+  caption('Transecto do Projeto EBA: <b>12 km de comprimento × 300 m de largura</b>.', 184.2, 187.9);
 
-  // Texto e cotas entram ~1.2 s mais tarde, quando o avião já está coletando os dados
-  inOut('#transectDims', 187.4, 196.5, { y: 14 });
-  block('#fEBA1', 187.6, 196.5);
-  caption('Agora veja isso aplicado a um <b>transecto inteiro do Projeto EBA</b>: <b>12 km × 300 m</b> de floresta amazônica varridos por avião!', 184.2, 196.5);
+  // A pausa em 187,7 s exige outro clique para iniciar a varredura.
+  tl.to(['#planeBeam', '#planeScanLine'], { autoAlpha: 1, duration: .18 }, 187.95)
+    .to('#airplane', { x: 880, y: 545, duration: 4.4, ease: 'none' }, 187.95)
+    .to(tPtEls, { scale: 1, duration: .25, stagger: { amount: 4.0 }, ease: 'back.out(2.5)' }, 188.15)
+    .to('#airplane', { autoAlpha: 0, x: 1100, y: 600, duration: .8, ease: 'power1.in' }, 192.35);
+  caption('Durante o sobrevoo, os <b>retornos LiDAR</b> descrevem a estrutura da floresta.', 187.95, 196.5);
 
   // Slide 22: O transecto inteiro se contrai em um único ponto resumido com um LAI
   tl.to(tPtEls, { attr: { cx: 610, cy: 615 }, duration: 1.2, stagger: { amount: 0.35 }, ease: 'power3.inOut' }, 197)
@@ -2659,7 +2672,7 @@
     { t: 150.7, resume: 158.1 }, // 18. P_lacunas = 0,08 -> LAI ≈ 5
     { t: 163.1, resume: 170.3 }, // 19. Perfil vertical: LAD × 0,5 m ao lado de cada estrato
     { t: 172.6, resume: 182.5 }, // 20. Soma dos estratos = 5,0
-    { t: 190.5, resume: 196.0 }, // 21. Transecto 3D (12 km x 300 m) no Projeto EBA
+    { t: 193.4, resume: 196.0 }, // 21. Transecto 3D (12 km x 300 m) no Projeto EBA
     { t: 199.8, resume: 206.5 }, // 22. Transecto inteiro virando um único ponto resumido com um LAI
     { t: 212.3, resume: 219.0 }, // 23. Ponto do transecto vira o 1º ponto na Amazônia + surgem os demais (742)
     { t: 222.0, resume: 224.7 }, // 24. Apresentação das 16 variáveis ambientais + 1º estrato Transecto
@@ -2690,21 +2703,34 @@
         if (stop.slide === 11) return [{ t: INTRO_DURATION + 53.8, resume: INTRO_DURATION + 54.2, slide: 11, phase: 'ready' }, stop];
         if (stop.slide === 18) return [{ t: INTRO_DURATION + 112.6, resume: INTRO_DURATION + 112.8, slide: 18, phase: 'ready' }, stop];
         if (stop.slide === 21) return [{ t: INTRO_DURATION + 138.5, resume: INTRO_DURATION + 138.8, slide: 21, phase: 'ready' }, stop];
+        if (stop.slide === 25) return [{ t: INTRO_DURATION + 187.7, resume: INTRO_DURATION + 187.8, slide: 25, phase: 'ready' }, stop];
         return [stop];
       }),
     { t: INTRO_DURATION + 421.6, resume: INTRO_DURATION + 422.0, slide: 50 }, // Obrigado / Dúvidas aguarda o clique para a despedida
   ].sort((a, b) => a.t - b.t);
   // A ordem de apresentação é independente do tempo usado para montar cada cena.
-  const SLIDE_ORDER = [1, 2, 3, 52, 53, 54, 4, 5, 17, ...Array.from({ length: 11 }, (_, i) => i + 6), ...Array.from({ length: 33 }, (_, i) => i + 18)];
+  const SLIDE_ORDER = window.PRESENTATION_SLIDES.map(item => item.scene);
+  const SCENE_STARTS = new Map([[1, 0], [2, 3.2], [3, 10.2], [4, 42.2], [52, 17.2], [53, 26], [54, 34.2], [5, INTRO_DURATION], [25, INTRO_DURATION + 183.6], [50, INTRO_DURATION + 417]]);
   const SLIDE_STOPS = SLIDE_ORDER.flatMap((scene, index) => SCENE_STOPS.flatMap((stop, sourceIndex) => {
     if (stop.slide !== scene) return [];
-    let entry = sourceIndex ? SCENE_STOPS[sourceIndex - 1].resume + .11 : 0;
+    const naturalEntry = sourceIndex ? SCENE_STOPS[sourceIndex - 1].resume + .11 : 0;
+    // Um salto nunca começa na saída de outra cena independente.
+    const entry = Math.max(naturalEntry, (SCENE_STARTS.get(scene) ?? 0) + .11);
     return [{ ...stop, scene, slide: index + 1, sourceIndex, entry }];
   }));
   const orderedStopIndex = (time) => {
     const sourceIndex = SCENE_STOPS.findIndex(stop => time <= stop.resume + .1);
     return sourceIndex < 0 ? -1 : SLIDE_STOPS.findIndex(stop => stop.sourceIndex === sourceIndex);
   };
+
+  // Os dados interpolados já estão na posição correta após um seek silencioso.
+  // Atualiza seus rótulos e curvas sem executar pausas de cenas intermediárias.
+  const dynamicRenders = tl.getChildren(true, true, false)
+    .filter(child => typeof child.vars.onUpdate === 'function');
+  function seekTimeline(time) {
+    tl.pause(time, true);
+    dynamicRenders.forEach(child => child.vars.onUpdate.call(child));
+  }
 
   const hint = $('#hint');
   const slideNum = $('#slideNum');
@@ -2724,6 +2750,13 @@
     const stepProgress = stop ? clamp((t - stop.entry) / Math.max(.01, stop.t - stop.entry), 0, 1) : 1;
     $('#fill').style.width = (stop ? Math.max(0, idx - 1 + stepProgress) / (SLIDE_STOPS.length - 1) : 1) * 100 + '%';
     window.syncPresentationBookends(t);
+    if ($('#stage').dataset.scene === 'science') {
+      const item = scientificCaptions.find(item => t >= item.start + INTRO_DURATION && t < item.end + INTRO_DURATION);
+      const el = $('#presentationCaption');
+      const html = item?.html || '';
+      if (el.innerHTML !== html) el.innerHTML = html;
+      el.hidden = !html;
+    }
   }
 
   const showHint = () => { hint.innerHTML = '<span>▶</span>'; hint.classList.add('on'); updateSlideNum(); };
@@ -2734,7 +2767,11 @@
   const ICON_PLAY = '<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>';
   const ICON_NEXT = '<svg viewBox="0 0 24 24"><path d="M4 5v14l11-7zM16 5h2v14h-2z" fill="currentColor"/></svg>';
   const atEnd = () => tl.progress() >= 1;
-  function setIcon() { btnPlay.innerHTML = tl.paused() || atEnd() ? ICON_PLAY : ICON_NEXT; }
+  function setIcon() {
+    const paused = tl.paused() || atEnd();
+    btnPlay.innerHTML = paused ? ICON_PLAY : ICON_NEXT;
+    $('#stage').dataset.playback = paused ? 'paused' : 'playing';
+  }
 
   function next() {
     if (!presentationReady || atEnd()) return;
@@ -2743,16 +2780,22 @@
       hideHint(); setIcon(); return;
     }
     if (tl.paused()) {
-      hideHint();
       const cur = SLIDE_STOPS.find((s) => Math.abs(tl.time() - s.t) < 0.25);
       const following = cur && SLIDE_STOPS[SLIDE_STOPS.indexOf(cur) + 1];
-      if (following && following.sourceIndex !== cur.sourceIndex + 1) tl.play(following.entry, false);
-      else if (cur && cur.resume > cur.t) tl.play(cur.resume, false);
-      else tl.play();
+      const advance = () => {
+        // O seek prepara a cena sem disparar callbacks das cenas atravessadas.
+        const entry = following && following.sourceIndex !== cur.sourceIndex + 1
+          ? following.entry : cur?.resume;
+        if (entry != null && entry > 0) seekTimeline(entry);
+        hideHint();
+        tl.play();
+        setIcon();
+      };
+      advance();
     } else {
       const nxt = SCENE_STOPS.find((s) => s.t > tl.time() + 0.05);
-      if (nxt != null) { tl.pause(nxt.t, false); showHint(); }
-      else { tl.progress(1, false); hideHint(); }
+      if (nxt != null) { seekTimeline(nxt.t); showHint(); }
+      else { seekTimeline(tl.duration()); hideHint(); }
     }
     setIcon();
   }
@@ -2761,19 +2804,21 @@
     window.resetPeopleClock?.();
     const currentIndex = orderedStopIndex(tl.time());
     const prevStop = SLIDE_STOPS[(currentIndex < 0 ? SLIDE_STOPS.length : currentIndex) - 1];
-    if (prevStop != null) { tl.pause(prevStop.t, false); showHint(); }
-    else { tl.pause(0, false); showHint(); }
-    setIcon();
+    const move = () => {
+      seekTimeline(prevStop ? prevStop.t : 0); showHint(); setIcon();
+    };
+    move();
   }
   function restart() {
     if (!presentationReady) return;
     window.resetPeopleClock?.();
-    tl.pause(0, false); hideHint(); tl.play(); setIcon();
+    seekTimeline(0); hideHint(); tl.play(); setIcon();
   }
 
   function toggleCaptions() {
     const off = document.body.classList.toggle('no-captions');
     btnCC.classList.toggle('active', !off);
+    btnCC.setAttribute('aria-pressed', String(!off));
   }
 
   SLIDE_STOPS.forEach(({ t, slide, phase }, index) => {
@@ -2798,7 +2843,7 @@
     select: (slide) => {
       window.resetPeopleClock?.();
       const stop = SLIDE_STOPS.find(s => s.slide === slide);
-      tl.pause(stop ? stop.t : tl.duration(), false);
+      seekTimeline(stop ? stop.t : tl.duration());
       if (stop) showHint(); else hideHint();
       setIcon();
       $('#stage').focus({ preventScroll: true });
@@ -2825,7 +2870,7 @@
     const stop = e.target.closest('.tick')?.dataset.stop;
     const nearest = Math.round(clamp((e.clientX - r.left) / r.width, 0, 1) * (SLIDE_STOPS.length - 1));
     const time = stop == null ? SLIDE_STOPS[nearest].t : Number(stop);
-    tl.pause(time, false);
+    seekTimeline(time);
     showHint(); setIcon();
   });
   const toggleFs = () => {
@@ -2844,7 +2889,7 @@
     if (e.code === 'KeyC') toggleCaptions();
     if (e.code === 'Home') { e.preventDefault(); restart(); }
     if (e.code === 'End') {
-      e.preventDefault(); window.resetPeopleClock?.(); tl.pause(tl.duration(), false); hideHint(); setIcon();
+      e.preventDefault(); window.resetPeopleClock?.(); seekTimeline(tl.duration()); hideHint(); setIcon();
     }
   });
   let hideT;
@@ -2859,11 +2904,11 @@
   const ready = () => {
     if (presentationReady) return;
     wrapEnvironmentalVariables();
-    tl.pause(0, false);
+    seekTimeline(0);
     hideHint();
     updateSlideNum();
     presentationReady = true;
-    tl.play(0, false);
+    tl.play(0, true);
     setIcon();
     $('#wrap').removeAttribute('inert');
     $('#wrap').setAttribute('aria-busy', 'false');

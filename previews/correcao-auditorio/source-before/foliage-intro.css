@@ -1,0 +1,55 @@
+/* Os slides de introdução herdam a tipografia e as cores da apresentação. */
+.bookend.foliageIntro {
+  --intro-ink: #fdf8ec; --intro-muted: #c4d3cf; --intro-green: #a4d878;
+  --intro-line: #608776; --intro-gold: #ffd76e;
+  color: var(--intro-ink);
+  background: radial-gradient(ellipse at 19% 65%, #254f47 0, transparent 48%), linear-gradient(125deg, #0b2133, #173c44);
+}
+body.projector .bookend.foliageIntro {
+  --intro-ink: #203c2c; --intro-muted: #4a6154; --intro-green: #387344;
+  --intro-line: #8aa38a; --intro-gold: #90651c;
+  background: radial-gradient(ellipse at 18% 70%, #e6f0dc 0, transparent 48%), linear-gradient(125deg, #f5fbfd, #f5f8ef);
+}
+.foliageHeader { position: absolute; top: 7.5%; left: 6%; right: 6%; z-index: 2; }
+.foliageHeader h2 { font: 600 4.7cqw/1.08 'Fraunces', serif; letter-spacing: -.025em; color: var(--intro-ink); }
+.foliageHeader h2 em { color: var(--intro-green); font-weight: 600; }
+#importanceTreeDiagram, #arrangementDiagram, #sizeDiagram { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.introTreeGround { fill: #87b16c22; stroke: var(--intro-line); stroke-width: 4; stroke-dasharray: none; }
+.introTreeCrown { transform-origin: 0 -200px; }
+.foliageIntro.is-active .introTreeCrown { animation: introCrownBreeze 6s ease-in-out infinite alternate; }
+#foliageSizeSlide.is-active .introTreeCrown { animation: none; }
+@keyframes introCrownBreeze { from { transform: rotate(-.35deg); } to { transform: rotate(.35deg); } }
+.foliageReasons { position: absolute; top: 27%; left: 45%; width: 49%; display: grid; gap: 2.2cqw; }
+.foliageReason { display: grid; grid-template-columns: 4cqw 1fr; gap: 1.15cqw; align-items: center; padding: .5cqw 0; }
+.foliageReasonNumber { font: 400 3cqw/1 'Fraunces', serif; color: var(--intro-line); transition: color .4s; }
+.foliageReason h3 { font: 600 2.75cqw/1.12 'Outfit', sans-serif; color: var(--intro-ink); }
+#foliageImportanceSlide[data-topic="0"] [data-reason="0"] .foliageReasonNumber,
+#foliageImportanceSlide[data-topic="1"] [data-reason="1"] .foliageReasonNumber,
+#foliageImportanceSlide[data-topic="2"] [data-reason="2"] .foliageReasonNumber,
+#foliageImportanceSlide[data-topic="3"] [data-reason="3"] .foliageReasonNumber,
+#foliageImportanceSlide[data-topic="4"] [data-reason="4"] .foliageReasonNumber { color: var(--intro-gold); }
+#foliageArrangementSlide .foliageHeader h2 { font-size: 4.3cqw; }
+.foliageTreeLabel { position: absolute; top: 78%; text-align: center; font: 600 2.65cqw/1.2 'Outfit', sans-serif; color: var(--intro-green); }
+.arrangementLabel { width: 37%; }
+.arrangementLeft { left: 5.98%; }
+.arrangementRight { left: 49.73%; }
+.introProfileTitle { font: 600 50px 'Outfit', sans-serif; fill: var(--intro-green); }
+.introProfileAxis { stroke: var(--intro-line); stroke-width: 2; }
+.introProfileBar { fill: var(--intro-green); opacity: .9; }
+.sizeLabel { width: 27%; }
+.sizeLow { left: .04%; }
+.sizeMiddle { left: 32.85%; }
+.sizeTall { left: 65.67%; }
+@media (prefers-reduced-motion: reduce) { .foliageIntro.is-active .introTreeCrown { animation: none; } }
+
+/* Os dois exemplos usam as mesmas árvores; a camada só aparece em suas cenas. */
+#foliageContinuity { position: absolute; inset: 0; z-index: 5; pointer-events: none; opacity: 0; visibility: hidden; }
+#foliageContinuity > svg, .foliageContinuityBackdrop { position: absolute; inset: 0; width: 100%; height: 100%; }
+#foliageContinuity { --intro-green: #a4d878; --intro-line: #608776; }
+body.projector #foliageContinuity { --intro-green: #387344; --intro-line: #8aa38a; }
+.foliageContinuityBackdrop { opacity: 0; background: radial-gradient(ellipse at 19% 65%, #254f47 0, transparent 48%), linear-gradient(125deg, #0b2133, #173c44); }
+body.projector .foliageContinuityBackdrop { background: radial-gradient(ellipse at 18% 70%, #e6f0dc 0, transparent 48%), linear-gradient(125deg, #f5fbfd, #f5f8ef); }
+#foliageImportanceSlide .foliageHeader h2 { font: 600 4.2cqw/1.08 'Fraunces', serif; }
+#foliageImportanceSlide .foliageHeader h2 em { font-style: normal; }
+#foliageImportanceSlide .foliageReason h3 { font: 400 2.2cqw/1.4 'Outfit', sans-serif; }
+#foliageImportanceSlide .foliageReasonNumber { font: 600 1.45cqw/1 'Outfit', sans-serif; text-align: center; }

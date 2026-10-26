@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Variação espacial e fatores ambientais associados ao LAI na Amazônia brasileira</title>
+  <meta name="description" content="Apresentação animada sobre LAI, LAD, Lei de Beer-Lambert, LiDAR e modelagem do LAI na Amazônia com transectos do projeto EBA e Random Forest." />
+  <style id="startup-guard">
+    /* Evita exibir os desenhos brutos antes de a timeline preparar o primeiro quadro. */
+    html:not(.presentation-ready) body { background: #fff !important; }
+    html:not(.presentation-ready) #stage { opacity: 0 !important; pointer-events: none !important; }
+    /* A camada científica só é liberada dentro de sua sequência, inclusive ao reiniciar. */
+    #stage[data-scene="bookend"] > #scene { opacity: 0 !important; }
+  </style>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,600&family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css?v=b6af53488722" />
+  <link rel="stylesheet" href="projector-theme.css?v=232de52a0da0" />
+  <link rel="stylesheet" href="slide-overview.css?v=95177ca3dce3" />
+  <link rel="stylesheet" href="foliage-intro.css?v=7a3719aab9d1" />
+</head>
+<body class="no-captions">
+<main id="wrap" inert aria-busy="true">
+  <div id="stage" data-scene="bookend" data-slide="1" tabindex="-1">
+    <svg id="scene" style="opacity:0" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+      <defs>
+        <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#0f2740" />
+          <stop offset=".55" stop-color="#2c5e70" />
+          <stop offset=".85" stop-color="#8e8a72" />
+          <stop offset="1" stop-color="#d39a6c" />
+        </linearGradient>
+        <radialGradient id="sunGlow">
+          <stop offset="0" stop-color="#ffe7a3" stop-opacity=".85" />
+          <stop offset=".35" stop-color="#ffcf6e" stop-opacity=".25" />
+          <stop offset="1" stop-color="#ffcf6e" stop-opacity="0" />
+        </radialGradient>
+        <linearGradient id="hillBack" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#3a6a63" /><stop offset="1" stop-color="#26463f" />
+        </linearGradient>
+        <linearGradient id="hillFront" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#46744a" /><stop offset="1" stop-color="#2d4f33" />
+        </linearGradient>
+        <linearGradient id="groundGrad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#5b7f36" /><stop offset=".25" stop-color="#3e5a26" /><stop offset="1" stop-color="#1c2a14" />
+        </linearGradient>
+        <linearGradient id="trunkGrad" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0" stop-color="#3a2416" /><stop offset=".35" stop-color="#8a6243" /><stop offset=".6" stop-color="#6b4a31" /><stop offset="1" stop-color="#2e1c11" />
+        </linearGradient>
+        <linearGradient id="branchGrad" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#6e4c33" /><stop offset="1" stop-color="#4a3020" />
+        </linearGradient>
+        <radialGradient id="blobGrad" cx=".38" cy=".3" r=".75">
+          <stop offset="0" stop-color="#5aa44c" /><stop offset=".6" stop-color="#2f6d36" /><stop offset="1" stop-color="#1a4425" />
+        </radialGradient>
+        <radialGradient id="blobBack" cx=".4" cy=".32" r=".75">
+          <stop offset="0" stop-color="#2f6b35" /><stop offset="1" stop-color="#11331c" />
+        </radialGradient>
+        <linearGradient id="rayGrad" gradientUnits="userSpaceOnUse" x1="0" y1="-760" x2="0" y2="0">
+          <stop offset="0" stop-color="#ffe7a3" stop-opacity=".9" />
+          <stop offset="1" stop-color="#ffe7a3" stop-opacity=".15" />
+        </linearGradient>
+        <pattern id="beamLightRays" patternUnits="userSpaceOnUse" x="-70" width="20" height="16">
+          <rect width="20" height="16" fill="#f9dc86" fill-opacity=".06" />
+          <path d="M10 0V16" stroke="#ffd974" stroke-width="7" stroke-opacity=".14" />
+          <path d="M10 0V16" stroke="#d8a53a" stroke-width="2.4" />
+        </pattern>
+        <linearGradient id="sqGrad" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#8fd16a" /><stop offset="1" stop-color="#3f8f46" />
+        </linearGradient>
+        <linearGradient id="laserCone" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#ff4d6d" stop-opacity=".75" />
+          <stop offset="1" stop-color="#9dff7a" stop-opacity=".18" />
+        </linearGradient>
+        <linearGradient id="laiMapGrad" x1="0" y1="0.8" x2="1" y2="0.2">
+          <stop offset="0" stop-color="#d7191c" />
+          <stop offset=".32" stop-color="#e64b28" />
+          <stop offset=".55" stop-color="#fdae61" />
+          <stop offset=".75" stop-color="#abdda4" />
+          <stop offset="1" stop-color="#2b83ba" />
+        </linearGradient>
+        <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+          <feGaussianBlur stdDeviation="6" result="b" />
+          <feMerge><feMergeNode in="b" /><feMergeNode in="SourceGraphic" /></feMerge>
+        </filter>
+        <filter id="glowSm" x="-20%" y="-20%" width="140%" height="140%">
+          <feGaussianBlur stdDeviation="2.5" result="b" />
+          <feMerge><feMergeNode in="b" /><feMergeNode in="SourceGraphic" /></feMerge>
+        </filter>
+        <filter id="blur10"><feGaussianBlur stdDeviation="10" /></filter>
+        <filter id="blur4" x="-30%" y="-10%" width="160%" height="120%"><feGaussianBlur stdDeviation="5" /></filter>
+        <clipPath id="envClip"><rect x="-290" y="-580" width="580" height="360" /></clipPath>
+        <!-- Contorno aproximado do Bioma Amazônia para animações vetoriais -->
+        <path id="amzShape" d="M 385,205 L 445,195 L 470,228 L 545,142 L 560,115 L 598,90 L 642,88 L 650,145 L 705,180 L 795,165 L 875,182 L 940,122 L 972,95 L 995,188 L 1035,205 L 1042,272 L 1168,312 L 1225,360 L 1142,462 L 1102,482 L 1085,575 L 998,605 L 990,715 L 948,735 L 850,722 L 775,712 L 758,645 L 712,650 L 702,742 L 758,768 L 705,825 L 660,828 L 652,742 L 542,728 L 448,660 L 420,582 L 325,595 L 315,532 L 245,515 L 220,462 L 258,392 L 348,378 L 372,265 Z" />
+        <clipPath id="amzClip"><use href="#amzShape" /></clipPath>
+      </defs>
+
+      <!-- Céu -->
+      <rect id="skyBackground" width="1920" height="1080" fill="url(#sky)" />
+      <g id="stars"></g>
+      <g id="sun">
+        <circle r="260" fill="url(#sunGlow)" />
+        <circle r="56" fill="#ffd76e" filter="url(#glow)" />
+      </g>
+      <g id="clouds"></g>
+      <path id="hb" fill="url(#hillBack)" d="M0,720 C300,640 520,700 800,660 C1100,610 1350,690 1600,650 C1750,630 1850,660 1920,650 L1920,900 L0,900Z" />
+      <path id="hf" fill="url(#hillFront)" d="M0,800 C250,760 450,790 700,770 C1000,745 1250,800 1500,775 C1700,760 1820,780 1920,770 L1920,900 L0,900Z" />
+      <rect id="night" width="1920" height="1080" fill="#081428" opacity=".6" />
+
+      <!-- Chão -->
+      <path id="groundPath" fill="url(#groundGrad)" d="M0,875 C400,868 800,882 1200,874 C1500,869 1750,880 1920,874 L1920,1080 L0,1080Z" />
+      <g id="grass"></g>
+      <g id="pollen"></g>
+
+      <!-- Árvore (origem = base do tronco) -->
+      <g id="tree">
+        <ellipse id="shadow" cx="0" cy="0" rx="290" ry="38" fill="#000" filter="url(#blur10)" />
+        <ellipse id="shadowLine" cx="0" cy="0" rx="290" ry="38" fill="rgba(255,215,110,.08)" stroke="#ffd76e" stroke-width="3" stroke-dasharray="12 9" />
+        <g id="areaLabel">
+          <text x="0" y="92" text-anchor="middle" class="svgHuge gold">20 m²</text>
+          <text x="0" y="132" text-anchor="middle" class="svgSmall">área de solo</text>
+        </g>
+
+        <g id="sway">
+          <g id="blobsBack"></g>
+          <g id="leavesBack"></g>
+          <g id="wood">
+            <g id="trunk">
+              <path fill="#3e2819" d="M-24,-6 C-40,-2 -56,4 -70,9 C-52,12 -36,10 -18,6Z" />
+              <path fill="#3e2819" d="M24,-6 C40,-2 56,4 72,9 C54,12 38,10 18,6Z" />
+              <path fill="url(#trunkGrad)" d="M-46,6 C-34,2 -28,-10 -26,-50 C-23,-120 -19,-180 -15,-250 L15,-250 C19,-180 23,-120 26,-50 C28,-10 34,2 46,6 C20,12 -20,12 -46,6Z" />
+              <g fill="none" stroke-linecap="round">
+                <path stroke="#2e1c11" stroke-opacity=".55" stroke-width="2.2" d="M-6,-14 C-9,-80 -4,-140 -8,-215" />
+                <path stroke="#2e1c11" stroke-opacity=".5" stroke-width="2" d="M8,-26 C11,-90 6,-150 9,-205" />
+                <path stroke="#2e1c11" stroke-opacity=".45" stroke-width="1.8" d="M-15,-52 C-14,-86 -12,-112 -13,-150" />
+                <path stroke="#2e1c11" stroke-opacity=".45" stroke-width="1.8" d="M17,-60 C16,-96 14,-120 15,-160" />
+                <path stroke="#b28a62" stroke-opacity=".35" stroke-width="3" d="M-17,-30 C-15,-110 -11,-180 -8,-240" />
+                <ellipse cx="4" cy="-120" rx="4" ry="7" fill="#2e1c11" opacity=".45" />
+              </g>
+            </g>
+            <g fill="none" stroke="url(#branchGrad)" stroke-linecap="round">
+              <path class="br" stroke-width="20" d="M0,-225 Q-2,-360 -8,-520" />
+              <path class="br" stroke-width="16" d="M-4,-215 Q-40,-300 -160,-372" />
+              <path class="br" stroke-width="16" d="M4,-222 Q50,-310 170,-392" />
+              <path class="br" stroke-width="9" d="M-84,-308 Q-150,-322 -240,-312" />
+              <path class="br" stroke-width="9" d="M-104,-333 Q-112,-430 -172,-480" />
+              <path class="br" stroke-width="9" d="M96,-326 Q170,-332 242,-322" />
+              <path class="br" stroke-width="9" d="M112,-352 Q122,-450 172,-500" />
+              <path class="br" stroke-width="7" d="M-6,-420 Q-60,-480 -80,-556" />
+              <path class="br" stroke-width="7" d="M-6,-432 Q50,-482 72,-562" />
+              <path class="br" stroke-width="6" d="M-160,-372 Q-210,-382 -252,-420" />
+              <path class="br" stroke-width="6" d="M170,-392 Q220,-412 262,-442" />
+            </g>
+          </g>
+          <g id="discs"></g>
+          <g id="blobs"></g>
+          <g id="leaves"></g>
+        </g>
+
+        <g id="rays"></g>
+        <g id="beam" filter="url(#blur4)"></g>
+        <g id="beamLabels"></g>
+
+        <g id="envelope" fill="none" stroke="#eaf7d4" stroke-width="3" stroke-dasharray="10 8">
+          <path d="M-290,-220 A290,40 0 0 1 290,-220" opacity=".45" />
+          <line x1="-290" y1="-580" x2="-290" y2="-220" />
+          <line x1="290" y1="-580" x2="290" y2="-220" />
+          <ellipse cx="0" cy="-580" rx="290" ry="40" fill="rgba(234,247,212,.07)" />
+          <path d="M-290,-220 A290,40 0 0 0 290,-220" />
+        </g>
+        <g id="bands" clip-path="url(#envClip)"></g>
+        <g id="sliceLines"></g>
+        <g id="bandLabels"></g>
+        <g id="lidarBandCalc"></g>
+        <g id="heightDim" stroke="#ffd76e" stroke-width="3">
+          <line x1="-335" y1="-580" x2="-335" y2="-220" />
+          <line x1="-350" y1="-580" x2="-320" y2="-580" />
+          <line x1="-350" y1="-220" x2="-320" y2="-220" />
+          <text x="0" y="0" transform="translate(-362,-400) rotate(-90)" text-anchor="middle" class="svgHuge gold" stroke="none">2,5 m</text>
+        </g>
+        <g id="volLabel">
+          <text x="318" y="-445" class="svgSmall">volume da copa</text>
+          <text x="318" y="-385" class="svgHuge gold">≈ 50 m³</text>
+        </g>
+        <g id="miniCube"></g>
+        <g id="lidarPts" filter="url(#glowSm)"></g>
+      </g>
+
+      <!-- Zoom do cubo de 1 m³ -->
+      <g id="zoom">
+        <line id="zl1" class="zl" x1="670" y1="416" x2="1330" y2="340" />
+        <line id="zl2" class="zl" x1="670" y1="484" x2="1330" y2="600" />
+        <g id="bigCube"></g>
+        <g id="cubeLabels">
+          <text x="1244" y="646" text-anchor="end" class="svgBig">1 m</text>
+          <text x="1404" y="646" text-anchor="end" class="svgBig">1 m</text>
+          <text x="1476" y="476" text-anchor="start" class="svgBig">1 m</text>
+        </g>
+        <g id="squares">
+          <g id="sqA">
+            <rect x="1555" y="340" width="120" height="120" rx="8" fill="url(#sqGrad)" stroke="#d6f5b0" stroke-width="2.5" />
+            <text x="1615" y="412" text-anchor="middle" class="svgBig dark">1 m²</text>
+          </g>
+          <g id="sqB">
+            <rect x="1555" y="485" width="120" height="120" rx="8" fill="url(#sqGrad)" stroke="#d6f5b0" stroke-width="2.5" />
+            <text x="1615" y="557" text-anchor="middle" class="svgBig dark">1 m²</text>
+          </g>
+          <text id="sqSum" x="1615" y="662" text-anchor="middle" class="svgHuge green">= 2 m²</text>
+        </g>
+        <g id="bigLeaves"></g>
+      </g>
+
+      <!-- LiDAR na árvore -->
+      <g id="lasers"></g>
+      <g id="drone">
+        <g id="droneBody">
+          <path d="M-58,-6 L58,-6" stroke="#2b3440" stroke-width="5" stroke-linecap="round" />
+          <rect x="-62" y="-16" width="8" height="12" rx="2" fill="#2b3440" />
+          <rect x="54" y="-16" width="8" height="12" rx="2" fill="#2b3440" />
+          <ellipse class="rotor" cx="-58" cy="-18" rx="32" ry="3.5" fill="rgba(220,235,255,.6)" />
+          <ellipse class="rotor" cx="58" cy="-18" rx="32" ry="3.5" fill="rgba(220,235,255,.6)" />
+          <rect x="-32" y="-16" width="64" height="22" rx="9" fill="#e8eef5" />
+          <rect x="-32" y="-3" width="64" height="9" rx="4.5" fill="#b9c5d2" />
+          <circle id="droneLed" cx="22" cy="-8" r="3" fill="#ff4d6d" />
+          <rect x="-12" y="5" width="24" height="12" rx="3" fill="#2b3440" />
+          <circle cx="0" cy="14" r="4.5" fill="#ff5a7a" filter="url(#glow)" />
+        </g>
+      </g>
+
+      <!-- ================= PARTE 06: TRANSECTO EBA (3D ISOMÉTRICO) ================= -->
+      <g id="ebaScene">
+        <!-- Bloco 3D de floresta amazônica em perspectiva isométrica (deslocado p/ esquerda para nunca cortar o 300 m) -->
+        <g id="forestSlab" transform="translate(-80, 0)">
+          <!-- Paredes laterais do bloco de solo/floresta -->
+          <polygon points="150,625 900,825 900,868 150,668" fill="#2a1b10" />
+          <polygon points="900,825 1070,695 1070,738 900,868" fill="#1b110a" />
+          <!-- Topo do bloco -->
+          <polygon points="150,625 900,825 1070,695 320,495" fill="#183d22" stroke="#3f8f46" stroke-width="2" />
+          <!-- Copas 3D da floresta amazônica geradas via JS -->
+          <g id="isoTrees"></g>
+
+          <!-- Retângulo 3D da faixa de transecto (12 km x 300 m) -->
+          <g id="transectBox">
+            <!-- Parede frontal e lateral direita do prisma 3D do transecto -->
+            <polygon points="200,590 920,782 920,712 200,520" fill="rgba(157,255,122,.14)" stroke="#9dff7a" stroke-width="2" stroke-dasharray="8 6" />
+            <polygon points="920,782 1015,710 1015,640 920,712" fill="rgba(157,255,122,.22)" stroke="#9dff7a" stroke-width="2" />
+            <!-- Topo iluminado da faixa do transecto -->
+            <polygon points="200,520 920,712 1015,640 295,448" fill="rgba(255,215,110,.16)" stroke="#ffd76e" stroke-width="3.5" />
+            <!-- Pontos LiDAR coletados ao longo do transecto -->
+            <g id="transectPts" filter="url(#glowSm)"></g>
+          </g>
+
+          <!-- Cotas de dimensão 3D: 12 km e 300 m -->
+          <g id="transectDims">
+            <line x1="185" y1="628" x2="905" y2="820" stroke="#ffd76e" stroke-width="3" />
+            <text x="530" y="768" text-anchor="middle" transform="rotate(14.9, 530, 768)" class="svgHuge gold">12 km</text>
+            <line x1="935" y1="794" x2="1030" y2="722" stroke="#ffd76e" stroke-width="3" />
+            <text x="995" y="805" text-anchor="start" class="svgBig gold">300 m</text>
+          </g>
+        </g>
+
+        <!-- Avião coletando LiDAR -->
+        <g id="airplane">
+          <!-- Cone de varredura laser do avião até o transecto -->
+          <polygon id="planeBeam" points="0,12 -52,225 48,150" fill="url(#laserCone)" />
+          <line x1="-52" y1="225" x2="48" y2="150" stroke="#ff4d6d" stroke-width="4" filter="url(#glow)" />
+          <!-- Corpo do avião bimotor de pesquisa -->
+          <g transform="rotate(14.9)">
+            <polygon points="-14,-4 8,-4 -12,-46 -26,-44" fill="#b8c7d9" />
+            <polygon points="-58,-4 -36,-4 -54,-34 -66,-32" fill="#d9e4f0" />
+            <polygon points="-56,0 -38,0 -52,18 -64,16" fill="#9fb2c7" />
+            <path d="M-62,-6 C-25,-14 32,-12 58,0 C32,10 -25,10 -62,2 Z" fill="#f4f8fc" stroke="#2b3d52" stroke-width="2" />
+            <path d="M24,-5 L44,-1 L40,3 L22,2 Z" fill="#1e3c58" />
+            <path d="M-48,-2 L32,1" stroke="#ffd76e" stroke-width="3.5" />
+            <polygon points="-10,2 14,2 -8,52 -24,48" fill="#e2ebf5" stroke="#2b3d52" stroke-width="1.5" />
+            <circle cx="2" cy="7" r="5" fill="#ff4d6d" filter="url(#glow)" />
+          </g>
+        </g>
+
+        <!-- Ponto único resumido do transecto (com caixa larga para caber todo o texto) -->
+        <g id="singlePoint">
+          <circle id="spHalo" cx="530" cy="615" r="36" fill="rgba(157,255,122,.22)" />
+          <circle id="spDot" cx="530" cy="615" r="16" fill="#9dff7a" stroke="#fff" stroke-width="3.5" filter="url(#glow)" />
+          <g id="singlePointTag">
+            <rect x="290" y="458" width="480" height="114" rx="18" fill="rgba(6,18,32,.92)" stroke="#ffd76e" stroke-width="3" />
+            <text x="530" y="504" text-anchor="middle" class="svgSmall gold">1 TRANSECTO = 1 PONTO</text>
+            <text x="530" y="552" text-anchor="middle" class="svgBig green">LAI médio = 4,8</text>
+          </g>
+        </g>
+      </g>
+
+      <!-- ================= PARTE 07–08: AMAZÔNIA, 742 PONTOS, 16 VARIÁVEIS E MAPA FINAL ================= -->
+      <g id="amzScene">
+        <!-- Contorno vetorial oficial do Bioma Amazônia (IBGE/EBA) com os centroides reais dos transectos -->
+        <g id="amzVectorGroup" transform="translate(20, 35) scale(1.03)">
+          <use id="amzFill" href="#amzShape" fill="rgba(20, 62, 38, 0.72)" />
+          <use id="amzBorder" href="#amzShape" fill="none" stroke="#9ad16a" stroke-width="3.5" stroke-linejoin="round" filter="url(#glowSm)" pathLength="1" />
+          <g id="amzDots742"></g>
+        </g>
+
+        <!-- Pilha 3D de 16 camadas preditoras + extração por ponto e tabelas abstratas -->
+        <g id="envStack">
+          <!-- Os 16 estratos das variáveis preditoras (gerados via JS de baixo p/ cima, centrados em x=390, y=235..775) -->
+          <g id="envSlicesG"></g>
+
+          <!-- Raios de vários transectos (1 ponto por transecto) atravessando a pilha (Slide 27) -->
+          <g id="multiRaysG"></g>
+
+          <!-- 1º Estrato no topo (Slide 24–26): Transecto único com nome posicionado acima sem colidir com a borda -->
+          <g id="sliceTransecto">
+            <text x="390" y="76" text-anchor="middle" class="svgMid gold">Transecto</text>
+            <line x1="390" y1="86" x2="390" y2="108" stroke="#ffd76e" stroke-width="2" opacity="0.7" />
+            <polygon points="120,145 410,193 660,145 370,97" fill="rgba(26, 82, 46, 0.88)" stroke="#9dff7a" stroke-width="3" />
+          </g>
+
+          <!-- Múltiplos mini-transectos separados no topo (Slide 27: 1 ponto no centro de cada transecto) -->
+          <g id="multiTransectosG"></g>
+
+          <!-- Raio central de 1 ponto atravessando todos os 16 estratos + 16 pontos de coleta visíveis (Slide 26) -->
+          <g id="singleDrillG">
+            <line id="rayCenter" x1="390" y1="145" x2="390" y2="775" stroke="#ffd76e" stroke-width="3.5" stroke-dasharray="9 6" filter="url(#glowSm)" />
+            <g id="hitsCenterG"></g>
+            <circle id="pulseCenter" cx="390" cy="145" r="11" fill="#ffd76e" filter="url(#glow)" />
+          </g>
+
+          <!-- Ponto único no centro do Transecto (Slide 26) -->
+          <circle id="ptCenter" cx="390" cy="145" r="10" fill="#9dff7a" stroke="#ffffff" stroke-width="2.5" filter="url(#glowSm)" />
+
+          <!-- Lista ampla dos 16 nomes de variáveis para auditório (Slide 24) -->
+          <g id="varItemsG"></g>
+
+          <!-- Tabelinha abstrata de 1 ponto (Slide 26, abaixo do texto sem sobrepor) -->
+          <g id="tableSingleG"></g>
+
+          <!-- Tabela abstrata completa de todos os transectos (Slide 27, abaixo do texto sem sobrepor) -->
+          <g id="tableFullG"></g>
+        </g>
+
+        <!-- Slide 28: Animação didática do Random Forest (Tabela -> Árvores de Decisão -> Média = LAI) -->
+        <g id="rfAnimScene"></g>
+
+        <!-- Slide 30, 31 e 32: Resultados do Random Forest (Importância das Variáveis, LAI Observado e Desempenho) -->
+        <g id="rfImpScene"></g>
+        <g id="rfObsScene"></g>
+        <g id="rfPerfScene"></g>
+
+        <!-- Slide 33, 34, 35 e 36: SHAP (Jogadores Cooperativos + Contribuição Positiva/Negativa + Precipitação Anual + Grid das 16 Variáveis) -->
+        <g id="shapTheoryScene"></g>
+        <g id="shapPayoutScene"></g>
+        <g id="shapSingleScene"></g>
+        <g id="shapGridScene"></g>
+
+        <!-- Slide 40, 41 e 42: Extrapolação Espacial (Nomes das 16 Variáveis -> 16 Camadas no formato da Amazônia -> Processamento do Random Forest) -->
+        <g id="amzPredScene"></g>
+
+        <!-- Slide 43: Mapa Final de LAI da Amazônia gerado do lai.tif com legenda de auditório -->
+        <g id="amzFinalMapCard"></g>
+      </g>
+    </svg>
+
+    <div class="vignette"></div>
+    <div class="grain"></div>
+
+    <!-- Camada de texto (ampliada para auditório) -->
+    <div id="overlay">
+      <section id="coverSlide" class="bookend fx" aria-label="Título do artigo">
+        <svg id="coverForest" viewBox="0 0 1920 1080" aria-hidden="true"><g id="coverLeafWreath"></g></svg>
+        <div class="coverCopy">
+          <h1><span><b id="coverBirdPerch">V</b>ariação espacial e fatores ambientais</span><span>associados à altura média do dossel</span><span>e ao índice de área foliar</span><em>na Amazônia brasileira</em></h1>
+        </div>
+        <svg id="coverBirdScene" class="bookendBirdScene" viewBox="0 0 1920 1080" aria-hidden="true"></svg>
+      </section>
+
+      <section id="peopleSlide" class="bookend fx" aria-label="Título do artigo e apresentação dos participantes">
+        <h2 class="peopleTitle">Variação espacial e fatores ambientais associados à altura média do dossel e ao índice de área foliar <em>na Amazônia brasileira</em></h2>
+        <div class="people">
+          <figure class="person" id="personGustavo">
+            <div class="avatarStage"><div class="avatarFloat"><div class="avatarActing"><img class="avatarNormal" src="assets/characters/gustavo.png" alt="Personagem de Gustavo, com cabelo grisalho e barba" width="1024" height="1536" decoding="async" /><img class="avatarGrimace" src="assets/characters/gustavo-careta.png" alt="" aria-hidden="true" width="1024" height="1536" decoding="async" /></div></div><span class="avatarGround"></span></div>
+            <figcaption><span class="personRole">Doutorando</span><h2>Gustavo Henrique de<br>Oliveira Mourão</h2></figcaption>
+          </figure>
+          <figure class="person" id="personEric">
+            <div class="avatarStage"><div class="avatarFloat"><img src="assets/characters/eric.png" alt="Personagem do orientador Eric, com cabelo escuro" width="1024" height="1536" decoding="async" /></div><span class="avatarGround"></span></div>
+            <figcaption><span class="personRole">Orientador</span><h2>Eric Bastos<br>Gorgens</h2></figcaption>
+          </figure>
+          <figure class="person" id="personJosi">
+            <div class="avatarStage"><div class="avatarFloat"><div class="avatarActing"><img src="assets/characters/josi-cacheada.png" alt="Personagem da professora Josiane, com cabelo cacheado e escuro" width="1024" height="1536" decoding="async" /></div></div><span class="avatarGround"></span></div>
+            <figcaption><span class="personRole">Professora da disciplina</span><h2>Josiane Silva<br>Costa Bruzinga</h2></figcaption>
+          </figure>
+        </div>
+        <svg id="peopleClockScene" viewBox="0 0 1920 1080" aria-hidden="true" data-clock-state="idle"></svg>
+      </section>
+
+      <section id="scopeSlide" class="bookend fx" aria-label="Recorte da apresentação: LAI">
+        <div class="scopeCopy">
+          <p class="scopeEyebrow">Recorte da apresentação</p>
+          <h2>Índice de<br>Área Foliar <em>LAI</em></h2>
+          <div class="scopeRule"></div>
+          <p class="scopeLead">A variação espacial na Amazônia brasileira<br>e os fatores ambientais associados.</p>
+        </div>
+        <svg id="scopeTree" viewBox="0 0 600 600" aria-hidden="true">
+          <ellipse class="scopeSoil" cx="300" cy="515" rx="158" ry="19" fill="#dfe8d4"/>
+          <g id="scopeTreeBranches" fill="none" stroke="#667b50" stroke-linecap="round" stroke-linejoin="round">
+            <path class="scopeBranch" pathLength="1" stroke-width="14" d="M300 510 C291 438 301 371 299 292 C297 239 300 202 300 160"/>
+            <path class="scopeBranch" pathLength="1" stroke-width="9" d="M299 410 Q263 340 204 302"/>
+            <path class="scopeBranch" pathLength="1" stroke-width="9" d="M298 387 Q343 324 396 292"/>
+            <path class="scopeBranch" pathLength="1" stroke-width="7" d="M299 322 Q259 265 219 215"/>
+            <path class="scopeBranch" pathLength="1" stroke-width="7" d="M299 292 Q338 243 374 199"/>
+            <path class="scopeBranch" pathLength="1" stroke-width="5" d="M263 348 Q209 332 177 281"/>
+            <path class="scopeBranch" pathLength="1" stroke-width="5" d="M344 331 Q398 319 424 266"/>
+            <path class="scopeBranch" pathLength="1" stroke-width="5" d="M268 276 Q251 227 264 176"/>
+            <path class="scopeBranch" pathLength="1" stroke-width="5" d="M331 251 Q339 195 327 151"/>
+          </g>
+          <g id="scopeTreeLeafCloud"></g>
+        </svg>
+      </section>
+
+      <section id="foliageImportanceSlide" class="bookend foliageIntro fx" aria-label="Por que estudar o LAI?" data-topic="0">
+        <header class="foliageHeader"><h2>Por que estudar o <em>LAI?</em></h2></header>
+        <svg id="importanceTreeDiagram" viewBox="0 0 1920 1080" role="img" aria-label="Árvore ilustrando a área foliar e os processos da floresta"><g id="importanceTreeArtwork"></g></svg>
+        <div class="foliageReasons">
+          <article class="foliageReason" data-reason="0"><span class="foliageReasonNumber">01</span><h3>Fotossíntese e carbono</h3></article>
+          <article class="foliageReason" data-reason="1"><span class="foliageReasonNumber">02</span><h3>Produtividade florestal</h3></article>
+          <article class="foliageReason" data-reason="2"><span class="foliageReasonNumber">03</span><h3>Regulação hídrica</h3></article>
+          <article class="foliageReason" data-reason="3"><span class="foliageReasonNumber">04</span><h3>Microclima</h3></article>
+          <article class="foliageReason" data-reason="4"><span class="foliageReasonNumber">05</span><h3>Respostas ao clima</h3></article>
+        </div>
+      </section>
+
+      <section id="foliageArrangementSlide" class="bookend foliageIntro fx" aria-label="Mesmo LAI, diferentes distribuições de LAD" data-arrangement="equal">
+        <header class="foliageHeader"><h2>Mesmo <em>LAI</em>, diferentes distribuições de <em>LAD</em></h2></header>
+        <svg id="arrangementDiagram" viewBox="0 0 1920 1080" role="img" aria-label="Duas árvores com a mesma área foliar e diferentes distribuições verticais de folhas"><g id="arrangementArtwork"></g></svg>
+        <p class="arrangementLabel arrangementLeft">Folhas no topo</p>
+        <p class="arrangementLabel arrangementRight">Folhas nos estratos</p>
+        <p class="arrangementTakeaway">Mesma área foliar. Mesma área de solo.</p>
+      </section>
+
+      <section id="foliageSizeSlide" class="bookend foliageIntro fx" aria-label="Mesmo LAI, diferentes alturas" data-size-phase="equal">
+        <header class="foliageHeader"><h2>Mesmo <em>LAI</em>, diferentes alturas</h2></header>
+        <svg id="sizeDiagram" viewBox="0 0 1920 1080" role="img" aria-label="Três árvores de mesma largura, área de solo e área foliar, com alturas diferentes e seus perfis verticais de LAD na mesma escala"><g id="sizeArtwork"></g></svg>
+        <p class="sizeLabel sizeLow">Menor altura</p>
+        <p class="sizeLabel sizeMiddle">Intermediária</p>
+        <p class="sizeLabel sizeTall">Maior altura</p>
+        <p class="sizeTakeaway">Mesma área foliar. Mesma área de solo.</p>
+      </section>
+
+      <section id="researchContributionSlide" class="bookend researchIntro fx" aria-label="Propósito e contribuições da pesquisa">
+        <svg class="researchLeafMark" viewBox="0 0 160 120" aria-hidden="true"><path d="M26 100Q64 58 132 22" fill="none" stroke="#92a878" stroke-width="2.5"/><path d="M48 80Q20 22 83 13Q94 58 48 80Z" fill="#dce8ce"/><path d="M73 66Q108 83 144 43Q100 24 73 66Z" fill="#b8cea3"/><path d="M48 80L78 22M73 66L136 47" stroke="#8eaa75" stroke-width="2" fill="none"/></svg>
+        <h2>Propósito da pesquisa</h2>
+        <div class="researchHeadingRule" aria-hidden="true"></div>
+        <div class="researchBenefits">
+          <article class="researchBenefit"><span class="benefitNumber">01</span><p><strong>Avançar</strong> na caracterização estrutural das florestas e nas relações entre área foliar e condições ambientais.</p></article>
+          <article class="researchBenefit"><span class="benefitNumber">02</span><p><strong>Gerar</strong> informações para a modelagem de processos ecossistêmicos e a avaliação das respostas das florestas às mudanças ambientais.</p></article>
+          <article class="researchBenefit"><span class="benefitNumber">03</span><p><strong>Disponibilizar</strong> produtos espaciais de LAI que poderão ser utilizados como dados de entrada em novas análises.</p></article>
+        </div>
+      </section>
+
+      <section id="closingSlide" class="bookend fx" aria-label="Obrigado! Dúvidas?">
+        <svg id="closingForest" viewBox="0 0 1920 1080" aria-hidden="true">
+          <g id="closingLeafParticles"></g>
+          <g id="closingLeafWreath"></g>
+          <g id="closingWindLines"></g>
+          <g id="closingWindLeaves"></g>
+        </svg>
+        <div class="closingCopy">
+          <h2 id="closingThanks" aria-label="Obrigado!"><span id="closingBirdPerch" aria-hidden="true">O</span><span aria-hidden="true">b</span><span aria-hidden="true">r</span><span aria-hidden="true">i</span><span aria-hidden="true">g</span><span aria-hidden="true">a</span><span aria-hidden="true">d</span><span aria-hidden="true">o</span><span aria-hidden="true">!</span></h2>
+          <div class="closingRule"></div>
+          <p id="closingQuestions">Dúvidas<span>?</span></p>
+        </div>
+        <svg id="closingBirdScene" class="bookendBirdScene" viewBox="0 0 1920 1080" aria-hidden="true"></svg>
+      </section>
+
+      <section id="farewellSlide" class="bookend fx" aria-label="Até a próxima!">
+        <h2 id="farewellTitle">Até a próxima!</h2>
+        <div id="closingGuest" role="img" aria-label="Personagem animado de Gustavo brincando com as folhas" data-action="idle">
+          <div class="closingGuestShadow" aria-hidden="true"></div>
+          <div class="closingGuestMotion" aria-hidden="true">
+            <div class="closingGuestPose" data-pose="duck"><img src="assets/characters/gustavo-brincadeiras.png" alt="" width="1024" height="1536" decoding="async" /></div>
+            <div class="closingGuestPose" data-pose="balance"><img src="assets/characters/gustavo-brincadeiras.png" alt="" width="1024" height="1536" decoding="async" /></div>
+            <div class="closingGuestPose" data-pose="shrug"><img src="assets/characters/gustavo-brincadeiras.png" alt="" width="1024" height="1536" decoding="async" /></div>
+            <div class="closingGuestPose" data-pose="dance"><img src="assets/characters/gustavo-brincadeiras.png" alt="" width="1024" height="1536" decoding="async" /></div>
+            <div class="closingGuestPose" data-pose="wave"><img src="assets/characters/gustavo.png" alt="" width="1024" height="1536" decoding="async" /></div>
+            <div class="closingGuestPose" data-pose="grimace"><img src="assets/characters/gustavo-careta.png" alt="" width="1024" height="1536" decoding="async" /></div>
+            <div class="closingGuestPose" data-pose="sneeze"><svg viewBox="0 -58 560 840" aria-hidden="true"><defs><clipPath id="farewellCrop-sneeze"><rect x="0" y="0" width="560" height="768"/></clipPath></defs><image href="assets/characters/gustavo-despedida.png" width="1024" height="1536" clip-path="url(#farewellCrop-sneeze)"/></svg></div>
+            <div class="closingGuestPose" data-pose="shush"><svg viewBox="500 -54 560 840" aria-hidden="true"><defs><clipPath id="farewellCrop-shush"><rect x="560" y="0" width="464" height="768"/></clipPath></defs><image href="assets/characters/gustavo-despedida.png" width="1024" height="1536" clip-path="url(#farewellCrop-shush)"/></svg></div>
+            <div class="closingGuestPose" data-pose="bow"><svg viewBox="0 667 560 840" aria-hidden="true"><defs><clipPath id="farewellCrop-bow"><rect x="0" y="768" width="560" height="768"/></clipPath></defs><image href="assets/characters/gustavo-despedida.png" width="1024" height="1536" clip-path="url(#farewellCrop-bow)"/></svg></div>
+            <div class="closingGuestPose" data-pose="heart"><svg viewBox="500 685 560 840" aria-hidden="true"><defs><clipPath id="farewellCrop-heart"><rect x="560" y="768" width="464" height="768"/></clipPath></defs><image href="assets/characters/gustavo-despedida.png" width="1024" height="1536" clip-path="url(#farewellCrop-heart)"/></svg></div>
+          </div>
+          <svg class="closingGuestEffects" viewBox="0 0 512 768" aria-hidden="true"><g id="closingGuestLeaf" opacity="0"><path d="M-22 0Q-4-26 27 0Q2 24-22 0Z" fill="#84a864"/><path d="M-18 0Q1-2 22 0" fill="none" stroke="#dce8c8" stroke-width="1.6"/></g></svg>
+        </div>
+      </section>
+
+      <header id="title" class="fx">
+        <h1>Índices <em>Foliares</em></h1>
+      </header>
+
+      <div id="h1" class="heading fx"><span class="num">Parte 01</span><h2 class="ht">Índice de Área Foliar <span class="abbr">LAI</span></h2></div>
+      <div id="h2" class="heading fx"><span class="num">Parte 02</span><h2 class="ht">Índice de Densidade Foliar <span class="abbr">LAD</span></h2></div>
+      <div id="h3" class="heading fx"><span class="num">Parte 03</span><h2 class="ht">Como <span class="abbr">LAI</span> e <span class="abbr">LAD</span> se conectam</h2></div>
+      <div id="h4" class="heading fx"><span class="num">Parte 04 · Medindo na prática</span><h2 class="ht">Lei de <span class="abbr">Beer-Lambert</span></h2></div>
+      <div id="h5" class="heading fx"><span class="num">Parte 05 · Medindo na prática</span><h2 class="ht">Medindo com <span class="abbr">LiDAR</span></h2></div>
+      <div id="h6" class="heading fx"><span class="num">Parte 06 · Projeto EBA</span><h2 class="ht">Da árvore ao <span class="abbr">transecto</span></h2></div>
+      <div id="h7" class="heading fx"><span class="num">Parte 07 · Escala Amazônica</span><h2 class="ht">Amostragem no <span class="abbr">Bioma Amazônia</span></h2></div>
+      <div id="h7b" class="heading fx" style="left: 44%; width: 53%;"><span class="num">Parte 07 · Variáveis Preditoras</span><h2 class="ht"><span class="abbr">16</span> Variáveis Ambientais</h2></div>
+      <div id="h8" class="heading fx" style="left: 4.5%; width: 42%; top: 3.8%;"><span class="num">Parte 08 · Machine Learning</span><h2 class="ht"><span class="abbr">Random Forest</span></h2></div>
+      <div id="h9Imp" class="heading fx" style="left: 6%; width: 88%; top: 5%;"><span class="num">Parte 09 · Resultados do Random Forest</span><h2 class="ht">Variáveis <span class="abbr">Mais Importantes</span></h2></div>
+      <div id="h9Obs" class="heading fx" style="left: 6%; width: 88%; top: 5%;"><span class="num">Parte 09 · Resultados do Random Forest</span><h2 class="ht">Valores Observados de <span class="abbr">LAI</span></h2></div>
+      <div id="h9Perf" class="heading fx" style="left: 6%; width: 88%; top: 5%;"><span class="num">Parte 09 · Resultados do Random Forest</span><h2 class="ht">Desempenho do <span class="abbr">Modelo</span></h2></div>
+      <div id="h10Theory" class="heading fx" style="left: 5%; width: 90%; top: 4.2%;"><span class="num">Parte 10 · Interpretabilidade do Modelo</span><h2 class="ht"><span class="abbr">SHAP</span> (SHapley Additive exPlanations)</h2></div>
+      <div id="h10Payout" class="heading fx" style="left: 5%; width: 90%; top: 4.2%;"><span class="num">Parte 10 · Interpretabilidade (SHAP)</span><h2 class="ht">Contribuição de Cada <span class="abbr">Variável</span> no LAI</h2></div>
+      <div id="h10Shap" class="heading fx" style="left: 3.5%; width: 93%; top: 2.5%;"><span class="num">Parte 10 · Curva de Dependência SHAP</span><h2 class="ht"><span class="abbr">Precipitação Anual</span></h2></div>
+      <div id="h10Grid" class="heading fx" style="left: 3.5%; width: 93%; top: 2.5%;"><span class="num">Parte 10 · Curvas de Dependência SHAP</span><h2 class="ht">Efeito das <span class="abbr">16 Variáveis</span> no LAI</h2></div>
+      <div id="h11Pred" class="heading fx" style="left: 4.5%; width: 91%; top: 3.8%;"><span class="num">Parte 11 · Extrapolação Espacial</span><h2 class="ht">Predição para <span class="abbr">Toda a Amazônia</span></h2></div>
+      <div id="h8Map" class="heading fx" style="left: 4.5%; width: 91%; top: 3.8%;"><span class="num">Parte 11 · Resultado Final</span><h2 class="ht">Mapa de <span class="abbr">LAI</span> da Amazônia</h2></div>
+
+      <div id="counter" class="block">
+        <div class="countNum">
+          <span class="n fx">×1</span><span class="n fx">×2</span><span class="n fx">×3</span><span class="n fx">×4</span><span class="n fx">×5</span>
+        </div>
+        <div id="countLbl" class="countLbl fx">camadas de folhas sobre a mesma área</div>
+        <div id="countSum" class="countSum fx">5 × 20 m² = <b>100 m²</b> de folhas</div>
+      </div>
+
+      <!-- Parte 1: LAI -->
+      <div id="fIAF1" class="block fx">
+        <div class="callout">
+          <div class="eq bigEq"><span class="sym">LAI</span> = <span class="frac"><span>área total de folhas</span><span>área de solo sob a copa</span></span></div>
+          <div class="eq bigEq">= <span class="frac"><span>100 m²</span><span>20 m²</span></span> = <span class="res">5</span> <span class="unit">m²/m²</span></div>
+        </div>
+      </div>
+
+      <div id="fIAF2" class="block fx">
+        <div class="callout">
+          <div class="calloutTitle"><span class="sym">LAI</span> = <span class="resSm">5</span> m²/m²</div>
+          <p class="bigNote">Significa que há <b>5 camadas de folhas</b> sobre cada metro quadrado de chão.</p>
+        </div>
+      </div>
+
+      <!-- Parte 2: LAD -->
+      <div id="fIDF1" class="block fx">
+        <div class="callout">
+          <div class="eq bigEq"><span class="sym">LAD</span> = <span class="frac"><span>área total de folhas</span><span>volume da copa</span></span></div>
+          <div class="eq bigEq">= <span class="frac"><span>100 m²</span><span>50 m³</span></span> = <span class="res">2</span> <span class="unit">m²/m³</span></div>
+        </div>
+      </div>
+
+      <div id="fIDF2" class="block fx">
+        <div class="callout">
+          <div class="calloutTitle"><span class="sym">LAD</span> = <span class="resSm">2</span> m²/m³</div>
+          <p class="bigNote">Mede quanta <b>área de folha</b> existe dentro de cada <b>metro cúbico</b> de copa.</p>
+          <p class="bigNote">Quanto maior o LAD, mais <b>densa e fechada</b> é a copa.</p>
+        </div>
+      </div>
+
+      <!-- Parte 3: Conexão LAD -> LAI -->
+      <div id="fLink1" class="block fx">
+        <div class="callout">
+          <div class="eq bigEq"><span class="sym">LAI</span> = Σ (<span class="sym">LAD</span><sub>estrato</sub> × Δh)</div>
+          <div class="eq midEq">= (1,2 + 2,4 + 3,0 + 2,2 + 1,2) × <b>0,5 m</b></div>
+          <div class="eq bigEq">= <span class="res">5</span> <span class="unit">m²/m²</span></div>
+        </div>
+      </div>
+
+      <div id="fLink2" class="block fx">
+        <div class="callout">
+          <div class="calloutTitle">Regra prática</div>
+          <div class="eq midEq"><span class="sym">LAI</span> = <span class="sym">LAD</span><sub>médio</sub> × altura da copa</div>
+          <div class="eq bigEq">= 2 m²/m³ × 2,5 m = <span class="res">5</span></div>
+        </div>
+      </div>
+
+      <!-- Parte 4: Beer-Lambert -->
+      <div id="fBL1" class="block fx">
+        <div class="callout">
+          <div class="eq bigEq"><span class="sym">I</span> = I₀ · e<sup>−k · LAI</sup></div>
+          <div class="eq bigEq"><span class="sym">LAI</span> = <span class="frac"><span>−ln(I / I₀)</span><span>k</span></span> = <span class="frac"><span>−ln(0,08)</span><span>0,5</span></span> ≈ <span class="res">5</span></div>
+        </div>
+      </div>
+
+      <div id="fBL2" class="block fx">
+        <div class="callout">
+          <div class="calloutTitle">O coeficiente <b>k</b></div>
+          <p class="bigNote"><b>k ≈ 0,5</b> para folhas com ângulos aleatórios e sol a pino.</p>
+          <p class="bigNote">Sensores ópticos (como o <b>LAI-2200</b>) e <b>fotos hemisféricas</b> usam esse princípio.</p>
+        </div>
+      </div>
+
+      <!-- Parte 5: LiDAR -->
+      <div id="lidarCount" class="block fx">
+        <div class="callout">
+          <div class="lc"><span class="lcN" id="lcTotal">0</span><span class="lcL">retornos LiDAR</span></div>
+          <div class="lc copa"><span class="lcN" id="lcCanopy">0</span><span class="lcL">retornos na copa</span></div>
+          <div class="lc solo"><span class="lcN" id="lcGround">0</span><span class="lcL">retornos do solo</span></div>
+        </div>
+      </div>
+
+      <div id="fLidar1" class="block fx">
+        <div class="callout">
+          <div class="eq bigEq"><span><span class="sym">P</span><sub>lacunas</sub></span> = <span class="frac"><span>retornos do solo</span><span>total de retornos</span></span> = <span class="frac"><span>8</span><span>100</span></span> = <b>0,08</b></div>
+          <div class="eq bigEq"><span class="sym">LAI</span> = <span class="frac"><span>−ln(0,08)</span><span>0,5</span></span> ≈ <span class="res">5</span></div>
+        </div>
+      </div>
+
+      <div id="fLidar2" class="block fx">
+        <div class="callout">
+          <div class="calloutTitle">Perfil vertical (<span class="sym">LAD</span> × 0,5 m)</div>
+          <p class="bigNote">Somando o <b>LAI de cada estrato</b> de <b>0,5 m</b> ao longo da altura da copa:</p>
+          <div class="eq midEq">0,6 + 1,2 + 1,5 + 1,1 + 0,6 = <span class="resSm">5,0</span></div>
+        </div>
+      </div>
+
+      <section id="sumL" class="sum left fx">
+        <svg viewBox="0 0 120 70" class="icon"><g fill="#9ad16a" stroke="#d6f5b0" stroke-width="1.5"><ellipse cx="60" cy="58" rx="52" ry="9" opacity=".55"/><ellipse cx="60" cy="47" rx="52" ry="9" opacity=".7"/><ellipse cx="60" cy="36" rx="52" ry="9" opacity=".85"/><ellipse cx="60" cy="25" rx="52" ry="9"/></g></svg>
+        <h3>LAI</h3>
+        <div class="u">m² / m²</div>
+        <p>Quantas <b>camadas de folhas</b> cobrem cada metro quadrado de chão.</p>
+      </section>
+      <section id="sumR" class="sum right fx">
+        <svg viewBox="0 0 120 70" class="icon"><g stroke="#ffd76e" stroke-width="1.5" stroke-linejoin="round"><polygon points="60,4 92,20 60,36 28,20" fill="rgba(255,215,110,.55)"/><polygon points="28,20 60,36 60,68 28,52" fill="rgba(255,215,110,.3)"/><polygon points="60,36 92,20 92,52 60,68" fill="rgba(255,215,110,.42)"/></g></svg>
+        <h3>LAD</h3>
+        <div class="u">m² / m³</div>
+        <p>Quanta <b>área de folha</b> cabe em cada metro cúbico de copa.</p>
+      </section>
+
+      <!-- ================= NOVOS BLOCOS: PROJETO EBA, 742 PONTOS, 16 VARIÁVEIS E RANDOM FOREST ================= -->
+      <div id="fEBA1" class="block fx">
+        <div class="calloutTitle">Transectos LiDAR do <b>Projeto EBA</b></div>
+        <p class="bigNote">(Estimativa de Biomassa na Amazônia)</p>
+        <p class="bigNote" style="margin-top: 1.2cqw;">Cada faixa sobrevoada tem <b>12 km de comprimento</b> por <b>300 m de largura</b>.</p>
+      </div>
+
+      <div id="fEBA2" class="block fx">
+        <div class="calloutTitle">De transecto para <b>ponto</b></div>
+        <p class="bigNote">Todo o perfil LiDAR de <b>12 km × 300 m</b> é processado e resumido em <b>um único ponto</b> com seu valor médio de <span class="sym">LAI</span>.</p>
+      </div>
+
+      <div id="fAmz742" class="block fx">
+        <div class="calloutTitle"><span class="resSm" id="cnt742">742</span> pontos amostrais</div>
+        <p class="bigNote">Cada ponto no mapa representa um transecto LiDAR do <b>Projeto EBA</b> resumido pelo seu valor de <span class="sym">LAI</span>.</p>
+      </div>
+
+      <!-- Textos limpos (sem fundo preto) para o stack das 16 variáveis e tabelas abstratas -->
+      <div id="fStackDone" class="block fx" style="left: 42%; width: 54%; top: 32%;">
+        <div class="calloutTitle">Variáveis Ambientais &#8594; <b>Variáveis Preditoras</b></div>
+        <p class="bigNote">As <b>16 variáveis ambientais</b> se tornam <b>variáveis preditoras</b> empilhadas sob o transecto para estimar o <span class="sym">LAI</span>.</p>
+      </div>
+
+      <div id="fDrill1" class="block fx" style="left: 42%; width: 54%; top: 18.5%;">
+        <div class="calloutTitle">Extração no <b>ponto do transecto</b></div>
+        <p class="bigNote">O ponto atravessa as <b>16 variáveis preditoras</b> e gera uma linha na tabela.</p>
+      </div>
+
+      <div id="fDrillAll" class="block fx" style="left: 42%; width: 54%; top: 18.5%;">
+        <div class="calloutTitle">Extração nos <b>742 transectos</b></div>
+        <p class="bigNote">Com <b>1 ponto por transecto</b>, formamos a tabela com o <b>ID</b>, o <span class="sym">LAI</span> e as <b>16 variáveis</b>.</p>
+      </div>
+
+      <!-- Explicação final ao lado do Mapa de LAI (sem fundo preto) -->
+      <div id="fMapFinal" class="block fx">
+        <div class="calloutTitle">Mapa contínuo de <span class="sym">LAI</span></div>
+        <p class="bigNote">O modelo <b>Random Forest</b> estima o <b>LAI</b> em cada pixel da <b>Amazônia</b>.</p>
+      </div>
+
+      <div id="captions"></div>
+
+      <div id="slideNum">1 / 50</div>
+      <div id="hint" title="Clique ou aperte Espaço / → para avançar"><span>▶</span></div>
+    </div>
+
+    <!-- Controles discretos -->
+    <div id="ui">
+      <button id="btnPrev" type="button" aria-label="Voltar etapa" title="Voltar etapa (←)">
+        <svg viewBox="0 0 24 24"><path d="M6 5h2v14H6zM20 5v14L9 12z" fill="currentColor"/></svg>
+      </button>
+      <button id="btnPlay" type="button" aria-label="Avançar" title="Avançar (espaço / →)"></button>
+      <button id="btnRestart" type="button" aria-label="Recomeçar" title="Recomeçar">
+        <svg viewBox="0 0 24 24"><path d="M12 5V2L7 6l5 4V7a5 5 0 1 1-5 5H5a7 7 0 1 0 7-7z" fill="currentColor"/></svg>
+      </button>
+      <div id="bar"><div id="fill"></div></div>
+      <button id="btnSlides" type="button" aria-label="Miniaturas dos slides" aria-haspopup="dialog" title="Miniaturas dos slides (G)">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="7" height="6" rx="1"/><rect x="14" y="4" width="7" height="6" rx="1"/><rect x="3" y="14" width="7" height="6" rx="1"/><rect x="14" y="14" width="7" height="6" rx="1"/></g></svg>
+      </button>
+      <button id="btnTheme" type="button" aria-label="Mudar para tema claro" aria-pressed="false" title="Mudar para tema claro">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.4 1.4m11.2 11.2L19 19M5 19l1.4-1.4M17.6 6.4L19 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      </button>
+      <button id="btnCC" type="button" aria-label="Ativar/Desativar legendas" title="Ativar/Desativar legendas (C)">CC</button>
+      <button id="btnFs" type="button" aria-label="Tela cheia" title="Tela cheia (F)">
+        <svg viewBox="0 0 24 24"><path d="M4 4h6v2H6v4H4zM14 4h6v6h-2V6h-4zM4 14h2v4h4v2H4zM18 14h2v6h-6v-2h4z" fill="currentColor"/></svg>
+      </button>
+    </div>
+  </div>
+</main>
+
+<dialog id="slideOverview" aria-labelledby="slideOverviewTitle">
+  <div class="overviewPanel">
+    <header class="overviewHeader">
+      <div><p class="overviewEyebrow">NAVEGAÇÃO</p><h2 id="slideOverviewTitle">Escolha um slide</h2></div>
+      <button id="closeSlideOverview" type="button" aria-label="Fechar miniaturas" title="Fechar (Esc)">×</button>
+    </header>
+    <div class="overviewToolbar">
+      <label for="slideSearch">Buscar</label><input id="slideSearch" type="search" placeholder="Título ou número do slide" autocomplete="off" />
+      <span id="slideSearchCount" role="status">54 slides</span>
+    </div>
+    <div id="slideThumbGrid" class="slideThumbGrid"></div>
+    <p id="slideSearchEmpty" hidden>Nenhum slide encontrado.</p>
+    <footer class="overviewFooter">Clique em uma miniatura para abrir. <span>G · miniaturas &nbsp; Esc · fechar</span></footer>
+  </div>
+</dialog>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="amz_data.js?v=06d093c88f0d"></script>
+<script src="shap_data.js?v=5254de7cb7d0"></script>
+<script src="perching-bird.js?v=5c7ccc31222b"></script>
+<script src="closing-life-tree.js?v=4cf7d0e03e5b"></script>
+<script src="cover-ambient.js?v=c1a9720e78ee"></script>
+<script src="people-clock.js?v=1d56be0c2baa"></script>
+<script src="closing-guest.js?v=9906f52ab47b"></script>
+<script src="foliage-intro.js?v=17bf16b2dddb"></script>
+<script src="bookends.js?v=3345d456de26"></script>
+<script src="projector-theme.js?v=d73ce17c23a6"></script>
+<script src="slide-overview.js?v=e727b04e974a"></script>
+<script src="main.js?v=5b30786be0e6"></script>
+</body>
+</html>

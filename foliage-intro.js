@@ -44,7 +44,8 @@
       return el;
     };
     const tree = (parent, x, y, scale, positions, name) => {
-      const position = make('g', { transform: `translate(${x} ${y}) scale(${scale})` }, parent);
+      const position = make('g', {}, parent);
+      gsap.set(position, { x, y, scale, svgOrigin: '0 0', smoothOrigin: false });
       const root = make('g', { 'data-tree': name }, position);
       const ground = cleanClone(document.querySelector('#shadowLine'));
       ground.setAttribute('class', 'introTreeGround');
@@ -54,7 +55,7 @@
       root.appendChild(wood);
       const crown = make('g', { class: 'introTreeCrown' }, root);
       const leaves = samples.map((sample, i) => leaf(crown, sample, positions[i]));
-      return { root, ground, wood, crown, leaves };
+      return { position, root, ground, wood, crown, leaves };
     };
     const enter = (target, at, from = {}, duration = .65, stagger = 0) => {
       tl.fromTo(target, { autoAlpha: 0, y: 16, ...from }, {
@@ -74,11 +75,32 @@
     reasonTimes.forEach((at, i) => enter(`.foliageReason[data-reason="${i}"]`, at, { y: 0, x: 28 }, .6));
     tl.to('#foliageImportanceSlide', { autoAlpha: 0, duration: .65 }, 26);
 
-    const artwork = document.querySelector('#arrangementArtwork');
+    // A geometria compartilhada é calculada pelo tempo atual, sem estados herdados de seeks.
+    const continuity = document.createElement('div');
+    continuity.id = 'foliageContinuity'; continuity.setAttribute('aria-hidden', 'true');
+    const backdrop = document.createElement('div'); backdrop.className = 'foliageContinuityBackdrop';
+    continuity.appendChild(backdrop);
+    const svg = make('svg', { viewBox: '0 0 1920 1080' }, continuity);
+    const artwork = make('g', { id: 'continuityArtwork' }, svg);
+    document.querySelector('#stage').appendChild(continuity);
     const left = tree(artwork, 470, 785, .72, samples.map(s => s.top), 'top');
     const right = tree(artwork, 1310, 785, .72, samples.map(s => s.top), 'distributed');
+    const third = tree(artwork, 1310, 785, .72, samples.map(s => s.distributed), 'additional');
+    const sizeTrees = [left, right, third];
+    // Estes grupos têm um único renderizador. A timeline não altera sua visibilidade.
+    sizeTrees.forEach(item => [item.position, item.root, item.wood, ...item.leaves].forEach(el => {
+      el.removeAttribute('style'); el.removeAttribute('transform'); el.removeAttribute('data-svg-origin');
+    }));
+    const alpha = (el, value) => {
+      el.setAttribute('opacity', value.toFixed(4));
+      el.setAttribute('visibility', value > .0001 ? 'visible' : 'hidden');
+    };
+    const progress = (time, start, duration) => {
+      const p = Math.max(0, Math.min(1, (time - start) / (reduced ? .1 : duration)));
+      return p * p * (3 - 2 * p);
+    };
+    const mix = (a, b, p) => a + (b - a) * p;
     const profiles = [];
-    // Perfis esquemáticos: barras calculadas a partir da área de folhas em cinco estratos.
     const weights = key => {
       const result = Array(5).fill(0);
       samples.forEach(sample => {
@@ -100,27 +122,15 @@
         class: 'introProfileBar', 'data-stratum': i + 1,
       }, group));
       profiles.push({ group, bars });
-      if (treeIndex) bars.forEach((bar, i) => tl.to(bar, { attr: { width: distributedWeights[i] / maxWeight * 118 }, duration: reduced ? .1 : 1.8, ease: 'power2.inOut' }, 29.35));
     });
     enter('#foliageArrangementSlide', 26, { y: 0 });
     enter('#foliageArrangementSlide .foliageHeader', 26.2);
-    enter([left.root, right.root], 26.7, { y: 22 }, .9, .12);
-    enter('.introLadProfile', 27.5);
     enter('.arrangementLeft', 27.5);
-    right.leaves.forEach((el, i) => {
-      tl.to(el, { x: samples[i].distributed.x, y: samples[i].distributed.y,
-        duration: reduced ? .1 : 1.8, ease: 'power2.inOut',
-      }, 29.35 + (reduced ? 0 : i % 7 * .025));
-    });
     enter('.arrangementRight', 31.3);
-    enter('.arrangementTakeaway', 31.9);
     tl.to('#foliageArrangementSlide', { autoAlpha: 0, duration: .7 }, 34.2);
 
-    // A largura da copa, o tamanho das folhas e a referência de solo são fixos.
-    // A animação altera somente as posições verticais das folhas e a altura da madeira.
     const sizePositions = (center, height) => samples.map(sample => ({
-      x: sample.top.x,
-      y: center + (sample.top.y + 505) / 112 * height,
+      x: sample.top.x, y: center + (sample.top.y + 505) / 112 * height,
     }));
     const mediumPositions = sizePositions(-420, 160);
     const sizeConfigurations = [
@@ -128,8 +138,6 @@
       { name: 'medium', x: 890, positions: mediumPositions, woodY: 1 },
       { name: 'tall', x: 1520, positions: sizePositions(-515, 225), woodY: 1.25 },
     ];
-    // Mesma escala de altura e de densidade nos três perfis. Os oito estratos
-    // têm espessura igual, logo a soma das barras representa a mesma área foliar.
     const sizeProfileBins = 8, sizeProfileTop = 760, sizeProfileThickness = 70;
     const sizeProfileWeights = positions => {
       const values = Array(sizeProfileBins).fill(0);
@@ -142,55 +150,105 @@
     const initialSizeWeights = sizeProfileWeights(mediumPositions);
     const finalSizeWeights = sizeConfigurations.map(config => sizeProfileWeights(config.positions));
     const sizeProfileMax = Math.max(...initialSizeWeights, ...finalSizeWeights.flat());
-    const sizeProfileGroups = [];
-    sizeConfigurations.forEach((config, index) => {
-      const x = config.x + 225;
-      const y = 810 - sizeProfileTop * .7;
+    const sizeProfiles = sizeConfigurations.map((config, index) => {
+      sizeTrees[index].root.dataset.heightRole = config.name;
+      const x = config.x + 225, y = 810 - sizeProfileTop * .7;
       const step = sizeProfileThickness * .7;
-      const profile = make('g', { class: 'sizeLadProfile', 'data-profile': config.name }, document.querySelector('#sizeArtwork'));
-      const label = make('text', { x: x + 52, y: y - 30, 'text-anchor': 'middle', class: 'introProfileTitle' }, profile);
+      const group = make('g', { class: 'sizeLadProfile', 'data-profile': config.name }, artwork);
+      const label = make('text', { x: x + 52, y: y - 30, 'text-anchor': 'middle', class: 'introProfileTitle' }, group);
       label.textContent = 'LAD';
-      make('line', { x1: x, x2: x, y1: y, y2: y + sizeProfileBins * step, class: 'introProfileAxis' }, profile);
-      initialSizeWeights.forEach((value, bin) => {
-        const bar = make('rect', {
-          x, y: y + (bin + .5) * step - 12, width: value / sizeProfileMax * 104,
-          height: 24, rx: 4, class: 'introProfileBar', 'data-stratum': bin + 1,
-        }, profile);
-        if (config.name !== 'medium') tl.to(bar, {
-          attr: { width: finalSizeWeights[index][bin] / sizeProfileMax * 104 },
-          duration: reduced ? .1 : 2.1, ease: 'power2.inOut',
-        }, 37.1);
-      });
-      sizeProfileGroups.push(profile);
-    });
-    const sizeTrees = sizeConfigurations.map(config => {
-      const item = tree(document.querySelector('#sizeArtwork'), config.x, 810, .7, mediumPositions, config.name);
-      gsap.set(item.wood, { scaleX: .95, scaleY: 1, svgOrigin: '0 0', smoothOrigin: false });
-      if (config.name !== 'medium') {
-        item.leaves.forEach((el, i) => tl.to(el, {
-          y: config.positions[i].y,
-          duration: reduced ? .1 : 2.1, ease: 'power2.inOut',
-        }, 37.1 + (reduced ? 0 : i % 7 * .025)));
-        tl.to(item.wood, { scaleY: config.woodY,
-          duration: reduced ? .1 : 2.1, ease: 'power2.inOut',
-        }, 37.1);
-      }
-      return item;
+      make('line', { x1: x, x2: x, y1: y, y2: y + sizeProfileBins * step, class: 'introProfileAxis' }, group);
+      const bars = initialSizeWeights.map((value, bin) => make('rect', {
+        x, y: y + (bin + .5) * step - 12, width: value / sizeProfileMax * 104,
+        height: 24, rx: 4, class: 'introProfileBar', 'data-stratum': bin + 1,
+      }, group));
+      return { group, bars };
     });
     enter('#foliageSizeSlide', 34.2, { y: 0 });
     enter('#foliageSizeSlide .foliageHeader', 34.4);
-    enter(sizeTrees.map(item => item.root), 34.85, { y: 20 }, .85, .13);
-    enter(sizeProfileGroups, 35.4, { y: 0 }, .6, .1);
     enter('.sizeLabel', 39.5, { y: 12 }, .6, .08);
-    enter('.sizeTakeaway', 40.0);
     tl.to('#foliageSizeSlide', { autoAlpha: 0, duration: .7 }, 42.2);
-
+    const forestAt = 46 + 183.6;
+    const forestSeeds = [...document.querySelectorAll('#isoTrees > [data-forest-seed]')]
+      .sort((a, b) => Number(a.dataset.forestSeed) - Number(b.dataset.forestSeed));
+    let lastTime = -1;
+    const render = time => {
+      if (time === lastTime) return;
+      lastTime = time;
+      const phase = time >= 26 && time < 34.2 ? 'comparison' : time >= 34.2 && time < 42.2 ? 'heights'
+        : time >= forestAt && time < forestAt + 2.8 ? 'forest' : 'off';
+      continuity.dataset.phase = phase;
+      continuity.style.opacity = phase === 'off' ? '0' : '1';
+      continuity.style.visibility = phase === 'off' ? 'hidden' : 'visible';
+      if (phase === 'off') return;
+      const isComparison = phase === 'comparison', isForest = phase === 'forest';
+      const layout = progress(time, 34.2, 1.35);
+      const redistribution = progress(time, 29.35, 1.8);
+      const heightChange = progress(time, 37.1, 2.1);
+      const travel = progress(time, forestAt, 2.05);
+      backdrop.style.opacity = isForest ? String(1 - progress(time, forestAt, 1.7)) : '0';
+      sizeTrees.forEach((item, index) => {
+        const config = sizeConfigurations[index];
+        let x = index === 0 ? 470 : 1310, y = 785, scale = .72;
+        let opacity = index === 2 ? 0 : progress(time, 26.7 + index * .12, .9);
+        let woodX = 1, woodY = 1, woodOpacity = 1, groundOpacity = 1;
+        if (phase === 'heights') {
+          const p = progress(time, 34.2 + (index === 2 ? .15 : 0), 1.35);
+          x = mix(x, config.x, p); y = mix(y, 810, p); scale = mix(.72, .7, p);
+          opacity = index === 2 ? p : 1;
+          woodX = mix(1, .95, layout); woodY = mix(1, config.woodY, heightChange);
+        } else if (isForest) {
+          const seed = forestSeeds[index];
+          x = mix(config.x, Number(seed.dataset.anchorX), travel);
+          y = mix(810, Number(seed.dataset.anchorY), travel);
+          scale = mix(.7, Number(seed.dataset.crownRadius) / 255, travel);
+          opacity = 1 - progress(time, forestAt + 1.65, .6);
+          woodX = .95; woodY = mix(config.woodY, .12, progress(time, forestAt + .5, 1.1));
+          woodOpacity = 1 - progress(time, forestAt + .5, 1.1);
+          groundOpacity = 1 - progress(time, forestAt, .45);
+        }
+        item.position.setAttribute('transform', `translate(${x} ${y}) scale(${scale})`);
+        alpha(item.position, opacity); alpha(item.root, 1);
+        item.wood.setAttribute('transform', `scale(${woodX} ${woodY})`);
+        alpha(item.wood, woodOpacity); alpha(item.ground, groundOpacity);
+        if (opacity < .0001) return;
+        item.leaves.forEach((el, i) => {
+          const sample = samples[i];
+          let lx = sample.top.x, ly = sample.top.y;
+          if (isComparison && index === 1) {
+            const p = progress(time, 29.35 + (reduced ? 0 : i % 7 * .025), 1.8);
+            lx = mix(lx, sample.distributed.x, p); ly = mix(ly, sample.distributed.y, p);
+          } else if (phase === 'heights') {
+            const from = index === 0 ? sample.top : sample.distributed;
+            const p0 = progress(time, 34.2 + (reduced ? 0 : i % 7 * .02), 1.35);
+            const p1 = progress(time, 37.1 + (reduced ? 0 : i % 7 * .025), 2.1);
+            lx = mix(from.x, mediumPositions[i].x, p0);
+            ly = mix(from.y, mediumPositions[i].y, p0) + (config.positions[i].y - mediumPositions[i].y) * p1;
+          } else if (isForest) {
+            const p = progress(time, forestAt, 1.9);
+            lx = config.positions[i].x;
+            ly = mix(config.positions[i].y, -140 + (sample.top.y + 505) / 112 * 220, p);
+          }
+          el.setAttribute('transform', `translate(${lx} ${ly}) rotate(${sample.rotation}) scale(${sample.size})`);
+        });
+      });
+      profiles.forEach((item, index) => {
+        alpha(item.group, isComparison ? progress(time, 27.5, .65) : phase === 'heights' ? 1 - progress(time, 34.2, .45) : 0);
+        item.bars.forEach((bar, bin) => bar.setAttribute('width',
+          mix(topWeights[bin], index ? distributedWeights[bin] : topWeights[bin], redistribution) / maxWeight * 118));
+      });
+      sizeProfiles.forEach((item, index) => {
+        alpha(item.group, isComparison ? 0 : isForest ? 1 - progress(time, forestAt, .45) : progress(time, 35.4 + index * .1, .6));
+        item.bars.forEach((bar, bin) => bar.setAttribute('width',
+          mix(initialSizeWeights[bin], finalSizeWeights[index][bin], heightChange) / sizeProfileMax * 104));
+      });
+    };
     return {
       sync(time) {
-        const topic = Math.max(0, reasonTimes.filter(at => time >= at).length - 1);
-        document.querySelector('#foliageImportanceSlide').dataset.topic = topic;
+        document.querySelector('#foliageImportanceSlide').dataset.topic = Math.max(0, reasonTimes.filter(at => time >= at).length - 1);
         document.querySelector('#foliageArrangementSlide').dataset.arrangement = time < 29.35 ? 'equal' : time < 31.4 ? 'redistributing' : 'distributed';
         document.querySelector('#foliageSizeSlide').dataset.sizePhase = time < 37.1 ? 'equal' : time < 39.4 ? 'reshaping' : 'different';
+        render(time);
       },
     };
   };

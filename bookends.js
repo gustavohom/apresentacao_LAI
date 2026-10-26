@@ -98,6 +98,13 @@
 
     const foliageIntro = window.addFoliageIntro(tl);
     enter('#researchContributionSlide', 42.2, { y: 0 }, .7);
+    enter('#researchContributionSlide h2', 42.3, { y: 18 }, .7);
+    tl.fromTo('.researchHeadingRule', { scaleX: 0, transformOrigin: '0% 50%' },
+      { scaleX: 1, duration: reduced ? .1 : .8, ease: 'power2.out' }, 42.55);
+    enter('.researchBenefit', 42.65, { y: 24, x: 14 }, .65, .2);
+    enter('.benefitNumber', 42.8, { scale: .6, y: 0 }, .6, .2);
+    tl.fromTo('.researchLeafMark', { autoAlpha: 0, scale: .35, rotation: -22, transformOrigin: '20% 85%' },
+      { autoAlpha: 1, scale: 1, rotation: 0, duration: reduced ? .1 : 1.15, ease: 'power3.out' }, 42.4);
     tl.to('#researchContributionSlide', { autoAlpha: 0, duration: .8 }, introDuration - .8);
 
     const closingAt = introDuration + 417;
@@ -175,9 +182,40 @@
     });
     wind.to({}, { duration: .2 }, 8.5);
 
+    const introCaption = document.querySelector('#presentationCaption');
+    const importanceCaptions = [
+      'Folhas captam luz e assimilam carbono.',
+      'A área foliar participa da produtividade florestal.',
+      'As folhas participam das trocas de água.',
+      'O dossel influencia o microclima.',
+      'A área foliar responde às condições ambientais.',
+    ];
+    const captionFor = (scene, time) => {
+      if (scene === 'coverSlide') return 'Variação espacial do LAI na Amazônia brasileira.';
+      if (scene === 'peopleSlide') {
+        if (time < 4.4) return 'Apresentação da equipe.';
+        if (time < 5.7) return 'Gustavo Mourão, doutorando.';
+        if (time < 7) return 'Eric Gorgens, orientador.';
+        return 'Josiane Bruzinga, professora da disciplina.';
+      }
+      if (scene === 'scopeSlide') return 'Variação espacial do LAI e fatores ambientais associados.';
+      if (scene === 'researchContributionSlide') return 'Caracterizar as florestas e gerar informações para novas análises.';
+      if (scene === 'foliageImportanceSlide') {
+        const index = [20.3, 21.6, 22.9, 24.2].filter(at => time >= at).length;
+        return importanceCaptions[index];
+      }
+      if (scene === 'foliageArrangementSlide') return 'O mesmo LAI pode ter diferentes perfis de LAD.';
+      if (scene === 'foliageSizeSlide') return 'A altura e a distribuição vertical das folhas variam.';
+      return '';
+    };
     let active = '';
     window.syncPresentationBookends = (time) => {
       const next = time < 3.2 ? 'coverSlide' : time < 10.2 ? 'peopleSlide' : time < 17.2 ? 'scopeSlide' : time < 26 ? 'foliageImportanceSlide' : time < 34.2 ? 'foliageArrangementSlide' : time < 42.2 ? 'foliageSizeSlide' : time < introDuration ? 'researchContributionSlide' : time >= farewellAt ? 'farewellSlide' : time >= closingAt ? 'closingSlide' : '';
+      if (next) {
+        const caption = captionFor(next, time);
+        if (introCaption.textContent !== caption) introCaption.textContent = caption;
+        introCaption.hidden = !caption;
+      }
       foliageIntro.sync(time);
       peopleClock.sync(next === 'peopleSlide' && time >= 7.9);
       if (next === active) return;

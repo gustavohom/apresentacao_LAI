@@ -1,6 +1,6 @@
 /* Navegação direta pelos slides, sem avançar a apresentação ao abrir o painel. */
 (() => {
-  const titles = [
+  const sourceTitles = [
     'Título do artigo', 'Apresentação e equipe', 'Recorte: Índice de Área Foliar',
     'Propósito e contribuições da pesquisa',
     'Índices Foliares', 'Área de solo', 'Área das folhas', 'Cálculo do LAI',
@@ -20,10 +20,16 @@
     'Camadas da Amazônia', 'Predição com Random Forest', 'Mapa contínuo de LAI',
     'Mapa e legenda', 'Valores de LAI nos pontos', 'Obrigado! Dúvidas?', 'Até a próxima!',
   ];
-  // O resumo de LAI e LAD antecede a explicação detalhada dos dois índices.
-  titles.splice(5, 0, titles.splice(16, 1)[0]);
-  titles.splice(3, 0, 'Por que estudar o LAI?', 'Mesmo LAI, diferentes distribuições de LAD');
-  titles.splice(5, 0, 'Mesmo LAI, diferentes alturas');
+  sourceTitles[51] = 'Por que estudar o LAI?';
+  sourceTitles[52] = 'Mesmo LAI, diferentes distribuições de LAD';
+  sourceTitles[53] = 'Mesmo LAI, diferentes alturas';
+  // Duas árvores, depois três alturas, antes do transecto.
+  const sceneOrder = [1, 2, 3, 4, 52, 5, 17,
+    ...Array.from({ length: 11 }, (_, i) => i + 6),
+    ...Array.from({ length: 7 }, (_, i) => i + 18),
+    53, 54, ...Array.from({ length: 27 }, (_, i) => i + 25)];
+  window.PRESENTATION_SLIDES = sceneOrder.map(scene => ({ scene, title: sourceTitles[scene - 1] }));
+  const titles = window.PRESENTATION_SLIDES.map(item => item.title);
 
   window.createSlideOverview = ({ totalSlides, getCurrentSlide, pause, resume, select }) => {
     const dialog = document.querySelector('#slideOverview');
@@ -76,7 +82,7 @@
       const theme = document.body.classList.contains('projector') ? 'light' : 'original';
       const current = getCurrentSlide();
       cards.forEach(card => {
-        card.image.src = `assets/slides/${theme}/${String(card.slide).padStart(2, '0')}.webp?v=20261026-perfis-final`;
+        card.image.src = `assets/slides/${theme}/${String(card.slide).padStart(2, '0')}.webp?v=20261026-auditorio-restaurado`;
         card.button.classList.toggle('is-current', card.slide === current);
         if (card.slide === current) card.button.setAttribute('aria-current', 'page');
         else card.button.removeAttribute('aria-current');

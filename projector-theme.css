@@ -54,15 +54,6 @@ body.projector:not(.beam-focus) .rfSub b, body.projector:not(.beam-focus) .rfEng
 body.projector:not(.beam-focus) .rfEngine { background: #fff; border-color: #bdcdb5; }
 body.projector:not(.beam-focus) .rfEngine p { font-weight: 400; opacity: 1; }
 
-body.projector:not(.beam-focus) .caption {
-  color: #233c2c; background: rgba(255, 255, 255, .97);
-  border: .1cqw solid #d4e0cf; box-shadow: 0 .2cqw .65cqw #233c2c10;
-  backdrop-filter: none; text-shadow: none;
-}
-body.projector:not(.beam-focus) .caption b, body.projector:not(.beam-focus) .caption em { color: #8b611b; }
-body.projector:not(.beam-focus) .caption b[style*="#38d9a9"] { color: #24744f !important; }
-body.projector:not(.beam-focus) .caption b[style*="#ff5c6c"] { color: #b2324c !important; }
-
 /* A paisagem acompanha o sol; os slides de dados mantêm o fundo neutro. */
 body.projector:not(.beam-focus) #skyBackground { fill: #f1f6f2; }
 body.projector:not(.beam-focus) #stage[data-scenery="day"] #skyBackground { fill: url(#sky); }
@@ -210,3 +201,7 @@ body.projector.beam-focus #beamLabels > text:first-child { transform: translateY
 
 /* Os retornos do levantamento pelo avião seguem a mesma cor da nuvem de pontos do drone. */
 body.projector:not(.beam-focus) #transectPts circle { fill: #0065a8; stroke: #fff; stroke-width: 1.4; paint-order: stroke fill; }
+
+/* As medidas ficam legíveis sobre a laje de floresta em ambos os temas. */
+#scene #transectDims text { fill: #ffe080; stroke: #17331f; stroke-width: 5px; paint-order: stroke fill; stroke-linejoin: round; font-weight: 700; }
+body.projector:not(.beam-focus) #scene #transectDims text { fill: #fff7d0 !important; stroke: #233b22 !important; }

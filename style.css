@@ -191,24 +191,23 @@ html, body {
 .sum p { font-size: 1.95cqw; line-height: 1.4; font-weight: 300; }
 .sum p b { font-weight: 600; color: #ffd76e; }
 
-/* Legendas (com opção de ocultar) */
+/* Legendas opcionais: a mesma caixa, tipografia e posição em toda a apresentação. */
 #captions {
-  position: absolute; left: 8%; right: 8%; bottom: 4.5%; height: 7.5cqw;
-  transition: opacity .3s ease;
+  position: absolute; left: 6%; right: 6%; bottom: 4.5%; height: auto;
+  z-index: 11; pointer-events: none;
 }
-body.no-captions #captions { opacity: 0 !important; pointer-events: none; }
-
-.caption {
+body.no-captions #captions { display: none; }
+#captions .caption {
   position: absolute; left: 0; right: 0; bottom: 0;
-  text-align: center; font-size: 2.15cqw; line-height: 1.35; font-weight: 400;
-  background: rgba(5, 13, 22, .68);
-  backdrop-filter: blur(6px);
-  padding: .7cqw 1.8cqw;
-  border-radius: .9cqw;
   width: fit-content; max-width: 100%; margin: 0 auto;
-  text-shadow: 0 .15cqw .8cqw rgba(0, 0, 0, .85);
+  padding: .7cqw 1.8cqw; border-radius: .8cqw;
+  border: 1px solid #ffffff30;
+  background: rgba(7, 20, 27, .94); color: #fdf8ec;
+  text-align: center; font: 400 2.2cqw/1.3 'Outfit', sans-serif;
+  text-shadow: none; backdrop-filter: none;
 }
-.caption b, .caption em { font-weight: 600; color: #ffd76e; font-style: normal; }
+#captions .caption[hidden] { display: none; }
+#captions .caption b, #captions .caption em { font-weight: 600; color: #ffd76e !important; font-style: normal; }
 
 /* ---------- Controles ---------- */
 #ui {
@@ -275,6 +274,13 @@ body.no-captions #captions { opacity: 0 !important; pointer-events: none; }
   position: absolute; inset: 0; z-index: 4;
   overflow: hidden; text-shadow: none; background: #fff; color: #151715;
 }
+.bookend:not(.is-active) { opacity: 0 !important; visibility: hidden !important; }
+/* O fundo da cena ativa permanece opaco durante as entradas dos seus elementos. */
+.bookend.is-active { opacity: 1 !important; visibility: visible !important; }
+#stage[data-scene="bookend"] #overlay > :not(.bookend):not(#captions):not(#slideNum):not(#hint) { opacity: 0 !important; visibility: hidden !important; }
+#stage[data-scene="bookend"] > :is(.vignette, .grain) { visibility: hidden; }
+#stage[data-scene="science"] .bookend { opacity: 0 !important; visibility: hidden !important; }
+#stage.light-slide { background: #fff; }
 #coverSlide { background: #fff; }
 #coverBirdPerch { display: inline-block; font: inherit; }
 .bookendBirdScene { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 3; pointer-events: none; }
@@ -301,6 +307,7 @@ body.no-captions #captions { opacity: 0 !important; pointer-events: none; }
   position: absolute; top: 31%; left: 4%; right: 4%; bottom: 5%;
   display: grid; grid-template-columns: repeat(3, 1fr); gap: 2.3cqw;
 }
+body:not(.no-captions) .people { top: 29.5%; }
 .person { margin: 0; text-align: center; position: relative; }
 .avatarStage { position: relative; height: 22.5cqw; margin: 0 auto .65cqw; }
 .avatarFloat {
@@ -336,15 +343,16 @@ body.no-captions #captions { opacity: 0 !important; pointer-events: none; }
 #scopeSlide.is-active #scopeTreeLeafCloud { animation: crownBreeze 5s ease-in-out infinite alternate; }
 @keyframes crownBreeze { from { transform: rotate(-.7deg); } to { transform: rotate(.7deg); } }
 
-.researchIntro { padding: 6.2% 7% 4%; background: linear-gradient(125deg, #fff 55%, #f0f5e9); }
-.researchIntro h2 { color: #1c3728; font: 600 4.2cqw/1.08 'Fraunces', serif; letter-spacing: -.025em; }
+.researchIntro { padding: 5.8% 7% 4%; background: #fff; }
+.researchIntro h2 { color: #1c3728; font: 600 4.7cqw/1.08 'Fraunces', serif; letter-spacing: -.025em; }
 .researchLeafMark { position: absolute; right: 6.5%; top: 6.5%; width: 8cqw; height: 6cqw; }
-.researchHeadingRule { width: 6cqw; height: .2cqw; background: #9bb57c; margin: 1.55cqw 0 2.4cqw; }
-.researchBenefits { display: grid; gap: 1.3cqw; }
-.researchBenefit { display: grid; grid-template-columns: 4.5cqw 1fr; align-items: center; gap: 1.7cqw; padding: 1.25cqw 1.8cqw; border-radius: 1cqw; background: #ffffffed; border: 1px solid #d8e3cf; border-left: .3cqw solid #92ad73; box-shadow: 0 .25cqw 1cqw #38582b06; }
-.benefitNumber { width: 3.9cqw; height: 3.9cqw; border-radius: 50%; background: #557a46; color: #fff; display: grid; place-items: center; font: 600 1.45cqw 'Outfit', sans-serif; }
-.researchBenefit p { color: #3c5142; font: 400 2cqw/1.4 'Outfit', sans-serif; }
-.researchBenefit strong { color: #315a30; font-weight: 600; }
+.researchHeadingRule { width: 6cqw; height: .2cqw; background: #9bb57c; margin: 1.55cqw 0 1.8cqw; }
+.researchBenefits { display: grid; gap: .25cqw; }
+.researchBenefit { display: grid; grid-template-columns: 6.2cqw 1fr; align-items: start; gap: 1.7cqw; padding: 1.25cqw 0 1.25cqw; border-bottom: 1px solid #dce6d7; }
+.researchBenefit:last-child { border-bottom: 0; }
+.benefitNumber { color: #91ab78; font: 500 4cqw/1.1 'Fraunces', serif; padding-top: .15cqw; }
+.researchBenefit p { color: #304b38; font: 400 2.65cqw/1.22 'Outfit', sans-serif; }
+.researchBenefit strong { color: #35642f; font-weight: 600; }
 
 #closingSlide { background: #f5f7f0; }
 #closingForest { position: absolute; inset: 0; width: 100%; height: 100%; }
@@ -388,3 +396,9 @@ body:has(#stage.light-slide) { background: #fff; }
 @media (prefers-reduced-motion: reduce) {
   .bookend *, .bookend.is-active * { animation: none !important; }
 }
+
+/* Movimento discreto no propósito, entre as entradas comandadas pela apresentação. */
+.researchIntro.is-active .researchLeafMark { animation: researchLeafBreeze 6.5s ease-in-out infinite alternate; }
+
+@keyframes researchLeafBreeze { from { translate: 0 0; } to { translate: 0 -.5cqw; } }
+@media (prefers-reduced-motion: reduce) { .researchIntro.is-active .researchLeafMark { animation: none; } }
