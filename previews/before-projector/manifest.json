@@ -1,0 +1,378 @@
+[
+  {
+    "step": 0,
+    "headings": [
+      "Variação espacial e fatores ambientais\nassociados à altura média do dossel\ne ao índice de área foliar\nna Amazônia brasileira"
+    ],
+    "slide": 1
+  },
+  {
+    "step": 1,
+    "headings": [
+      "Variação espacial e fatores ambientais associados à altura média do dossel e ao índice de área foliar na Amazônia brasileira"
+    ],
+    "slide": 2
+  },
+  {
+    "step": 2,
+    "headings": [
+      "Variação espacial e fatores ambientais associados à altura média do dossel e ao índice de área foliar na Amazônia brasileira",
+      "Gustavo Henrique de\nOliveira Mourão"
+    ],
+    "slide": 2
+  },
+  {
+    "step": 3,
+    "headings": [
+      "Variação espacial e fatores ambientais associados à altura média do dossel e ao índice de área foliar na Amazônia brasileira",
+      "Gustavo Henrique de\nOliveira Mourão",
+      "Eric Bastos\nGorgens"
+    ],
+    "slide": 2
+  },
+  {
+    "step": 4,
+    "headings": [
+      "Variação espacial e fatores ambientais associados à altura média do dossel e ao índice de área foliar na Amazônia brasileira",
+      "Gustavo Henrique de\nOliveira Mourão",
+      "Eric Bastos\nGorgens",
+      "Josiane Silva\nCosta Bruzinga"
+    ],
+    "slide": 2
+  },
+  {
+    "step": 5,
+    "headings": [
+      "Índice de\nÁrea Foliar LAI"
+    ],
+    "slide": 3
+  },
+  {
+    "step": 6,
+    "headings": [
+      "Índices Foliares"
+    ],
+    "slide": 4
+  },
+  {
+    "step": 7,
+    "headings": [
+      "Índice de Área Foliar LAI"
+    ],
+    "slide": 5
+  },
+  {
+    "step": 8,
+    "headings": [
+      "Índice de Área Foliar LAI"
+    ],
+    "slide": 6
+  },
+  {
+    "step": 9,
+    "headings": [
+      "Índice de Área Foliar LAI"
+    ],
+    "slide": 7
+  },
+  {
+    "step": 10,
+    "headings": [
+      "Índice de Área Foliar LAI",
+      "LAI = 5 m²/m²"
+    ],
+    "slide": 8
+  },
+  {
+    "step": 11,
+    "headings": [
+      "Índice de Densidade Foliar LAD"
+    ],
+    "slide": 9
+  },
+  {
+    "step": 12,
+    "headings": [
+      "Índice de Densidade Foliar LAD"
+    ],
+    "slide": 10
+  },
+  {
+    "step": 12,
+    "headings": [
+      "Índice de Densidade Foliar LAD"
+    ],
+    "slide": 11
+  },
+  {
+    "step": 12,
+    "headings": [
+      "Índice de Densidade Foliar LAD",
+      "LAD = 2 m²/m³"
+    ],
+    "slide": 12
+  },
+  {
+    "step": 12,
+    "headings": [
+      "Como LAI e LAD se conectam"
+    ],
+    "slide": 13
+  },
+  {
+    "step": 12,
+    "headings": [
+      "Como LAI e LAD se conectam"
+    ],
+    "slide": 14
+  },
+  {
+    "step": 12,
+    "headings": [
+      "Como LAI e LAD se conectam",
+      "Regra prática"
+    ],
+    "slide": 15
+  },
+  {
+    "step": 12,
+    "headings": [],
+    "slide": 16
+  },
+  {
+    "step": 12,
+    "headings": [
+      "Lei de Beer-Lambert"
+    ],
+    "slide": 17
+  },
+  {
+    "step": 12,
+    "headings": [
+      "Lei de Beer-Lambert"
+    ],
+    "slide": 18
+  },
+  {
+    "step": 12,
+    "headings": [
+      "Lei de Beer-Lambert",
+      "O coeficiente k"
+    ],
+    "slide": 19
+  },
+  {
+    "step": 12,
+    "headings": [
+      "Medindo com LiDAR"
+    ],
+    "slide": 20
+  },
+  {
+    "step": 12,
+    "headings": [
+      "Medindo com LiDAR"
+    ],
+    "slide": 21
+  },
+  {
+    "step": 12,
+    "headings": [
+      "Medindo com LiDAR"
+    ],
+    "slide": 22
+  },
+  {
+    "step": 12,
+    "headings": [
+      "Medindo com LiDAR",
+      "Perfil vertical (LAD × 0,5 m)"
+    ],
+    "slide": 23
+  },
+  {
+    "step": 12,
+    "headings": [
+      "Da árvore ao transecto",
+      "Transectos LiDAR do Projeto EBA"
+    ],
+    "slide": 24
+  },
+  {
+    "step": 12,
+    "headings": [
+      "Da árvore ao transecto",
+      "De transecto para ponto"
+    ],
+    "slide": 25
+  },
+  {
+    "step": 12,
+    "headings": [
+      "Amostragem no Bioma Amazônia",
+      "1 pontos amostrais"
+    ],
+    "slide": 26
+  },
+  {
+    "step": 12,
+    "headings": [
+      "16 Variáveis Ambientais"
+    ],
+    "slide": 27
+  },
+  {
+    "step": 12,
+    "headings": [
+      "16 Variáveis Ambientais",
+      "Variáveis Ambientais → Variáveis Preditoras"
+    ],
+    "slide": 28
+  },
+  {
+    "step": 12,
+    "headings": [
+      "16 Variáveis Ambientais",
+      "Extração no ponto do transecto"
+    ],
+    "slide": 29
+  },
+  {
+    "step": 12,
+    "headings": [
+      "16 Variáveis Ambientais",
+      "Extração nos 742 transectos"
+    ],
+    "slide": 30
+  },
+  {
+    "step": 12,
+    "headings": [
+      "Random Forest"
+    ],
+    "slide": 31
+  },
+  {
+    "step": 12,
+    "headings": [
+      "Random Forest"
+    ],
+    "slide": 32
+  },
+  {
+    "step": 12,
+    "headings": [
+      "Variáveis Mais Importantes"
+    ],
+    "slide": 33
+  },
+  {
+    "step": 12,
+    "headings": [
+      "Valores Observados de LAI"
+    ],
+    "slide": 34
+  },
+  {
+    "step": 12,
+    "headings": [
+      "Desempenho do Modelo"
+    ],
+    "slide": 35
+  },
+  {
+    "step": 12,
+    "headings": [
+      "SHAP (SHapley Additive exPlanations)"
+    ],
+    "slide": 36
+  },
+  {
+    "step": 12,
+    "headings": [
+      "Contribuição de Cada Variável no LAI"
+    ],
+    "slide": 37
+  },
+  {
+    "step": 12,
+    "headings": [
+      "Precipitação Anual"
+    ],
+    "slide": 38
+  },
+  {
+    "step": 12,
+    "headings": [
+      "Efeito das 16 Variáveis no LAI"
+    ],
+    "slide": 39
+  },
+  {
+    "step": 12,
+    "headings": [
+      "Efeito das 16 Variáveis no LAI"
+    ],
+    "slide": 40
+  },
+  {
+    "step": 12,
+    "headings": [
+      "Efeito das 16 Variáveis no LAI"
+    ],
+    "slide": 41
+  },
+  {
+    "step": 12,
+    "headings": [
+      "Efeito das 16 Variáveis no LAI"
+    ],
+    "slide": 42
+  },
+  {
+    "step": 12,
+    "headings": [
+      "Predição para Toda a Amazônia"
+    ],
+    "slide": 43
+  },
+  {
+    "step": 12,
+    "headings": [
+      "Predição para Toda a Amazônia"
+    ],
+    "slide": 44
+  },
+  {
+    "step": 12,
+    "headings": [
+      "Predição para Toda a Amazônia"
+    ],
+    "slide": 45
+  },
+  {
+    "step": 12,
+    "headings": [
+      "Mapa de LAI da Amazônia",
+      "Mapa contínuo de LAI"
+    ],
+    "slide": 46
+  },
+  {
+    "step": 12,
+    "headings": [],
+    "slide": 47
+  },
+  {
+    "step": 12,
+    "headings": [],
+    "slide": 48
+  },
+  {
+    "step": 12,
+    "headings": [
+      "Obrigado!"
+    ],
+    "slide": 48
+  }
+]

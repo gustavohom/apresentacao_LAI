@@ -1,0 +1,74 @@
+[
+  {
+    "test": "Reinício do slide 48, claro",
+    "cover": "1",
+    "opacity": "0",
+    "scene": "bookend",
+    "slide": "1",
+    "theme": "claro"
+  },
+  {
+    "test": "Recarga, claro",
+    "cover": "1",
+    "opacity": "0",
+    "scene": "bookend",
+    "slide": "1",
+    "theme": "claro"
+  },
+  {
+    "test": "Reinício do mapa, original",
+    "cover": "1",
+    "opacity": "0",
+    "scene": "bookend",
+    "slide": "1",
+    "theme": "original"
+  },
+  {
+    "test": "Recarga, original",
+    "cover": "1",
+    "opacity": "0",
+    "scene": "bookend",
+    "slide": "1",
+    "theme": "original"
+  },
+  {
+    "test": "Voltar da sequência científica para o recorte",
+    "cover": "0",
+    "opacity": "0",
+    "scene": "bookend",
+    "slide": "3",
+    "theme": "original"
+  },
+  {
+    "test": "Sequência científica, original",
+    "cover": "0",
+    "opacity": "1",
+    "scene": "science",
+    "slide": "13",
+    "theme": "original"
+  },
+  {
+    "test": "Mapa de dados sem paisagem",
+    "cover": "0",
+    "opacity": "1",
+    "scene": "science",
+    "slide": "26",
+    "theme": "claro"
+  },
+  {
+    "test": "Encerramento",
+    "cover": "0",
+    "opacity": "0",
+    "scene": "bookend",
+    "slide": "49",
+    "theme": "claro"
+  },
+  {
+    "test": "Retorno à paisagem, claro",
+    "cover": "0",
+    "opacity": "1",
+    "scene": "science",
+    "slide": "13",
+    "theme": "claro"
+  }
+]

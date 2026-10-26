@@ -1,0 +1,54 @@
+/* Os slides de introdução herdam a tipografia e as cores da apresentação. */
+.bookend.foliageIntro {
+  --intro-ink: #fdf8ec; --intro-muted: #c4d3cf; --intro-green: #a4d878;
+  --intro-line: #608776; --intro-gold: #ffd76e;
+  color: var(--intro-ink);
+  background: radial-gradient(ellipse at 19% 65%, #254f47 0, transparent 48%), linear-gradient(125deg, #0b2133, #173c44);
+}
+body.projector .bookend.foliageIntro {
+  --intro-ink: #203c2c; --intro-muted: #4a6154; --intro-green: #387344;
+  --intro-line: #8aa38a; --intro-gold: #90651c;
+  background: radial-gradient(ellipse at 18% 70%, #e6f0dc 0, transparent 48%), linear-gradient(125deg, #f5fbfd, #f5f8ef);
+}
+.foliageHeader { position: absolute; top: 6.7%; left: 6%; right: 6%; z-index: 2; }
+.foliageEyebrow { font: 600 1.35cqw/1.1 'Outfit', sans-serif; text-transform: uppercase; letter-spacing: .2em; color: var(--intro-gold); margin-bottom: 1.05cqw; }
+.foliageHeader h2 { font: 600 4.35cqw/1.08 'Fraunces', serif; letter-spacing: -.025em; color: var(--intro-ink); }
+.foliageHeader h2 em { color: var(--intro-green); font-weight: 600; }
+.foliageSubhead { font: 400 1.9cqw/1.3 'Outfit', sans-serif; color: var(--intro-muted); margin-top: 1.2cqw; }
+#importanceTreeDiagram, #arrangementDiagram, #sizeDiagram { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.introTreeGround { fill: #87b16c22; stroke: var(--intro-line); stroke-width: 2; stroke-dasharray: none; }
+.introTreeCrown { transform-origin: 0 -200px; }
+.foliageIntro.is-active .introTreeCrown { animation: introCrownBreeze 6s ease-in-out infinite alternate; }
+@keyframes introCrownBreeze { from { transform: rotate(-.35deg); } to { transform: rotate(.35deg); } }
+.importanceTreeNote { position: absolute; left: 5%; top: 80%; width: 36%; text-align: center; color: var(--intro-muted); font: 400 1.85cqw/1.35 'Outfit', sans-serif; }
+.foliageReasons { position: absolute; top: 26%; left: 46%; width: 48%; display: grid; gap: 1.3cqw; }
+.foliageReason { display: grid; grid-template-columns: 3.25cqw 1fr; gap: 1.15cqw; align-items: start; padding: .35cqw 0; }
+.foliageReasonNumber { font: 400 2.6cqw/1 'Fraunces', serif; color: var(--intro-line); padding-top: .15cqw; transition: color .4s; }
+.foliageReason h3 { font: 600 2.2cqw/1.14 'Outfit', sans-serif; color: var(--intro-ink); margin-bottom: .35cqw; }
+.foliageReason p { font: 400 1.68cqw/1.25 'Outfit', sans-serif; color: var(--intro-muted); }
+#foliageImportanceSlide[data-topic="0"] [data-reason="0"] .foliageReasonNumber,
+#foliageImportanceSlide[data-topic="1"] [data-reason="1"] .foliageReasonNumber,
+#foliageImportanceSlide[data-topic="2"] [data-reason="2"] .foliageReasonNumber,
+#foliageImportanceSlide[data-topic="3"] [data-reason="3"] .foliageReasonNumber,
+#foliageImportanceSlide[data-topic="4"] [data-reason="4"] .foliageReasonNumber { color: var(--intro-gold); }
+.foliageSource { position: absolute; left: 6%; right: 6%; bottom: 7.5%; color: var(--intro-muted); font: 400 .83cqw/1.2 'Outfit', sans-serif; opacity: .85; text-align: left; }
+#foliageArrangementSlide .foliageHeader h2 { font-size: 3.8cqw; }
+.arrangementLabel { position: absolute; top: 79.7%; width: 37%; text-align: center; font: 600 2cqw/1.2 'Outfit', sans-serif; color: var(--intro-green); }
+.arrangementLeft { left: 5.5%; }
+.arrangementRight { left: 49.5%; }
+.arrangementTakeaway { position: absolute; bottom: 12%; left: 6%; right: 6%; text-align: center; font: 400 1.9cqw/1.35 'Outfit', sans-serif; color: var(--intro-muted); }
+.arrangementTakeaway br { display: none; }
+.arrangementTakeaway strong { color: var(--intro-ink); font-weight: 600; margin-left: .5cqw; }
+.introProfileTitle { font: 600 31px 'Outfit', sans-serif; fill: var(--intro-green); }
+.introProfileAxis { stroke: var(--intro-line); stroke-width: 2; }
+.introProfileBar { fill: var(--intro-green); opacity: .9; }
+.introSoilLabel { font: 400 27px 'Outfit', sans-serif; fill: var(--intro-muted); }
+#foliageSizeSlide .foliageHeader h2 { font-size: 4cqw; }
+#foliageSizeSlide .foliageSubhead { font-size: 1.85cqw; }
+.sizeLabel { position: absolute; top: 80%; width: 30%; text-align: center; font: 600 2cqw/1.2 'Outfit', sans-serif; color: var(--intro-green); }
+.sizeLow { left: 2.2%; }
+.sizeTall { left: 35%; }
+.sizeMiddle { left: 67.8%; }
+.sizeTakeaway { position: absolute; bottom: 12%; left: 6%; right: 6%; text-align: center; font: 400 2cqw/1.25 'Outfit', sans-serif; color: var(--intro-muted); }
+.sizeTakeaway strong { color: var(--intro-ink); font-weight: 600; }
+@media (prefers-reduced-motion: reduce) { .foliageIntro.is-active .introTreeCrown { animation: none; } }

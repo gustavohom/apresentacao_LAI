@@ -1,0 +1,498 @@
+[
+  {
+    "headings": [
+      "Variação espacial e fatores ambientais\nassociados à altura média do dossel\ne ao índice de área foliar\nna Amazônia brasileira"
+    ],
+    "slide": 1
+  },
+  {
+    "headings": [
+      "Variação espacial e fatores ambientais associados à altura média do dossel e ao índice de área foliar na Amazônia brasileira"
+    ],
+    "slide": 2
+  },
+  {
+    "headings": [
+      "Variação espacial e fatores ambientais associados à altura média do dossel e ao índice de área foliar na Amazônia brasileira",
+      "Gustavo Henrique de\nOliveira Mourão"
+    ],
+    "slide": 2
+  },
+  {
+    "headings": [
+      "Variação espacial e fatores ambientais associados à altura média do dossel e ao índice de área foliar na Amazônia brasileira",
+      "Gustavo Henrique de\nOliveira Mourão",
+      "Eric Bastos\nGorgens"
+    ],
+    "slide": 2
+  },
+  {
+    "headings": [
+      "Variação espacial e fatores ambientais associados à altura média do dossel e ao índice de área foliar na Amazônia brasileira",
+      "Gustavo Henrique de\nOliveira Mourão",
+      "Eric Bastos\nGorgens",
+      "Josiane Silva\nCosta Bruzinga"
+    ],
+    "slide": 2
+  },
+  {
+    "headings": [
+      "Índice de\nÁrea Foliar LAI"
+    ],
+    "slide": 3
+  },
+  {
+    "headings": [
+      "Índices Foliares"
+    ],
+    "slide": 4
+  },
+  {
+    "headings": [
+      "Índice de Área Foliar LAI"
+    ],
+    "slide": 5
+  },
+  {
+    "headings": [
+      "Índice de Área Foliar LAI"
+    ],
+    "slide": 6
+  },
+  {
+    "headings": [
+      "Índice de Área Foliar LAI"
+    ],
+    "slide": 7
+  },
+  {
+    "headings": [
+      "Índice de Área Foliar LAI",
+      "LAI = 5 m²/m²"
+    ],
+    "slide": 8
+  },
+  {
+    "headings": [
+      "Índice de Densidade Foliar LAD"
+    ],
+    "slide": 9
+  },
+  {
+    "headings": [
+      "Índice de Densidade Foliar LAD"
+    ],
+    "slide": 10
+  },
+  {
+    "headings": [
+      "Índice de Densidade Foliar LAD"
+    ],
+    "slide": 11
+  },
+  {
+    "headings": [
+      "Índice de Densidade Foliar LAD",
+      "LAD = 2 m²/m³"
+    ],
+    "slide": 12
+  },
+  {
+    "headings": [
+      "Como LAI e LAD se conectam"
+    ],
+    "slide": 13
+  },
+  {
+    "headings": [
+      "Como LAI e LAD se conectam"
+    ],
+    "slide": 14
+  },
+  {
+    "headings": [
+      "Como LAI e LAD se conectam",
+      "Regra prática"
+    ],
+    "slide": 15
+  },
+  {
+    "headings": [],
+    "slide": 16
+  },
+  {
+    "headings": [
+      "Lei de Beer-Lambert"
+    ],
+    "slide": 17
+  },
+  {
+    "headings": [
+      "Lei de Beer-Lambert"
+    ],
+    "slide": 18
+  },
+  {
+    "headings": [
+      "Lei de Beer-Lambert",
+      "O coeficiente k"
+    ],
+    "slide": 19
+  },
+  {
+    "headings": [
+      "Medindo com LiDAR"
+    ],
+    "slide": 20
+  },
+  {
+    "headings": [
+      "Medindo com LiDAR"
+    ],
+    "slide": 21
+  },
+  {
+    "headings": [
+      "Medindo com LiDAR"
+    ],
+    "slide": 22
+  },
+  {
+    "headings": [
+      "Medindo com LiDAR",
+      "Perfil vertical (LAD × 0,5 m)"
+    ],
+    "slide": 23
+  },
+  {
+    "headings": [
+      "Da árvore ao transecto",
+      "Transectos LiDAR do Projeto EBA"
+    ],
+    "slide": 24
+  },
+  {
+    "headings": [
+      "Da árvore ao transecto",
+      "Transectos LiDAR do Projeto EBA"
+    ],
+    "slide": 24
+  },
+  {
+    "headings": [
+      "Da árvore ao transecto",
+      "De transecto para ponto"
+    ],
+    "slide": 25
+  },
+  {
+    "headings": [
+      "Amostragem no Bioma Amazônia",
+      "742 pontos amostrais"
+    ],
+    "slide": 26
+  },
+  {
+    "headings": [
+      "16 Variáveis Ambientais"
+    ],
+    "slide": 27
+  },
+  {
+    "headings": [
+      "16 Variáveis Ambientais",
+      "Variáveis Ambientais → Variáveis Preditoras"
+    ],
+    "slide": 28
+  },
+  {
+    "headings": [
+      "16 Variáveis Ambientais",
+      "Extração no ponto do transecto"
+    ],
+    "slide": 29
+  },
+  {
+    "headings": [
+      "16 Variáveis Ambientais",
+      "Extração nos 742 transectos"
+    ],
+    "slide": 30
+  },
+  {
+    "headings": [
+      "Random Forest"
+    ],
+    "slide": 31
+  },
+  {
+    "headings": [
+      "Random Forest"
+    ],
+    "slide": 32
+  },
+  {
+    "headings": [
+      "Variáveis Mais Importantes"
+    ],
+    "slide": 33
+  },
+  {
+    "headings": [
+      "Valores Observados de LAI"
+    ],
+    "slide": 34
+  },
+  {
+    "headings": [
+      "Desempenho do Modelo"
+    ],
+    "slide": 35
+  },
+  {
+    "headings": [
+      "SHAP (SHapley Additive exPlanations)"
+    ],
+    "slide": 36
+  },
+  {
+    "headings": [
+      "Contribuição de Cada Variável no LAI"
+    ],
+    "slide": 37
+  },
+  {
+    "headings": [
+      "Precipitação Anual"
+    ],
+    "slide": 38
+  },
+  {
+    "headings": [
+      "Efeito das 16 Variáveis no LAI"
+    ],
+    "slide": 39
+  },
+  {
+    "headings": [
+      "Efeito das 16 Variáveis no LAI"
+    ],
+    "slide": 40
+  },
+  {
+    "headings": [
+      "Efeito das 16 Variáveis no LAI"
+    ],
+    "slide": 41
+  },
+  {
+    "headings": [
+      "Efeito das 16 Variáveis no LAI"
+    ],
+    "slide": 42
+  },
+  {
+    "headings": [
+      "Predição para Toda a Amazônia"
+    ],
+    "slide": 43
+  },
+  {
+    "headings": [
+      "Predição para Toda a Amazônia"
+    ],
+    "slide": 44
+  },
+  {
+    "headings": [
+      "Predição para Toda a Amazônia"
+    ],
+    "slide": 45
+  },
+  {
+    "headings": [
+      "Mapa de LAI da Amazônia",
+      "Mapa contínuo de LAI"
+    ],
+    "slide": 46
+  },
+  {
+    "headings": [],
+    "slide": 47
+  },
+  {
+    "headings": [],
+    "slide": 48
+  },
+  {
+    "headings": [
+      "Obrigado!"
+    ],
+    "slide": 49
+  },
+  {
+    "headings": [
+      "Variação espacial e fatores ambientais\nassociados à altura média do dossel\ne ao índice de área foliar\nna Amazônia brasileira"
+    ],
+    "slide": 1
+  },
+  {
+    "headings": [
+      "Variação espacial e fatores ambientais associados à altura média do dossel e ao índice de área foliar na Amazônia brasileira"
+    ],
+    "slide": 2
+  },
+  {
+    "headings": [
+      "Variação espacial e fatores ambientais associados à altura média do dossel e ao índice de área foliar na Amazônia brasileira",
+      "Gustavo Henrique de\nOliveira Mourão"
+    ],
+    "slide": 2
+  },
+  {
+    "headings": [
+      "Variação espacial e fatores ambientais associados à altura média do dossel e ao índice de área foliar na Amazônia brasileira",
+      "Gustavo Henrique de\nOliveira Mourão",
+      "Eric Bastos\nGorgens"
+    ],
+    "slide": 2
+  },
+  {
+    "headings": [
+      "Variação espacial e fatores ambientais associados à altura média do dossel e ao índice de área foliar na Amazônia brasileira",
+      "Gustavo Henrique de\nOliveira Mourão",
+      "Eric Bastos\nGorgens",
+      "Josiane Silva\nCosta Bruzinga"
+    ],
+    "slide": 2
+  },
+  {
+    "headings": [
+      "Índice de\nÁrea Foliar LAI"
+    ],
+    "slide": 3
+  },
+  {
+    "headings": [
+      "Índices Foliares"
+    ],
+    "slide": 4
+  },
+  {
+    "headings": [
+      "Índice de Área Foliar LAI"
+    ],
+    "slide": 5
+  },
+  {
+    "headings": [
+      "Índice de Área Foliar LAI"
+    ],
+    "slide": 6
+  },
+  {
+    "headings": [
+      "Índice de Área Foliar LAI"
+    ],
+    "slide": 7
+  },
+  {
+    "headings": [
+      "Índice de Área Foliar LAI",
+      "LAI = 5 m²/m²"
+    ],
+    "slide": 8
+  },
+  {
+    "headings": [
+      "Índice de Densidade Foliar LAD"
+    ],
+    "slide": 9
+  },
+  {
+    "headings": [
+      "Índice de Densidade Foliar LAD"
+    ],
+    "slide": 10
+  },
+  {
+    "headings": [
+      "Índice de Densidade Foliar LAD"
+    ],
+    "slide": 11
+  },
+  {
+    "headings": [
+      "Índice de Densidade Foliar LAD",
+      "LAD = 2 m²/m³"
+    ],
+    "slide": 12
+  },
+  {
+    "headings": [
+      "Como LAI e LAD se conectam"
+    ],
+    "slide": 13
+  },
+  {
+    "headings": [
+      "Como LAI e LAD se conectam"
+    ],
+    "slide": 14
+  },
+  {
+    "headings": [
+      "Como LAI e LAD se conectam",
+      "Regra prática"
+    ],
+    "slide": 15
+  },
+  {
+    "headings": [],
+    "slide": 16
+  },
+  {
+    "headings": [
+      "Lei de Beer-Lambert"
+    ],
+    "slide": 17
+  },
+  {
+    "headings": [
+      "Lei de Beer-Lambert"
+    ],
+    "slide": 18
+  },
+  {
+    "headings": [
+      "Lei de Beer-Lambert",
+      "O coeficiente k"
+    ],
+    "slide": 19
+  },
+  {
+    "headings": [
+      "Medindo com LiDAR"
+    ],
+    "slide": 20
+  },
+  {
+    "headings": [
+      "Medindo com LiDAR"
+    ],
+    "slide": 21
+  },
+  {
+    "headings": [
+      "Medindo com LiDAR"
+    ],
+    "slide": 22
+  },
+  {
+    "headings": [
+      "Medindo com LiDAR",
+      "Perfil vertical (LAD × 0,5 m)"
+    ],
+    "slide": 23
+  }
+]

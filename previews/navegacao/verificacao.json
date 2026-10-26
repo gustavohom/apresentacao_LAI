@@ -1,0 +1,123 @@
+[
+  {
+    "test": "Sol aguardando clique",
+    "beamHeight": 0,
+    "crown": "0",
+    "droneX": 847.8280029296875,
+    "ground": "0",
+    "pausedHint": true,
+    "slide": "17",
+    "total": "0",
+    "visibleLaserLines": 0
+  },
+  {
+    "test": "Sol continua aguardando",
+    "beamHeight": 0,
+    "crown": "0",
+    "droneX": 853.423828125,
+    "ground": "0",
+    "pausedHint": true,
+    "slide": "17",
+    "total": "0",
+    "visibleLaserLines": 0
+  },
+  {
+    "test": "Feixe depois do clique",
+    "beamHeight": 74.0625,
+    "crown": "0",
+    "droneX": 849.1710205078125,
+    "ground": "0",
+    "pausedHint": true,
+    "slide": "17",
+    "total": "0",
+    "visibleLaserLines": 0
+  },
+  {
+    "test": "Drone aguardando clique",
+    "beamHeight": 0,
+    "crown": "0",
+    "droneX": 50.40858459472656,
+    "ground": "0",
+    "pausedHint": true,
+    "slide": "20",
+    "total": "0",
+    "visibleLaserLines": 0
+  },
+  {
+    "test": "Drone continua aguardando",
+    "beamHeight": 0,
+    "crown": "0",
+    "droneX": 48.84175109863281,
+    "ground": "0",
+    "pausedHint": true,
+    "slide": "20",
+    "total": "0",
+    "visibleLaserLines": 0
+  },
+  {
+    "test": "Varredura depois do clique",
+    "beamHeight": 0,
+    "crown": "92",
+    "droneX": 851.4093627929688,
+    "ground": "8",
+    "pausedHint": true,
+    "slide": "20",
+    "total": "100",
+    "visibleLaserLines": 0
+  },
+  {
+    "test": "Miniatura 17 abre antes do feixe",
+    "beamHeight": 0,
+    "crown": "0",
+    "droneX": 848.9471435546875,
+    "ground": "0",
+    "pausedHint": true,
+    "slide": "17",
+    "total": "0",
+    "visibleLaserLines": 0
+  },
+  {
+    "test": "Espaço aciona feixe após a miniatura",
+    "beamHeight": 74.0625,
+    "crown": "0",
+    "droneX": 853.2000122070312,
+    "ground": "0",
+    "pausedHint": true,
+    "slide": "17",
+    "total": "0",
+    "visibleLaserLines": 0
+  },
+  {
+    "test": "Miniatura 20 abre antes dos retornos, tema original",
+    "beamHeight": 0,
+    "crown": "0",
+    "droneX": 50.40858459472656,
+    "ground": "0",
+    "pausedHint": true,
+    "slide": "20",
+    "total": "0",
+    "visibleLaserLines": 0
+  },
+  {
+    "test": "Contagem final no tema original",
+    "beamHeight": 0,
+    "crown": "92",
+    "droneX": 858.3482055664062,
+    "ground": "8",
+    "pausedHint": true,
+    "slide": "20",
+    "total": "100",
+    "visibleLaserLines": 0
+  },
+  {
+    "test": "Navegação final abre o drone em espera, tema claro",
+    "beamHeight": 0,
+    "crown": "0",
+    "droneX": 55.5567512512207,
+    "ground": "0",
+    "pausedHint": true,
+    "slide": "20",
+    "total": "0",
+    "visibleLaserLines": 0
+  }
+]
