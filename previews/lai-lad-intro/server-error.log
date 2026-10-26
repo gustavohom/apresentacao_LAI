@@ -186,3 +186,14 @@
 127.0.0.1 - - [26/Oct/2026 13:38:28] "GET /bookends.js?v=3345d456de26 HTTP/1.1" 304 -
 127.0.0.1 - - [26/Oct/2026 13:38:28] "GET /slide-overview.js?v=590150505069 HTTP/1.1" 200 -
 127.0.0.1 - - [26/Oct/2026 13:38:28] "GET /main.js?v=5b30786be0e6 HTTP/1.1" 304 -
+127.0.0.1 - - [26/Oct/2026 13:44:01] "GET /?v=folhas-20261026 HTTP/1.1" 200 -
+127.0.0.1 - - [26/Oct/2026 13:44:02] "GET /foliage-intro.css?v=7a3719aab9d1 HTTP/1.1" 304 -
+127.0.0.1 - - [26/Oct/2026 13:44:02] "GET /foliage-intro.js?v=17bf16b2dddb HTTP/1.1" 200 -
+127.0.0.1 - - [26/Oct/2026 13:44:02] "GET /bookends.js?v=3345d456de26 HTTP/1.1" 304 -
+127.0.0.1 - - [26/Oct/2026 13:44:02] "GET /slide-overview.js?v=63226cf15d80 HTTP/1.1" 200 -
+127.0.0.1 - - [26/Oct/2026 13:44:02] "GET /main.js?v=5b30786be0e6 HTTP/1.1" 304 -
+127.0.0.1 - - [26/Oct/2026 13:46:07] "GET /?v=folhas-20261026 HTTP/1.1" 200 -
+127.0.0.1 - - [26/Oct/2026 13:46:07] "GET /slide-overview.js?v=e727b04e974a HTTP/1.1" 200 -
+127.0.0.1 - - [26/Oct/2026 13:46:07] "GET /foliage-intro.css?v=7a3719aab9d1 HTTP/1.1" 304 -
+127.0.0.1 - - [26/Oct/2026 13:46:07] "GET /foliage-intro.js?v=17bf16b2dddb HTTP/1.1" 304 -
+127.0.0.1 - - [26/Oct/2026 13:46:07] "GET /main.js?v=5b30786be0e6 HTTP/1.1" 304 -
