@@ -84,7 +84,7 @@
       gsap.to(root, { autoAlpha: 1, duration: reduced ? .1 : .65 });
       if (reduced) {
         symbols.forEach(element => gsap.set(element, { ...docks[element.dataset.symbol], autoAlpha: 1 }));
-        pose('victory');
+        pose('wave');
         interaction('all-symbols');
         return;
       }
@@ -108,7 +108,6 @@
         .to(motion, { rotation: 3, duration: .15, yoyo: true, repeat: 3, ease: 'sine.inOut' }, 5.95)
         .call(() => pose('shrug'), [], 6.65)
         .to(motion, { rotation: 0, yPercent: 0, duration: .3 }, 6.65)
-        .call(() => pose('grimace'), [], 7.35)
         .fromTo(motion, { rotation: -2 }, { rotation: 2, duration: .07, repeat: 5, yoyo: true, ease: 'sine.inOut', immediateRender: false }, 7.35)
         .call(() => pose('wave'), [], 8.1)
         .to(motion, { rotation: 0, duration: .3 }, 8.1)
@@ -155,7 +154,6 @@
         .to(props.r, { left: '50%', top: '29.4%', scale: .48, rotation: -5, duration: .5, ease: 'power2.in' }, 5.7)
         .to(motion, { scaleY: .965, duration: .12, yoyo: true, repeat: 1 }, 6.2)
         .to(props.r, { rotation: 9, duration: .16, yoyo: true, repeat: 3, ease: 'sine.inOut' }, 6.2)
-        .call(() => pose('grimace'), [], 6.3)
         .to(props.r, { ...homes.r, rotation: 0, scale: 1, duration: .85, ease: 'power2.inOut' }, 7.55)
 
         // O espirro afasta a dupla de IA, que se acomoda nas laterais.
@@ -225,6 +223,7 @@
       cycle.call(() => pose('duck'), [], 32.05)
         .to(props.zotero, { left: '57%', top: '33%', rotation: 100, duration: .55, ease: 'none' }, 32.2);
       park('zotero', 32.75);
+      cycle.call(() => pose('grimace'), [], 32.75);
       cycle.call(() => pose('balance'), [], 33.55);
       arrive('drive', { left: '18%', top: '65%', scale: .3 }, 33.55,
         { left: '39%', top: '48%', scale: .62 });
@@ -270,6 +269,7 @@
       park('lidr', 51.6); park('terra', 51.6);
       cycle.call(() => pose('shrug'), [], 51.6)
         .to(motion, { rotation: 0, duration: .3 }, 51.6)
+        .call(() => pose('grimace'), [], 52.4)
         .call(() => pose('victory'), [], 54);
 
       // Uma reverência e um coração acompanham os símbolos institucionais.
@@ -284,7 +284,7 @@
 
       // Os 24 ficam visíveis; só o personagem continua a se movimentar.
       cycle.call(() => interaction('all-symbols'), [], 65.5)
-        .call(() => pose('victory'), [], 65.5)
+        .call(() => pose('wave'), [], 65.5)
         .to(motion, { rotation: 1.4, duration: .5, repeat: 3, yoyo: true, ease: 'sine.inOut' }, 68.2)
         .to(motion, { rotation: 0, duration: .3 }, 70.2)
         .to(motion, { yPercent: -.35, duration: 2.4, repeat: -1, yoyo: true, ease: 'sine.inOut' }, 70.5);
