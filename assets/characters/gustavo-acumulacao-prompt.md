@@ -1,8 +1,8 @@
 # Poses novas para a despedida
 
-Arquivo: `gustavo-acumulacao.png`, PNG RGBA 1024 × 1536, criado com a ferramenta integrada imagegen a partir de `gustavo.png`. As quatro poses são malabarismo, carregar uma pilha, agarrar no alto e comemorar. Os recortes SVG em `index.html` preservam mãos e calçados, inclusive os dedos da pose de agarrar que ultrapassam a divisão horizontal da folha de poses.
+Arquivo: [gustavo-acumulacao.png](C:/Users/Linse/Downloads/josi/assets/characters/gustavo-acumulacao.png), PNG RGBA 1024 × 1536, criado com a ferramenta integrada imagegen a partir de `gustavo.png`. As quatro poses são malabarismo, carregar uma pilha, agarrar no alto e comemorar. Os recortes SVG em `index.html` preservam mãos e calçados, inclusive os dedos da pose de agarrar que ultrapassam a divisão horizontal da folha de poses.
 
-O slide final acumula os 23 símbolos e os conserva na tela. Não há reinício automático que esconda os logos. Sair e voltar ao slide recomeça a encenação.
+O slide final acumula os 24 símbolos e os conserva na tela. Não há reinício automático que esconda os logos. Sair e voltar ao slide recomeça a encenação.
 
 ## Prompt final
 
