@@ -1,0 +1,211 @@
+/* Tema de projeção: superfícies claras, tipografia escura e gráficos nítidos. */
+#ui #btnTheme {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 2.6cqw; min-width: 32px; padding: 0; border-radius: 50%;
+}
+#ui #btnTheme svg { width: 56%; height: 56%; }
+#ui #btnTheme:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
+body.projector:not(.beam-focus) { background: #f8faf6; color: #233c2c; }
+body.projector:not(.beam-focus) #stage { background: #f8faf6; }
+body.projector:not(.beam-focus) .vignette, body.projector:not(.beam-focus) .grain { display: none; }
+body.projector:not(.beam-focus) #overlay { text-shadow: none; }
+
+body.projector:not(.beam-focus) .svgHuge, body.projector:not(.beam-focus) .svgBig,
+body.projector:not(.beam-focus) .svgMid, body.projector:not(.beam-focus) .svgSmall { fill: #233c2c; }
+body.projector:not(.beam-focus) .svgUnit { opacity: 1; }
+body.projector:not(.beam-focus) .gold { fill: #8b611b; }
+body.projector:not(.beam-focus) .green { fill: #2e6a41; }
+body.projector:not(.beam-focus) .dark { fill: #173a25; }
+body.projector:not(.beam-focus) .zl { stroke: #8b611b; opacity: .9; }
+
+body.projector:not(.beam-focus) #title h1 { color: #203c2c; }
+body.projector:not(.beam-focus) #title h1 em { color: #547c37; font-weight: 600; }
+body.projector:not(.beam-focus) #title p { color: #425644; opacity: 1; font-weight: 600; letter-spacing: .15em; }
+body.projector:not(.beam-focus) .heading .num { color: #657346; letter-spacing: .18em; font-weight: 600; }
+body.projector:not(.beam-focus) .heading .ht { color: #203c2c; }
+body.projector:not(.beam-focus) .heading .abbr { color: #3d733e; }
+
+body.projector:not(.beam-focus) .callout {
+  background: rgba(255, 255, 255, .97); backdrop-filter: none;
+  border: .1cqw solid #d4e0cf; border-left: .35cqw solid #58834c;
+  border-radius: .65cqw; padding: 1.9cqw 2.2cqw;
+  box-shadow: 0 .3cqw 1cqw rgba(35, 60, 44, .08);
+}
+body.projector:not(.beam-focus) .callout.rightCard { border-left: .1cqw solid #d4e0cf; border-right: .35cqw solid #a77c2b; }
+body.projector:not(.beam-focus) .calloutTitle { color: #233c2c; }
+body.projector:not(.beam-focus) .calloutTitle b, body.projector:not(.beam-focus) .eq b,
+body.projector:not(.beam-focus) .bigNote b, body.projector:not(.beam-focus) .countSum b { color: #8b611b; }
+body.projector:not(.beam-focus) .bigNote { font-weight: 400; line-height: 1.38; }
+body.projector:not(.beam-focus) .sym { color: #8b611b; }
+body.projector:not(.beam-focus) .res, body.projector:not(.beam-focus) .resSm, body.projector:not(.beam-focus) .countNum .n { color: #34713d; }
+body.projector:not(.beam-focus) .unit { opacity: 1; }
+body.projector:not(.beam-focus) .sum.left h3 { color: #34713d; }
+body.projector:not(.beam-focus) .sum.right h3 { color: #936720; }
+body.projector:not(.beam-focus) .sum p { font-weight: 400; }
+body.projector:not(.beam-focus) .sum p b { color: #8b611b; }
+body.projector:not(.beam-focus) .sum .u { opacity: 1; }
+body.projector:not(.beam-focus) .lcN { color: #233c2c; }
+body.projector:not(.beam-focus) .lc.copa .lcN { color: #34713d; }
+body.projector:not(.beam-focus) .lc.solo .lcN { color: #ad5c21; }
+
+body.projector:not(.beam-focus) .rfHeader, body.projector:not(.beam-focus) .rfBadge, body.projector:not(.beam-focus) .rfArrow { color: #8b611b; }
+body.projector:not(.beam-focus) .rfSub { color: #233c2c; font-weight: 400; }
+body.projector:not(.beam-focus) .rfSub b, body.projector:not(.beam-focus) .rfEngine h3 { color: #34713d; }
+body.projector:not(.beam-focus) .rfEngine { background: #fff; border-color: #bdcdb5; }
+body.projector:not(.beam-focus) .rfEngine p { font-weight: 400; opacity: 1; }
+
+/* A paisagem acompanha o sol; os slides de dados mantêm o fundo neutro. */
+body.projector:not(.beam-focus) #skyBackground { fill: #f1f6f2; }
+body.projector:not(.beam-focus) #stage[data-scenery="day"] #skyBackground { fill: url(#sky); }
+body.projector:not(.beam-focus) #night { fill: #eef4ed; }
+body.projector:not(.beam-focus) #clouds circle { fill: #fff; }
+body.projector:not(.beam-focus) #areaLabel text, body.projector:not(.beam-focus) #beamLabels > text:last-child {
+  fill: #233c2c; stroke: #e2edcd; stroke-width: 2.5;
+  paint-order: stroke fill; stroke-linejoin: round;
+}
+body.projector:not(.beam-focus) #stars circle { fill: #819d89; }
+body.projector:not(.beam-focus) #pollen { display: none; }
+body.projector:not(.beam-focus) #grass > g { display: none; }
+body.projector:not(.beam-focus) #lidarPts circle { stroke: #fff; stroke-width: 2; paint-order: stroke fill; }
+body.projector:not(.beam-focus) #lidarPts circle[fill="#9dff7a"] { fill: #0065a8; }
+body.projector:not(.beam-focus) #lidarPts circle[fill="#ffb347"] { fill: #b45309; }
+body.projector:not(.beam-focus) .lc.copa .lcN { color: #0065a8; }
+body.projector:not(.beam-focus) #lasers line { stroke: #c3254b !important; stroke-width: 2.6; }
+body.projector:not(.beam-focus) #drone .rotor { fill: #6b8298; }
+body.projector:not(.beam-focus) #droneBody > rect[fill="#e8eef5"] { fill: #d5e1e9; stroke: #587087; stroke-width: 1.5; }
+body.projector:not(.beam-focus) #beam { filter: none; }
+body.projector:not(.beam-focus) #beam > rect { fill: url(#beamLightRays); stroke: none; }
+body.projector:not(.beam-focus) #beam > ellipse { fill: #edc65b; stroke: none; }
+body.projector:not(.beam-focus) #miniCube polygon, body.projector:not(.beam-focus) #bigCube polygon { stroke: #477e83; stroke-width: 2.3; }
+body.projector:not(.beam-focus) #miniCube polygon:nth-child(1), body.projector:not(.beam-focus) #bigCube polygon:nth-child(1) { fill: rgba(105, 181, 180, .09); }
+body.projector:not(.beam-focus) #miniCube polygon:nth-child(2), body.projector:not(.beam-focus) #bigCube polygon:nth-child(2) { fill: rgba(105, 181, 180, .16); }
+body.projector:not(.beam-focus) #miniCube polygon:nth-child(3), body.projector:not(.beam-focus) #bigCube polygon:nth-child(3) { fill: rgba(164, 217, 211, .06); }
+body.projector:not(.beam-focus) .zl { stroke: #6c9191; }
+body.projector:not(.beam-focus) #scene [filter="url(#glow)"], body.projector:not(.beam-focus) #scene [filter="url(#glowSm)"] { filter: none; }
+body.projector:not(.beam-focus) .mapLegend text { font-size: 26px; font-weight: 600; }
+body.projector:not(.beam-focus) .mapLegend text:first-of-type { font-size: 32px; }
+body.projector:not(.beam-focus) .mapSamplePoint text { font-size: 24px; }
+body.projector:not(.beam-focus) #scene text.rasterLabel {
+  fill: #fff !important; stroke: #224c39; stroke-width: 3px;
+  paint-order: stroke fill; stroke-linejoin: round;
+}
+body.projector:not(.beam-focus) #transectDims text {
+  fill: #685021 !important; stroke: #fff; stroke-width: 4px;
+  paint-order: stroke fill; stroke-linejoin: round;
+}
+
+body.projector:not(.beam-focus) #ui { background: linear-gradient(transparent, rgba(249, 251, 246, .96)); }
+body.projector:not(.beam-focus) #ui button { color: #31543a; background: #ffffffe6; border-color: #9eb39f; }
+body.projector:not(.beam-focus) #ui button:hover { background: #e6eddf; }
+body.projector:not(.beam-focus) #bar { background: #ccd9c6; }
+body.projector:not(.beam-focus) #fill { background: #527e44; }
+body.projector:not(.beam-focus) .tick { background: #66826380; }
+body.projector:not(.beam-focus) #slideNum { color: #36503c; background: #ffffffc9; border-color: #cbd9c5; backdrop-filter: none; opacity: .85; }
+body.projector:not(.beam-focus) #hint { background: #ffffff8c; border-color: #a7bba0; }
+body.projector:not(.beam-focus) #hint span { color: #52764b; }
+
+/* Estratos da copa: separadores legíveis sobre as folhas, sem lavar a ilustração. */
+body.projector:not(.beam-focus) #bands rect { fill: #4d9988; }
+body.projector:not(.beam-focus) #bands { opacity: .4; }
+body.projector:not(.beam-focus) #sliceLines ellipse {
+  stroke: #264e3d !important; stroke-width: 3.5; stroke-dasharray: 10 6;
+  filter: drop-shadow(0 1px 1px #ffffffd9);
+}
+body.projector:not(.beam-focus) #envelope { stroke: #456652 !important; }
+body.projector:not(.beam-focus) #stage:is([data-scene-slide="14"], [data-scene-slide="15"], [data-scene-slide="16"]) #bandLabels > text { opacity: 1 !important; }
+body.projector:not(.beam-focus) #stage:is([data-scene-slide="14"], [data-scene-slide="15"], [data-scene-slide="16"]) #sliceLines ellipse {
+  stroke: #fff !important; filter: drop-shadow(0 0 1.5px #173e2d);
+}
+body.projector:not(.beam-focus) #stage:is([data-scene-slide="19"], [data-scene-slide="20"]) #beamLabels > text { opacity: .85 !important; }
+body.projector:not(.beam-focus) #stage:is([data-scene-slide="11"], [data-scene-slide="12"], [data-scene-slide="13"]) #volLabel { opacity: .7 !important; }
+body.projector:not(.beam-focus) #stage[data-scene-slide="24"] #lidarBandCalc > text { opacity: .8 !important; }
+
+/* Random Forest: caminho escolhido em âmbar; predição em verde escuro. */
+body.projector:not(.beam-focus) #scene .rfBranch { stroke: #b3c2b7 !important; }
+body.projector:not(.beam-focus) #scene .rfDecisionPath { stroke: #b87700 !important; stroke-width: 7; }
+body.projector:not(.beam-focus) #scene .rfQuestion rect { fill: #fff !important; stroke: #7e9587 !important; }
+body.projector:not(.beam-focus) #scene .rfQuestion text, body.projector:not(.beam-focus) #scene .rfLeafNode text { fill: #294335 !important; }
+body.projector:not(.beam-focus) #scene .rfQuestionActive rect { fill: #fff2cd !important; stroke: #ad720b !important; stroke-width: 2.8; }
+body.projector:not(.beam-focus) #scene .rfQuestionActive text { fill: #69450b !important; }
+body.projector:not(.beam-focus) #scene .rfLeafNode rect { fill: #f3f6f1 !important; stroke: #a7b9ab !important; }
+body.projector:not(.beam-focus) #scene .rfChosenLeaf rect { fill: #276340 !important; stroke: #17482c !important; }
+body.projector:not(.beam-focus) #scene .rfChosenLeaf text { fill: #fff !important; }
+body.projector:not(.beam-focus) #scene .rfPredictionPill rect { fill: #276340 !important; stroke: #17482c !important; }
+body.projector:not(.beam-focus) #scene .rfPredictionPill text { fill: #fff !important; }
+
+/* Distribuição do LAI: a moldura nunca encobre os dados. */
+body.projector:not(.beam-focus) #scene .obsHighlight rect { fill: none !important; stroke: #286b46 !important; }
+body.projector:not(.beam-focus) #scene .obsHighlight text { fill: #286b46 !important; }
+body.projector:not(.beam-focus) #scene .obsBar { fill: #c5dfe9 !important; stroke: #43849d !important; }
+body.projector:not(.beam-focus) #scene .obsBarFocus { fill: #82b49b !important; stroke: #286b46 !important; }
+body.projector:not(.beam-focus) #scene .obsDensityFill { fill: rgba(55, 117, 149, .08) !important; }
+body.projector:not(.beam-focus) #scene .obsDensityCurve { stroke: #8c5c12 !important; }
+
+/* Encaixes locais: mantêm as contas e os rótulos fora dos painéis. */
+body.projector:not(.beam-focus) #beamLabels > text:first-child { transform: translateY(-32px) !important; }
+body.projector:not(.beam-focus) #stage[data-scene-slide="24"] #lidarBandCalc > text { font-size: 28px; transform: translateX(-8px) !important; }
+body.projector:not(.beam-focus) #stage[data-scene-slide="24"] #lidarBandCalc .svgBig { font-size: 34px; }
+body.projector:not(.beam-focus) #stage:is([data-scene-slide="6"], [data-scene-slide="7"], [data-scene-slide="8"], [data-scene-slide="9"]) #areaLabel > text:first-child { transform: translateX(-130px) !important; }
+body.projector:not(.beam-focus) #stage:is([data-scene-slide="6"], [data-scene-slide="7"], [data-scene-slide="8"], [data-scene-slide="9"]) #areaLabel > text:last-child { transform: translate(90px, -40px) !important; }
+body.projector:not(.beam-focus) #shapGridScene { scale: 1 .94; transform-origin: 960px 158px; }
+body.projector:not(.beam-focus) #stage:is([data-scene-slide="48"], [data-scene-slide="49"]) .mapLegend { translate: 0 -90px !important; }
+
+/* Símbolos de LAI e LAD do resumo, desenhados para o fundo claro. */
+body.projector:not(.beam-focus) #sumL .icon g { fill: #67a14b; stroke: #3f7536; stroke-width: 2; }
+body.projector:not(.beam-focus) #sumR .icon g { stroke: #966313; stroke-width: 2.2; }
+body.projector:not(.beam-focus) #sumR .icon polygon:nth-child(1) { fill: #f6e3a8; }
+body.projector:not(.beam-focus) #sumR .icon polygon:nth-child(2) { fill: #dfbc66; }
+body.projector:not(.beam-focus) #sumR .icon polygon:nth-child(3) { fill: #eed293; }
+
+/* Nas tabelas, ID e LAI não dependem de branco ou verde luminoso. */
+body.projector:not(.beam-focus) :is(#tableSingleG, #tableFullG, .rfInputTable) rect[fill^="rgba(253,248,236"] { fill: #83988a !important; }
+body.projector:not(.beam-focus) :is(#tableSingleG, #tableFullG, .rfInputTable) [fill="#9dff7a"] { fill: #4e8b39 !important; }
+
+/* Cores próprias das barras de resultados, sem alterar áreas transparentes. */
+body.projector:not(.beam-focus) #rfImpScene rect[fill="#9dff7a"] { fill: #4d8d35 !important; }
+body.projector:not(.beam-focus) #rfImpScene rect[fill="#38d9a9"] { fill: #159b78 !important; }
+body.projector:not(.beam-focus) #rfImpScene rect[fill="#ffd76e"] { fill: #bc8720 !important; }
+body.projector:not(.beam-focus) #rfImpScene rect[fill="#5ec8f8"] { fill: #2b8bb6 !important; }
+body.projector:not(.beam-focus) #rfImpScene rect[fill="#f79d65"] { fill: #d47a3d !important; }
+body.projector:not(.beam-focus) #shapPayoutScene rect[fill="#38d9a9"] { fill: #169b79 !important; }
+body.projector:not(.beam-focus) #shapPayoutScene rect[fill="#ff5c6c"] { fill: #d54662 !important; }
+
+/* Seleção do estrato central: a moldura e o pulso não dependem do preenchimento da copa. */
+#stage[data-scene-slide="14"] #bandLabels > text:nth-child(3) { fill: #ffd76e; font-weight: 700; }
+#stage[data-scene-slide="14"] .layerFocusSurface { animation: selectedLayerPulse 2.2s ease-in-out infinite alternate; }
+@keyframes selectedLayerPulse { from { fill-opacity: .14; } to { fill-opacity: .32; } }
+body.projector:not(.beam-focus) #scene #layerFocus .layerFocusHalo { stroke: #fff !important; }
+body.projector:not(.beam-focus) #scene #layerFocus .layerFocusEdge { stroke: #d29317 !important; }
+body.projector:not(.beam-focus) #scene #layerFocus .layerFocusSurface { fill: #f2bf4e; }
+body.projector:not(.beam-focus) #stage[data-scene-slide="14"] #bandLabels > text:nth-child(3) { fill: #80530e; }
+
+/* Mapa de amostragem: fundo claro e pontos de coleta azuis. A escala do mapa de LAI é preservada. */
+body.projector:not(.beam-focus) #scene #amzFill { fill: #dce9ef; }
+body.projector:not(.beam-focus) #scene #amzBorder { stroke: #5d8294 !important; stroke-width: 2.8; }
+body.projector:not(.beam-focus) #scene #amzDots742 circle { fill: #175f8a; stroke: #fff !important; stroke-width: .6; r: 3.6px; }
+body.projector:not(.beam-focus) #scene #spDot { fill: #246a9b !important; stroke: #fff !important; }
+body.projector:not(.beam-focus) #scene #spHalo { fill: rgba(36, 106, 155, .16); }
+@media (prefers-reduced-motion: reduce) {
+  #stage[data-scene-slide="14"] .layerFocusSurface { animation: none; }
+}
+
+/* Na demonstração do feixe, a iluminação original volta suavemente e os raios mantêm o brilho original. */
+body.projector { transition: background-color 1s ease; }
+body.projector #scene :is(#sky, #hillBack, #hillFront, #groundGrad) stop { transition: stop-color 1s ease; }
+body.projector #night { transition: fill 1s ease; }
+body.projector.beam-focus #beamLabels > text:first-child { transform: translateY(-32px) !important; }
+@media (prefers-reduced-motion: reduce) {
+  body.projector, body.projector #scene :is(#sky, #hillBack, #hillFront, #groundGrad) stop,
+  body.projector #night { transition: none; }
+}
+
+/* Os retornos do levantamento pelo avião seguem a mesma cor da nuvem de pontos do drone. */
+body.projector:not(.beam-focus) #transectPts circle { fill: #0065a8; stroke: #fff; stroke-width: 1.4; paint-order: stroke fill; }
+
+/* As medidas ficam legíveis sobre a laje de floresta em ambos os temas. */
+#scene #transectDims text { fill: #ffe080; stroke: #17331f; stroke-width: 5px; paint-order: stroke fill; stroke-linejoin: round; font-weight: 700; }
+body.projector:not(.beam-focus) #scene #transectDims text { fill: #fff7d0 !important; stroke: #233b22 !important; }
+
+/* A mesma limpeza usa o fundo claro ja adotado pelo tema de projecao. */
+body.projector #stage.results-clean { background: #f8faf6; }
+body.projector #stage.results-clean #scene #skyBackground { fill: #f8faf6 !important; }

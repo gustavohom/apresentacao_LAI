@@ -1,0 +1,41 @@
+{
+  "before": {
+    "bodyBox": {
+      "bottom": 568.03125,
+      "height": 373.640625,
+      "left": 576,
+      "right": 1203.1875,
+      "top": 194.390625,
+      "width": 627.1875,
+      "x": 576,
+      "y": 194.390625
+    },
+    "bodyStyle": "600 35.2px / 39.424px Outfit, sans-serif",
+    "headerBox": {
+      "bottom": 139.203125,
+      "height": 64.96875,
+      "left": 89.59375,
+      "right": 1190.40625,
+      "top": 74.234375,
+      "width": 1100.8125,
+      "x": 89.59375,
+      "y": 74.234375
+    },
+    "headerStyle": "600 60.16px / 64.9728px Fraunces, serif",
+    "numbers": "38.4px / 38.4px Fraunces, serif"
+  },
+  "after": {
+    "bodyBox": {
+      "bottom": 568.03125,
+      "height": 373.640625,
+      "left": 576,
+      "right": 1203.1875,
+      "top": 194.390625,
+      "width": 627.1875,
+      "x": 576,
+      "y": 194.390625
+    },
+    "bodyStyle": "600 35.2px / 39.424px Outfit, sans-serif",
+    "numbers": "38.4px / 38.4px Fraunces, serif"
+  }
+}

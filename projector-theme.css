@@ -205,3 +205,7 @@ body.projector:not(.beam-focus) #transectPts circle { fill: #0065a8; stroke: #ff
 /* As medidas ficam legíveis sobre a laje de floresta em ambos os temas. */
 #scene #transectDims text { fill: #ffe080; stroke: #17331f; stroke-width: 5px; paint-order: stroke fill; stroke-linejoin: round; font-weight: 700; }
 body.projector:not(.beam-focus) #scene #transectDims text { fill: #fff7d0 !important; stroke: #233b22 !important; }
+
+/* A mesma limpeza usa o fundo claro ja adotado pelo tema de projecao. */
+body.projector #stage.results-clean { background: #f8faf6; }
+body.projector #stage.results-clean #scene #skyBackground { fill: #f8faf6 !important; }

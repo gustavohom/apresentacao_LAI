@@ -2710,6 +2710,8 @@
   ].sort((a, b) => a.t - b.t);
   // A ordem de apresentação é independente do tempo usado para montar cada cena.
   const SLIDE_ORDER = window.PRESENTATION_SLIDES.map(item => item.scene);
+  // Superficie neutra apenas nos resultados; os IDs permanecem estaveis ao reordenar slides.
+  const CLEAN_RESULT_SCENES = new Set([34, 35, 36, 39, 40, 41, 42, 43, 47, 48, 49]);
   const SCENE_STARTS = new Map([[1, 0], [2, 3.2], [3, 10.2], [4, 42.2], [52, 17.2], [53, 26], [54, 34.2], [5, INTRO_DURATION], [25, INTRO_DURATION + 183.6], [50, INTRO_DURATION + 417]]);
   const SLIDE_STOPS = SLIDE_ORDER.flatMap((scene, index) => SCENE_STOPS.flatMap((stop, sourceIndex) => {
     if (stop.slide !== scene) return [];
@@ -2744,6 +2746,7 @@
     slideNum.textContent = `${current} / ${totalSlides}`;
     $('#stage').dataset.slide = current;
     $('#stage').dataset.sceneSlide = stop ? stop.scene : totalSlides;
+    $('#stage').classList.toggle('results-clean', CLEAN_RESULT_SCENES.has(stop?.scene));
     $('#stage').dataset.scenery = t >= INTRO_DURATION + 9.3 && t < INTRO_DURATION + 183 ? 'day' : 'plain';
     // A demonstração óptica usa a iluminação original para revelar a atenuação do feixe.
     document.body.classList.toggle('beam-focus', t >= INTRO_DURATION + 107.5 && t < INTRO_DURATION + 134.4);

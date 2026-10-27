@@ -82,7 +82,7 @@
       const theme = document.body.classList.contains('projector') ? 'light' : 'original';
       const current = getCurrentSlide();
       cards.forEach(card => {
-        card.image.src = `assets/slides/${theme}/${String(card.slide).padStart(2, '0')}.webp?v=20261026-auditorio-restaurado`;
+        card.image.src = `assets/slides/${theme}/${String(card.slide).padStart(2, '0')}.webp?v=20261026-despedida-simbolos-2`;
         card.button.classList.toggle('is-current', card.slide === current);
         if (card.slide === current) card.button.setAttribute('aria-current', 'page');
         else card.button.removeAttribute('aria-current');

@@ -1,0 +1,553 @@
+{
+  "frames": [
+    {
+      "action": "grimace",
+      "logos": [
+        {
+          "box": {
+            "bottom": 513.59375,
+            "height": 192,
+            "left": 185.6015625,
+            "right": 326.3984375,
+            "top": 321.59375,
+            "width": 140.796875,
+            "x": 185.6015625,
+            "y": 321.59375
+          },
+          "name": "treelab",
+          "opacity": 1,
+          "visibility": "visible"
+        },
+        {
+          "box": {
+            "bottom": 236.55831909179688,
+            "height": 49.77288818359375,
+            "left": 612.5280151367188,
+            "right": 667.4719848632812,
+            "top": 186.78543090820312,
+            "width": 54.9439697265625,
+            "x": 612.5280151367188,
+            "y": 186.78543090820312
+          },
+          "name": "r",
+          "opacity": 1,
+          "visibility": "visible"
+        },
+        {
+          "box": {
+            "bottom": 300.78125,
+            "height": 83.1875,
+            "left": 112,
+            "right": 195.1875,
+            "top": 217.59375,
+            "width": 83.1875,
+            "x": 112,
+            "y": 217.59375
+          },
+          "name": "chatgpt",
+          "opacity": 0,
+          "visibility": "hidden"
+        },
+        {
+          "box": {
+            "bottom": 297.5859375,
+            "height": 76.796875,
+            "left": 1030.40625,
+            "right": 1145.59375,
+            "top": 220.7890625,
+            "width": 115.1875,
+            "x": 1030.40625,
+            "y": 220.7890625
+          },
+          "name": "gemini",
+          "opacity": 0,
+          "visibility": "hidden"
+        },
+        {
+          "box": {
+            "bottom": 331.9921875,
+            "height": 102.390625,
+            "left": 831.9921875,
+            "right": 934.3828125,
+            "top": 229.6015625,
+            "width": 102.390625,
+            "x": 831.9921875,
+            "y": 229.6015625
+          },
+          "name": "qgis",
+          "opacity": 0,
+          "visibility": "hidden"
+        },
+        {
+          "box": {
+            "bottom": 525.59375,
+            "height": 115.1875,
+            "left": 345.59375,
+            "right": 473.59375,
+            "top": 410.40625,
+            "width": 128,
+            "x": 345.59375,
+            "y": 410.40625
+          },
+          "name": "excel",
+          "opacity": 0,
+          "visibility": "hidden"
+        },
+        {
+          "box": {
+            "bottom": 631.9921875,
+            "height": 140.796875,
+            "left": 870.3984375,
+            "right": 1100.7890625,
+            "top": 491.1953125,
+            "width": 230.390625,
+            "x": 870.3984375,
+            "y": 491.1953125
+          },
+          "name": "fusion",
+          "opacity": 0,
+          "visibility": "hidden"
+        },
+        {
+          "box": {
+            "bottom": 468.7890625,
+            "height": 102.390625,
+            "left": 915.1953125,
+            "right": 1081.5859375,
+            "top": 366.3984375,
+            "width": 166.390625,
+            "x": 915.1953125,
+            "y": 366.3984375
+          },
+          "name": "eba",
+          "opacity": 0,
+          "visibility": "hidden"
+        }
+      ],
+      "phase": "r-balance",
+      "theme": "true",
+      "title": {
+        "bottom": 184.3125,
+        "height": 126.71875,
+        "left": 64,
+        "right": 1216,
+        "top": 57.59375,
+        "width": 1152,
+        "x": 64,
+        "y": 57.59375
+      }
+    },
+    {
+      "action": "dance",
+      "logos": [
+        {
+          "box": {
+            "bottom": 513.59375,
+            "height": 192,
+            "left": 185.6015625,
+            "right": 326.3984375,
+            "top": 321.59375,
+            "width": 140.796875,
+            "x": 185.6015625,
+            "y": 321.59375
+          },
+          "name": "treelab",
+          "opacity": 1,
+          "visibility": "visible"
+        },
+        {
+          "box": {
+            "bottom": 318.390625,
+            "height": 89.59375,
+            "left": 358.3984375,
+            "right": 460.7890625,
+            "top": 228.796875,
+            "width": 102.390625,
+            "x": 358.3984375,
+            "y": 228.796875
+          },
+          "name": "r",
+          "opacity": 1,
+          "visibility": "visible"
+        },
+        {
+          "box": {
+            "bottom": 300.78125,
+            "height": 83.1875,
+            "left": 112,
+            "right": 195.1875,
+            "top": 217.59375,
+            "width": 83.1875,
+            "x": 112,
+            "y": 217.59375
+          },
+          "name": "chatgpt",
+          "opacity": 1,
+          "visibility": "visible"
+        },
+        {
+          "box": {
+            "bottom": 297.5859375,
+            "height": 76.796875,
+            "left": 1030.40625,
+            "right": 1145.59375,
+            "top": 220.7890625,
+            "width": 115.1875,
+            "x": 1030.40625,
+            "y": 220.7890625
+          },
+          "name": "gemini",
+          "opacity": 1,
+          "visibility": "visible"
+        },
+        {
+          "box": {
+            "bottom": 360.17822265625,
+            "height": 84.05642700195312,
+            "left": 738.7686767578125,
+            "right": 822.8250732421875,
+            "top": 276.1217956542969,
+            "width": 84.056396484375,
+            "x": 738.7686767578125,
+            "y": 276.1217956542969
+          },
+          "name": "qgis",
+          "opacity": 1,
+          "visibility": "visible"
+        },
+        {
+          "box": {
+            "bottom": 315.6070861816406,
+            "height": 82.78268432617188,
+            "left": 505.27044677734375,
+            "right": 595.5108032226562,
+            "top": 232.82440185546875,
+            "width": 90.2403564453125,
+            "x": 505.27044677734375,
+            "y": 232.82440185546875
+          },
+          "name": "excel",
+          "opacity": 1,
+          "visibility": "visible"
+        },
+        {
+          "box": {
+            "bottom": 631.9921875,
+            "height": 140.796875,
+            "left": 870.3984375,
+            "right": 1100.7890625,
+            "top": 491.1953125,
+            "width": 230.390625,
+            "x": 870.3984375,
+            "y": 491.1953125
+          },
+          "name": "fusion",
+          "opacity": 0,
+          "visibility": "hidden"
+        },
+        {
+          "box": {
+            "bottom": 468.7890625,
+            "height": 102.390625,
+            "left": 915.1953125,
+            "right": 1081.5859375,
+            "top": 366.3984375,
+            "width": 166.390625,
+            "x": 915.1953125,
+            "y": 366.3984375
+          },
+          "name": "eba",
+          "opacity": 0,
+          "visibility": "hidden"
+        }
+      ],
+      "phase": "qgis-excel-dance",
+      "theme": "true",
+      "title": {
+        "bottom": 184.3125,
+        "height": 126.71875,
+        "left": 64,
+        "right": 1216,
+        "top": 57.59375,
+        "width": 1152,
+        "x": 64,
+        "y": 57.59375
+      }
+    },
+    {
+      "action": "bow",
+      "logos": [
+        {
+          "box": {
+            "bottom": 513.59375,
+            "height": 192,
+            "left": 185.6015625,
+            "right": 326.3984375,
+            "top": 321.59375,
+            "width": 140.796875,
+            "x": 185.6015625,
+            "y": 321.59375
+          },
+          "name": "treelab",
+          "opacity": 1,
+          "visibility": "visible"
+        },
+        {
+          "box": {
+            "bottom": 318.390625,
+            "height": 89.59375,
+            "left": 358.3984375,
+            "right": 460.7890625,
+            "top": 228.796875,
+            "width": 102.390625,
+            "x": 358.3984375,
+            "y": 228.796875
+          },
+          "name": "r",
+          "opacity": 1,
+          "visibility": "visible"
+        },
+        {
+          "box": {
+            "bottom": 300.78125,
+            "height": 83.1875,
+            "left": 112,
+            "right": 195.1875,
+            "top": 217.59375,
+            "width": 83.1875,
+            "x": 112,
+            "y": 217.59375
+          },
+          "name": "chatgpt",
+          "opacity": 1,
+          "visibility": "visible"
+        },
+        {
+          "box": {
+            "bottom": 297.5859375,
+            "height": 76.796875,
+            "left": 1030.40625,
+            "right": 1145.59375,
+            "top": 220.7890625,
+            "width": 115.1875,
+            "x": 1030.40625,
+            "y": 220.7890625
+          },
+          "name": "gemini",
+          "opacity": 1,
+          "visibility": "visible"
+        },
+        {
+          "box": {
+            "bottom": 331.9921875,
+            "height": 102.390625,
+            "left": 831.9921875,
+            "right": 934.3828125,
+            "top": 229.6015625,
+            "width": 102.390625,
+            "x": 831.9921875,
+            "y": 229.6015625
+          },
+          "name": "qgis",
+          "opacity": 1,
+          "visibility": "visible"
+        },
+        {
+          "box": {
+            "bottom": 525.59375,
+            "height": 115.1875,
+            "left": 345.59375,
+            "right": 473.59375,
+            "top": 410.40625,
+            "width": 128,
+            "x": 345.59375,
+            "y": 410.40625
+          },
+          "name": "excel",
+          "opacity": 1,
+          "visibility": "visible"
+        },
+        {
+          "box": {
+            "bottom": 631.9921875,
+            "height": 140.796875,
+            "left": 870.3984375,
+            "right": 1100.7890625,
+            "top": 491.1953125,
+            "width": 230.390625,
+            "x": 870.3984375,
+            "y": 491.1953125
+          },
+          "name": "fusion",
+          "opacity": 1,
+          "visibility": "visible"
+        },
+        {
+          "box": {
+            "bottom": 418.3828125,
+            "height": 102.390625,
+            "left": 723.1953125,
+            "right": 889.5859375,
+            "top": 315.9921875,
+            "width": 166.390625,
+            "x": 723.1953125,
+            "y": 315.9921875
+          },
+          "name": "eba",
+          "opacity": 1,
+          "visibility": "visible"
+        }
+      ],
+      "phase": "fusion-eba",
+      "theme": "true",
+      "title": {
+        "bottom": 184.3125,
+        "height": 126.71875,
+        "left": 64,
+        "right": 1216,
+        "top": 57.59375,
+        "width": 1152,
+        "x": 64,
+        "y": 57.59375
+      }
+    },
+    {
+      "action": "wave",
+      "logos": [
+        {
+          "box": {
+            "bottom": 513.59375,
+            "height": 192,
+            "left": 185.6015625,
+            "right": 326.3984375,
+            "top": 321.59375,
+            "width": 140.796875,
+            "x": 185.6015625,
+            "y": 321.59375
+          },
+          "name": "treelab",
+          "opacity": 1,
+          "visibility": "visible"
+        },
+        {
+          "box": {
+            "bottom": 318.390625,
+            "height": 89.59375,
+            "left": 358.3984375,
+            "right": 460.7890625,
+            "top": 228.796875,
+            "width": 102.390625,
+            "x": 358.3984375,
+            "y": 228.796875
+          },
+          "name": "r",
+          "opacity": 1,
+          "visibility": "visible"
+        },
+        {
+          "box": {
+            "bottom": 300.78125,
+            "height": 83.1875,
+            "left": 112,
+            "right": 195.1875,
+            "top": 217.59375,
+            "width": 83.1875,
+            "x": 112,
+            "y": 217.59375
+          },
+          "name": "chatgpt",
+          "opacity": 1,
+          "visibility": "visible"
+        },
+        {
+          "box": {
+            "bottom": 297.5859375,
+            "height": 76.796875,
+            "left": 1030.40625,
+            "right": 1145.59375,
+            "top": 220.7890625,
+            "width": 115.1875,
+            "x": 1030.40625,
+            "y": 220.7890625
+          },
+          "name": "gemini",
+          "opacity": 1,
+          "visibility": "visible"
+        },
+        {
+          "box": {
+            "bottom": 331.9921875,
+            "height": 102.390625,
+            "left": 831.9921875,
+            "right": 934.3828125,
+            "top": 229.6015625,
+            "width": 102.390625,
+            "x": 831.9921875,
+            "y": 229.6015625
+          },
+          "name": "qgis",
+          "opacity": 1,
+          "visibility": "visible"
+        },
+        {
+          "box": {
+            "bottom": 525.59375,
+            "height": 115.1875,
+            "left": 345.59375,
+            "right": 473.59375,
+            "top": 410.40625,
+            "width": 128,
+            "x": 345.59375,
+            "y": 410.40625
+          },
+          "name": "excel",
+          "opacity": 1,
+          "visibility": "visible"
+        },
+        {
+          "box": {
+            "bottom": 631.9921875,
+            "height": 140.796875,
+            "left": 870.3984375,
+            "right": 1100.7890625,
+            "top": 491.1953125,
+            "width": 230.390625,
+            "x": 870.3984375,
+            "y": 491.1953125
+          },
+          "name": "fusion",
+          "opacity": 1,
+          "visibility": "visible"
+        },
+        {
+          "box": {
+            "bottom": 468.7890625,
+            "height": 102.390625,
+            "left": 915.1953125,
+            "right": 1081.5859375,
+            "top": 366.3984375,
+            "width": 166.390625,
+            "x": 915.1953125,
+            "y": 366.3984375
+          },
+          "name": "eba",
+          "opacity": 1,
+          "visibility": "visible"
+        }
+      ],
+      "phase": "tools",
+      "theme": "true",
+      "title": {
+        "bottom": 184.3125,
+        "height": 126.71875,
+        "left": 64,
+        "right": 1216,
+        "top": 57.59375,
+        "width": 1152,
+        "x": 64,
+        "y": 57.59375
+      }
+    }
+  ],
+  "repeatConfirmed": true
+}

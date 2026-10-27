@@ -1,0 +1,337 @@
+[
+  {
+    "phase": "idle",
+    "action": "wave",
+    "count": 0
+  },
+  {
+    "phase": "treelab",
+    "action": "bow",
+    "count": 1
+  },
+  {
+    "phase": "treelab",
+    "action": "bow",
+    "count": 1
+  },
+  {
+    "phase": "treelab",
+    "action": "bow",
+    "count": 1
+  },
+  {
+    "phase": "treelab",
+    "action": "wave",
+    "count": 1
+  },
+  {
+    "phase": "treelab",
+    "action": "wave",
+    "count": 1
+  },
+  {
+    "phase": "r-balance",
+    "action": "duck",
+    "count": 2
+  },
+  {
+    "phase": "r-balance",
+    "action": "balance",
+    "count": 2
+  },
+  {
+    "phase": "r-balance",
+    "action": "grimace",
+    "count": 2
+  },
+  {
+    "phase": "r-balance",
+    "action": "shrug",
+    "count": 2
+  },
+  {
+    "phase": "r-balance",
+    "action": "grimace",
+    "count": 2
+  },
+  {
+    "phase": "r-balance",
+    "action": "wave",
+    "count": 2
+  },
+  {
+    "phase": "ai-sneeze",
+    "action": "shush",
+    "count": 2
+  },
+  {
+    "phase": "ai-sneeze",
+    "action": "shush",
+    "count": 4
+  },
+  {
+    "phase": "ai-sneeze",
+    "action": "shush",
+    "count": 4
+  },
+  {
+    "phase": "ai-sneeze",
+    "action": "sneeze",
+    "count": 4
+  },
+  {
+    "phase": "ai-sneeze",
+    "action": "sneeze",
+    "count": 4
+  },
+  {
+    "phase": "ai-sneeze",
+    "action": "shrug",
+    "count": 4
+  },
+  {
+    "phase": "ai-sneeze",
+    "action": "shrug",
+    "count": 4
+  },
+  {
+    "phase": "qgis-excel-dance",
+    "action": "dance",
+    "count": 6
+  },
+  {
+    "phase": "qgis-excel-dance",
+    "action": "dance",
+    "count": 6
+  },
+  {
+    "phase": "qgis-excel-dance",
+    "action": "dance",
+    "count": 6
+  },
+  {
+    "phase": "qgis-excel-dance",
+    "action": "dance",
+    "count": 6
+  },
+  {
+    "phase": "qgis-excel-dance",
+    "action": "shrug",
+    "count": 6
+  },
+  {
+    "phase": "qgis-excel-dance",
+    "action": "shrug",
+    "count": 6
+  },
+  {
+    "phase": "fusion-eba",
+    "action": "bow",
+    "count": 6
+  },
+  {
+    "phase": "fusion-eba",
+    "action": "bow",
+    "count": 8
+  },
+  {
+    "phase": "fusion-eba",
+    "action": "bow",
+    "count": 8
+  },
+  {
+    "phase": "fusion-eba",
+    "action": "bow",
+    "count": 8
+  },
+  {
+    "phase": "fusion-eba",
+    "action": "heart",
+    "count": 8
+  },
+  {
+    "phase": "fusion-eba",
+    "action": "heart",
+    "count": 8
+  },
+  {
+    "phase": "fusion-eba",
+    "action": "heart",
+    "count": 8
+  },
+  {
+    "phase": "fusion-eba",
+    "action": "heart",
+    "count": 8
+  },
+  {
+    "phase": "tools",
+    "action": "wave",
+    "count": 8
+  },
+  {
+    "phase": "tools",
+    "action": "wave",
+    "count": 8
+  },
+  {
+    "phase": "tools",
+    "action": "wave",
+    "count": 8
+  },
+  {
+    "phase": "tools",
+    "action": "wave",
+    "count": 8
+  },
+  {
+    "phase": "tools",
+    "action": "wave",
+    "count": 8
+  },
+  {
+    "phase": "tools",
+    "action": "wave",
+    "count": 8
+  },
+  {
+    "phase": "tools",
+    "action": "wave",
+    "count": 8
+  },
+  {
+    "phase": "tools",
+    "action": "wave",
+    "count": 8
+  },
+  {
+    "phase": "tools",
+    "action": "wave",
+    "count": 8
+  },
+  {
+    "phase": "tools",
+    "action": "wave",
+    "count": 8
+  },
+  {
+    "phase": "writing-tools",
+    "action": "wave",
+    "count": 8
+  },
+  {
+    "phase": "writing-tools",
+    "action": "duck",
+    "count": 9
+  },
+  {
+    "phase": "writing-tools",
+    "action": "duck",
+    "count": 9
+  },
+  {
+    "phase": "writing-tools",
+    "action": "balance",
+    "count": 9
+  },
+  {
+    "phase": "writing-tools",
+    "action": "balance",
+    "count": 11
+  },
+  {
+    "phase": "writing-tools",
+    "action": "juggle",
+    "count": 12
+  },
+  {
+    "phase": "writing-tools",
+    "action": "juggle",
+    "count": 13
+  },
+  {
+    "phase": "writing-tools",
+    "action": "juggle",
+    "count": 13
+  },
+  {
+    "phase": "writing-tools",
+    "action": "shrug",
+    "count": 13
+  },
+  {
+    "phase": "writing-tools",
+    "action": "shrug",
+    "count": 13
+  },
+  {
+    "phase": "writing-tools",
+    "action": "shrug",
+    "count": 13
+  },
+  {
+    "phase": "writing-tools",
+    "action": "shrug",
+    "count": 13
+  },
+  {
+    "phase": "reading-tools",
+    "action": "carry",
+    "count": 14
+  },
+  {
+    "phase": "reading-tools",
+    "action": "carry",
+    "count": 15
+  },
+  {
+    "phase": "reading-tools",
+    "action": "carry",
+    "count": 15
+  },
+  {
+    "phase": "reading-tools",
+    "action": "carry",
+    "count": 15
+  },
+  {
+    "phase": "reading-tools",
+    "action": "duck",
+    "count": 16
+  },
+  {
+    "phase": "reading-tools",
+    "action": "duck",
+    "count": 16
+  },
+  {
+    "phase": "reading-tools",
+    "action": "wave",
+    "count": 16
+  },
+  {
+    "phase": "reading-tools",
+    "action": "wave",
+    "count": 16
+  },
+  {
+    "phase": "reading-tools",
+    "action": "wave",
+    "count": 16
+  },
+  {
+    "phase": "reading-tools",
+    "action": "wave",
+    "count": 16
+  },
+  {
+    "phase": "reading-tools",
+    "action": "wave",
+    "count": 16
+  },
+  {
+    "phase": "r-packages",
+    "action": "catch",
+    "count": 16
+  }
+]

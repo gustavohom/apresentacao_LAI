@@ -402,3 +402,39 @@ body:has(#stage.light-slide) { background: #fff; }
 
 @keyframes researchLeafBreeze { from { translate: 0 0; } to { translate: 0 -.5cqw; } }
 @media (prefers-reduced-motion: reduce) { .researchIntro.is-active .researchLeafMark { animation: none; } }
+
+/* Fundos neutros restritos as cenas de resultados, sem alterar a timeline. */
+#stage.results-clean { background: #102b36; }
+#stage.results-clean #scene #skyBackground { fill: #102b36 !important; }
+#stage.results-clean > :is(.vignette, .grain),
+#stage.results-clean #scene :is(#clouds, #stars, #pollen, #sun, #hb, #hf, #groundPath, #grass, #night) { display: none !important; }
+#stage.results-clean #rfImpScene rect[filter="url(#glowSm)"],
+#stage.results-clean #rfObsScene .obsDensityCurve { filter: none !important; }
+
+/* Objetos das brincadeiras, isolados no último slide. Os logos permanecem originais. */
+#farewellSymbols { position: absolute; inset: 0; z-index: 3; pointer-events: none; mix-blend-mode: multiply; }
+#farewellSymbols .farewellSymbol {
+  position: absolute; display: block; width: 8cqw; height: 8cqw;
+  object-fit: contain; opacity: 0; visibility: hidden; transform-origin: center;
+}
+#farewellSymbols [data-symbol="treelab"] { width: 11cqw; height: 15cqw; }
+#farewellSymbols [data-symbol="r"] { width: 8cqw; height: 7cqw; }
+#farewellSymbols [data-symbol="chatgpt"] { width: 6.5cqw; height: 6.5cqw; }
+#farewellSymbols [data-symbol="gemini"] { width: 9cqw; height: 6cqw; }
+#farewellSymbols [data-symbol="excel"] { width: 10cqw; height: 9cqw; }
+#farewellSymbols [data-symbol="fusion"] { width: 18cqw; height: 11cqw; }
+#farewellSymbols [data-symbol="eba"] { width: 13cqw; height: 8cqw; }
+#farewellSymbols [data-symbol="zotero"] { width: 12cqw; height: 12cqw; }
+#farewellSymbols [data-symbol="drive"] { width: 13cqw; height: 9cqw; }
+#farewellSymbols [data-symbol="docs"] { width: 8cqw; height: 11cqw; }
+#farewellSymbols [data-symbol="notion"] { width: 10cqw; height: 10cqw; }
+#farewellSymbols [data-symbol="miro"] { width: 19cqw; height: 8.5cqw; object-fit: cover; }
+#farewellSymbols [data-symbol="cafe"] { width: 15cqw; height: 7cqw; }
+#farewellSymbols [data-symbol="periodicos"] { width: 19cqw; height: 12cqw; }
+#farewellSymbols [data-symbol="scihub"] { width: 10cqw; height: 14cqw; }
+#farewellSymbols :is([data-symbol="lidr"], [data-symbol="sf"]) { width: 10cqw; height: 11cqw; }
+#farewellSymbols :is([data-symbol="terra"], [data-symbol="tidyverse"]) { width: 12cqw; height: 14cqw; }
+#farewellSymbols [data-symbol="capes"] { width: 12cqw; height: 11cqw; }
+#farewellSymbols [data-symbol="fapemig"] { width: 17cqw; height: 12cqw; }
+#farewellSymbols [data-symbol="ufvjm"] { width: 16cqw; height: 12cqw; }
+#farewellSymbols [data-symbol="pos-graduacao"] { width: 14cqw; height: 9cqw; object-fit: cover; }
