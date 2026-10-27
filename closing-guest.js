@@ -147,7 +147,7 @@
         }, .8)
         .call(() => pose('wave'), [], 3.1)
 
-        // O R sobe em arco, pousa no cabelo e provoca a careta.
+        // O R sobe em arco, pousa no cabelo e retorna à lateral.
         .call(() => interaction('r-balance'), [], 4.8)
         .set(props.r, { left: '30%', top: '48%', scale: .75, rotation: -18, autoAlpha: 1 }, 4.8)
         .to(props.r, { left: '44%', top: '31%', scale: .55, rotation: 12, duration: .9, ease: 'power2.out' }, 4.8)
