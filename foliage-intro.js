@@ -71,8 +71,7 @@
     tl.fromTo(importance.wood, { scaleY: .2, transformOrigin: '50% 100%', opacity: 0 },
       { scaleY: 1, opacity: 1, duration: reduced ? .1 : .85, ease: 'power3.out' }, 17.65);
     tl.fromTo(importance.leaves, { opacity: 0 }, { opacity: 1, duration: reduced ? .1 : .55, stagger: reduced ? 0 : .002 }, 17.9);
-    const reasonTimes = [18.6, 20.3, 21.6, 22.9, 24.2];
-    reasonTimes.forEach((at, i) => enter(`.foliageReason[data-reason="${i}"]`, at, { y: 0, x: 28 }, .6));
+    enter('#foliageImportanceSlide .foliageReasons', 18.6, { y: 0, x: 28 }, .6);
     tl.to('#foliageImportanceSlide', { autoAlpha: 0, duration: .65 }, 26);
 
     // A geometria compartilhada é calculada pelo tempo atual, sem estados herdados de seeks.
@@ -245,7 +244,6 @@
     };
     return {
       sync(time) {
-        document.querySelector('#foliageImportanceSlide').dataset.topic = Math.max(0, reasonTimes.filter(at => time >= at).length - 1);
         document.querySelector('#foliageArrangementSlide').dataset.arrangement = time < 29.35 ? 'equal' : time < 31.4 ? 'redistributing' : 'distributed';
         document.querySelector('#foliageSizeSlide').dataset.sizePhase = time < 37.1 ? 'equal' : time < 39.4 ? 'reshaping' : 'different';
         render(time);

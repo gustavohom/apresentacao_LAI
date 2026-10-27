@@ -183,13 +183,6 @@
     wind.to({}, { duration: .2 }, 8.5);
 
     const introCaption = document.querySelector('#presentationCaption');
-    const importanceCaptions = [
-      'Folhas captam luz e assimilam carbono.',
-      'A área foliar participa da produtividade florestal.',
-      'As folhas participam das trocas de água.',
-      'O dossel influencia o microclima.',
-      'A área foliar responde às condições ambientais.',
-    ];
     const captionFor = (scene, time) => {
       if (scene === 'coverSlide') return 'Variação espacial do LAI na Amazônia brasileira.';
       if (scene === 'peopleSlide') {
@@ -200,10 +193,7 @@
       }
       if (scene === 'scopeSlide') return 'Variação espacial do LAI e fatores ambientais associados.';
       if (scene === 'researchContributionSlide') return 'Caracterizar as florestas e gerar informações para novas análises.';
-      if (scene === 'foliageImportanceSlide') {
-        const index = [20.3, 21.6, 22.9, 24.2].filter(at => time >= at).length;
-        return importanceCaptions[index];
-      }
+      if (scene === 'foliageImportanceSlide') return 'O LAI ajuda a estudar carbono, produtividade florestal, água, microclima e respostas ao clima.';
       if (scene === 'foliageArrangementSlide') return 'O mesmo LAI pode ter diferentes perfis de LAD.';
       if (scene === 'foliageSizeSlide') return 'A altura e a distribuição vertical das folhas variam.';
       return '';

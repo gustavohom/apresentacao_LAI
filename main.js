@@ -2641,11 +2641,7 @@
     { t: 6.7, resume: 6.95, slide: 2 }, // Clique: Eric
     { t: 8.0, resume: 10.2, slide: 2 }, // Clique: Josiane
     { t: 16.2, resume: 17.2, slide: 3 }, // Recorte da apresentação: LAI
-    { t: 19.9, resume: 20.2, slide: 52 }, // Importância: fotossíntese e carbono
-    { t: 21.2, resume: 21.5, slide: 52 }, // Importância: produtividade florestal
-    { t: 22.5, resume: 22.8, slide: 52 }, // Importância: regulação hídrica
-    { t: 23.8, resume: 24.1, slide: 52 }, // Importância: microclima
-    { t: 25.1, resume: 26.0, slide: 52 }, // Importância: respostas ao clima
+    { t: 19.9, resume: 26.0, slide: 52 }, // Importância: lista completa, sem pausas entre os itens
     { t: 28.9, resume: 29.2, slide: 53, phase: 'ready' }, // Mesma área foliar, antes da redistribuição
     { t: 33.4, resume: 34.2, slide: 53 }, // Mesma área foliar, diferentes perfis de LAD
     { t: 36.6, resume: 36.9, slide: 54, phase: 'ready' }, // Mesmo LAI: três copas antes da mudança de porte

@@ -21,13 +21,8 @@ body.projector .bookend.foliageIntro {
 @keyframes introCrownBreeze { from { transform: rotate(-.35deg); } to { transform: rotate(.35deg); } }
 .foliageReasons { position: absolute; top: 27%; left: 45%; width: 49%; display: grid; gap: 2.2cqw; }
 .foliageReason { display: grid; grid-template-columns: 4cqw 1fr; gap: 1.15cqw; align-items: center; padding: .5cqw 0; }
-.foliageReasonNumber { font: 400 3cqw/1 'Fraunces', serif; color: var(--intro-line); transition: color .4s; }
+.foliageReasonNumber { font: 400 3cqw/1 'Fraunces', serif; color: var(--intro-gold); }
 .foliageReason h3 { font: 600 2.75cqw/1.12 'Outfit', sans-serif; color: var(--intro-ink); }
-#foliageImportanceSlide[data-topic="0"] [data-reason="0"] .foliageReasonNumber,
-#foliageImportanceSlide[data-topic="1"] [data-reason="1"] .foliageReasonNumber,
-#foliageImportanceSlide[data-topic="2"] [data-reason="2"] .foliageReasonNumber,
-#foliageImportanceSlide[data-topic="3"] [data-reason="3"] .foliageReasonNumber,
-#foliageImportanceSlide[data-topic="4"] [data-reason="4"] .foliageReasonNumber { color: var(--intro-gold); }
 #foliageArrangementSlide .foliageHeader h2 { font-size: 4.3cqw; }
 .foliageTreeLabel { position: absolute; top: 78%; text-align: center; font: 600 2.65cqw/1.2 'Outfit', sans-serif; color: var(--intro-green); }
 .arrangementLabel { width: 37%; }
