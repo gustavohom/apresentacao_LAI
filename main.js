@@ -2631,6 +2631,7 @@
   const INTRO_DURATION = 46;
   tl.shiftChildren(INTRO_DURATION, true, 0);
   window.addPresentationBookends(tl, INTRO_DURATION);
+  const sceneTransition = window.createSceneTransition();
 
   /* ================= MODO APRESENTAÇÃO (PAUSA IMEDIATA AO FIM DE CADA ANIMAÇÃO) ================= */
   // Cada slide pausa exatamente quando sua animação termina (t), e ao clicar avança direto para a saída (resume)
@@ -2773,7 +2774,7 @@
   }
 
   function next() {
-    if (!presentationReady || atEnd()) return;
+    if (!presentationReady || atEnd() || sceneTransition.isRunning()) return;
     // Após a entrada dos três participantes, um clique apresenta a brincadeira.
     if (tl.paused() && window.playPeopleClock?.()) {
       hideHint(); setIcon(); return;
@@ -2790,7 +2791,8 @@
         tl.play();
         setIcon();
       };
-      advance();
+      if (cur?.slide === 3 && following?.slide === 4) sceneTransition.play(advance);
+      else advance();
     } else {
       const nxt = SCENE_STOPS.find((s) => s.t > tl.time() + 0.05);
       if (nxt != null) { seekTimeline(nxt.t); showHint(); }
@@ -2800,6 +2802,7 @@
   }
   function prev() {
     if (!presentationReady) return;
+    sceneTransition.cancel();
     window.resetPeopleClock?.();
     const currentIndex = orderedStopIndex(tl.time());
     const prevStop = SLIDE_STOPS[(currentIndex < 0 ? SLIDE_STOPS.length : currentIndex) - 1];
@@ -2810,6 +2813,7 @@
   }
   function restart() {
     if (!presentationReady) return;
+    sceneTransition.cancel();
     window.resetPeopleClock?.();
     seekTimeline(0); hideHint(); tl.play(); setIcon();
   }
@@ -2837,9 +2841,10 @@
   const overview = window.createSlideOverview({
     totalSlides,
     getCurrentSlide: () => Number($('#stage').dataset.slide),
-    pause: () => { const playing = !tl.paused(); tl.pause(); setIcon(); return playing; },
+    pause: () => { sceneTransition.cancel(); const playing = !tl.paused(); tl.pause(); setIcon(); return playing; },
     resume: () => { tl.play(); setIcon(); },
     select: (slide) => {
+      sceneTransition.cancel();
       window.resetPeopleClock?.();
       const stop = SLIDE_STOPS.find(s => s.slide === slide);
       seekTimeline(stop ? stop.t : tl.duration());
@@ -2864,6 +2869,7 @@
   btnCC.addEventListener('click', toggleCaptions);
   bar.addEventListener('click', (e) => {
     if (!presentationReady) return;
+    sceneTransition.cancel();
     window.resetPeopleClock?.();
     const r = bar.getBoundingClientRect();
     const stop = e.target.closest('.tick')?.dataset.stop;
@@ -2888,7 +2894,7 @@
     if (e.code === 'KeyC') toggleCaptions();
     if (e.code === 'Home') { e.preventDefault(); restart(); }
     if (e.code === 'End') {
-      e.preventDefault(); window.resetPeopleClock?.(); seekTimeline(tl.duration()); hideHint(); setIcon();
+      e.preventDefault(); sceneTransition.cancel(); window.resetPeopleClock?.(); seekTimeline(tl.duration()); hideHint(); setIcon();
     }
   });
   let hideT;

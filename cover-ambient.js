@@ -9,7 +9,7 @@
   };
 
   window.createCoverAmbient = ({ scene, leaves, drawLeaf, vector }) => {
-    const ambient = gsap.timeline({ paused: true, repeat: -1, repeatDelay: 4 });
+    const ambient = gsap.timeline({ paused: true, repeat: -1, repeatDelay: 4 }).timeScale(2);
 
     // Uma rajada leve chega depois que a moldura se acomoda.
     leaves.forEach((leaf, i) => {

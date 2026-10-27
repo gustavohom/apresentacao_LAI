@@ -1,0 +1,110 @@
+{
+  "before": {
+    "height": 59.4375,
+    "width": 284.640625,
+    "x": 76.796875,
+    "y": 54
+  },
+  "frames": [
+    {
+      "at": 1793115838947,
+      "height": 59.4375,
+      "hidden": false,
+      "newOpacity": "0",
+      "oldOpacity": "0.001184",
+      "width": 284.640625,
+      "x": 76.796875,
+      "y": 54
+    },
+    {
+      "at": 1793115839063,
+      "height": 59.4375,
+      "hidden": false,
+      "newOpacity": "0.068608",
+      "oldOpacity": "0",
+      "width": 284.640625,
+      "x": 76.796875,
+      "y": 54
+    },
+    {
+      "at": 1793115839185,
+      "height": 59.4375,
+      "hidden": false,
+      "newOpacity": "0.436404",
+      "oldOpacity": "0",
+      "width": 284.640625,
+      "x": 76.796875,
+      "y": 54
+    },
+    {
+      "at": 1793115839307,
+      "height": 59.4375,
+      "hidden": false,
+      "newOpacity": "0.860281",
+      "oldOpacity": "0",
+      "width": 284.640625,
+      "x": 76.796875,
+      "y": 54
+    },
+    {
+      "at": 1793115839419,
+      "height": 59.4375,
+      "hidden": false,
+      "newOpacity": "1",
+      "oldOpacity": "0",
+      "width": 284.640625,
+      "x": 76.796875,
+      "y": 54
+    },
+    {
+      "at": 1793115839573,
+      "height": 59.4375,
+      "hidden": false,
+      "newOpacity": "1",
+      "oldOpacity": "0",
+      "width": 284.640625,
+      "x": 76.796875,
+      "y": 54
+    },
+    {
+      "at": 1793115839678,
+      "height": 59.4375,
+      "hidden": false,
+      "newOpacity": "1",
+      "oldOpacity": "0",
+      "width": 284.640625,
+      "x": 76.796875,
+      "y": 54
+    },
+    {
+      "at": 1793115839781,
+      "height": 59.4375,
+      "hidden": false,
+      "newOpacity": "1",
+      "oldOpacity": "0",
+      "width": 284.640625,
+      "x": 76.796875,
+      "y": 54
+    },
+    {
+      "at": 1793115839894,
+      "height": 59.4375,
+      "hidden": false,
+      "newOpacity": "1",
+      "oldOpacity": "0",
+      "width": 284.640625,
+      "x": 76.796875,
+      "y": 54
+    },
+    {
+      "at": 1793115840024,
+      "height": 59.4375,
+      "hidden": false,
+      "newOpacity": "1",
+      "oldOpacity": "0",
+      "width": 284.640625,
+      "x": 76.796875,
+      "y": 54
+    }
+  ]
+}

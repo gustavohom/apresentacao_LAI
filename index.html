@@ -15,14 +15,17 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,600&family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css?v=2d288efc81eb" />
+  <link rel="stylesheet" href="style.css?v=013e5def23bf" />
   <link rel="stylesheet" href="projector-theme.css?v=cc93cc03ce25" />
   <link rel="stylesheet" href="slide-overview.css?v=95177ca3dce3" />
-  <link rel="stylesheet" href="foliage-intro.css?v=772aa235b5a1" />
+  <link rel="stylesheet" href="foliage-intro.css?v=b8d4687f226b" />
 </head>
 <body class="no-captions">
 <main id="wrap" inert aria-busy="true">
   <div id="stage" data-scene="bookend" data-slide="1" tabindex="-1">
+    <header id="foliageComparisonHeader" class="foliageHeader" hidden>
+      <h2><span id="sameLaiPrefix">Mesmo <em>LAI</em>,</span><span class="comparisonTitleEnding"><span id="arrangementTitleEnding">diferentes distribuições de <em>LAD</em></span><span id="sizeTitleEnding">diferentes alturas</span></span></h2>
+    </header>
     <svg id="scene" style="opacity:0" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
       <defs>
         <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
@@ -428,14 +431,12 @@
       </section>
 
       <section id="foliageArrangementSlide" class="bookend foliageIntro fx" aria-label="Mesmo LAI, diferentes distribuições de LAD" data-arrangement="equal">
-        <header class="foliageHeader"><h2>Mesmo <em>LAI</em>, diferentes distribuições de <em>LAD</em></h2></header>
         <svg id="arrangementDiagram" viewBox="0 0 1920 1080" role="img" aria-label="Duas árvores com a mesma área foliar e diferentes distribuições verticais de folhas"><g id="arrangementArtwork"></g></svg>
         <p class="foliageTreeLabel arrangementLabel arrangementLeft">Folhas no topo</p>
         <p class="foliageTreeLabel arrangementLabel arrangementRight">Folhas nos estratos</p>
       </section>
 
       <section id="foliageSizeSlide" class="bookend foliageIntro fx" aria-label="Mesmo LAI, diferentes alturas" data-size-phase="equal">
-        <header class="foliageHeader"><h2>Mesmo <em>LAI</em>, diferentes alturas</h2></header>
         <svg id="sizeDiagram" viewBox="0 0 1920 1080" role="img" aria-label="Três árvores de mesma largura, área de solo e área foliar, com alturas diferentes e seus perfis verticais de LAD na mesma escala"><g id="sizeArtwork"></g></svg>
         <p class="foliageTreeLabel sizeLabel sizeLow">Altura menor</p>
         <p class="foliageTreeLabel sizeLabel sizeMiddle">Altura média</p>
@@ -740,13 +741,14 @@
 <script src="shap_data.js?v=5254de7cb7d0"></script>
 <script src="perching-bird.js?v=5c7ccc31222b"></script>
 <script src="closing-life-tree.js?v=4cf7d0e03e5b"></script>
-<script src="cover-ambient.js?v=c1a9720e78ee"></script>
+<script src="cover-ambient.js?v=3c1a9693e1b7"></script>
 <script src="people-clock.js?v=1d56be0c2baa"></script>
 <script src="closing-guest.js?v=71ed1378306e"></script>
-<script src="foliage-intro.js?v=a5cc77399ee1"></script>
+<script src="foliage-intro.js?v=b01d5b0ff724"></script>
 <script src="bookends.js?v=569e7f0e19a9"></script>
 <script src="projector-theme.js?v=d73ce17c23a6"></script>
-<script src="slide-overview.js?v=f0a56baf99a4"></script>
-<script src="main.js?v=68093bbcd991"></script>
+<script src="slide-overview.js?v=cc4c3be25c74"></script>
+<script src="slide-transition.js?v=1134202be452"></script>
+<script src="main.js?v=09e4cc085ba5"></script>
 </body>
 </html>

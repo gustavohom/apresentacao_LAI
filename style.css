@@ -281,6 +281,13 @@ body.no-captions #captions { display: none; }
 #stage[data-scene="bookend"] > :is(.vignette, .grain) { visibility: hidden; }
 #stage[data-scene="science"] .bookend { opacity: 0 !important; visibility: hidden !important; }
 #stage.light-slide { background: #fff; }
+
+/* Rajada de folhas na passagem do recorte para o propósito da pesquisa. */
+#slideTransition { position: absolute; inset: 0; z-index: 20; pointer-events: none; opacity: 0; visibility: hidden; }
+#slideTransition > svg, .transitionBackdrop { position: absolute; inset: 0; width: 100%; height: 100%; }
+.transitionBackdrop { background: radial-gradient(ellipse at 30% 65%, #e8efdde8, transparent 65%), #fff; }
+#slideTransition[data-surface="dark"] .transitionBackdrop { background: radial-gradient(ellipse at 30% 65%, #254f47, #0b2133); }
+.transitionWindLine { fill: none; stroke: #89a671; stroke-width: 2; opacity: .25; stroke-linecap: round; }
 #coverSlide { background: #fff; }
 #coverBirdPerch { display: inline-block; font: inherit; }
 .bookendBirdScene { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 3; pointer-events: none; }

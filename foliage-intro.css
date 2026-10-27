@@ -23,7 +23,17 @@ body.projector .bookend.foliageIntro {
 .foliageReason { display: grid; grid-template-columns: 4cqw 1fr; gap: 1.15cqw; align-items: center; padding: .5cqw 0; }
 .foliageReasonNumber { font: 400 3cqw/1 'Fraunces', serif; color: var(--intro-gold); }
 .foliageReason h3 { font: 600 2.75cqw/1.12 'Outfit', sans-serif; color: var(--intro-ink); }
-#foliageArrangementSlide .foliageHeader h2 { font-size: 4.3cqw; }
+/* Um único título mantém o prefixo imóvel entre a comparação e as alturas. */
+#foliageComparisonHeader {
+  --intro-ink: #fdf8ec; --intro-green: #a4d878;
+  z-index: 6; pointer-events: none; text-shadow: none;
+}
+body.projector #foliageComparisonHeader { --intro-ink: #203c2c; --intro-green: #387344; }
+#foliageComparisonHeader[hidden] { display: none; }
+#foliageComparisonHeader h2 { display: flex; align-items: baseline; gap: .25em; font-size: 4.3cqw; white-space: nowrap; }
+#sameLaiPrefix { flex: none; }
+.comparisonTitleEnding { display: grid; }
+.comparisonTitleEnding > span { grid-area: 1 / 1; }
 .foliageTreeLabel { position: absolute; top: 78%; text-align: center; font: 600 2.65cqw/1.2 'Outfit', sans-serif; color: var(--intro-green); }
 .arrangementLabel { width: 37%; }
 .arrangementLeft { left: 5.98%; }

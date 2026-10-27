@@ -74,6 +74,10 @@
     enter('#foliageImportanceSlide .foliageReasons', 18.6, { y: 0, x: 28 }, .6);
     tl.to('#foliageImportanceSlide', { autoAlpha: 0, duration: .65 }, 26);
 
+    const comparisonHeader = document.querySelector('#foliageComparisonHeader');
+    const arrangementEnding = document.querySelector('#arrangementTitleEnding');
+    const sizeEnding = document.querySelector('#sizeTitleEnding');
+
     // A geometria compartilhada é calculada pelo tempo atual, sem estados herdados de seeks.
     const continuity = document.createElement('div');
     continuity.id = 'foliageContinuity'; continuity.setAttribute('aria-hidden', 'true');
@@ -123,7 +127,6 @@
       profiles.push({ group, bars });
     });
     enter('#foliageArrangementSlide', 26, { y: 0 });
-    enter('#foliageArrangementSlide .foliageHeader', 26.2);
     enter('.arrangementLeft', 27.5);
     enter('.arrangementRight', 31.3);
     tl.to('#foliageArrangementSlide', { autoAlpha: 0, duration: .7 }, 34.2);
@@ -164,7 +167,6 @@
       return { group, bars };
     });
     enter('#foliageSizeSlide', 34.2, { y: 0 });
-    enter('#foliageSizeSlide .foliageHeader', 34.4);
     enter('.sizeLabel', 39.5, { y: 12 }, .6, .08);
     tl.to('#foliageSizeSlide', { autoAlpha: 0, duration: .7 }, 42.2);
     const forestAt = 46 + 183.6;
@@ -176,6 +178,14 @@
       lastTime = time;
       const phase = time >= 26 && time < 34.2 ? 'comparison' : time >= 34.2 && time < 42.2 ? 'heights'
         : time >= forestAt && time < forestAt + 2.8 ? 'forest' : 'off';
+      comparisonHeader.hidden = phase !== 'comparison' && phase !== 'heights';
+      // A entrada do slide 26 é imediata. No 27, apenas os complementos esmaecem.
+      const oldTitleOpacity = 1 - progress(time, 34.2, .25);
+      const newTitleOpacity = progress(time, 34.5, .4);
+      arrangementEnding.style.opacity = String(oldTitleOpacity);
+      arrangementEnding.style.visibility = oldTitleOpacity > 0 ? 'visible' : 'hidden';
+      sizeEnding.style.opacity = String(newTitleOpacity);
+      sizeEnding.style.visibility = newTitleOpacity > 0 ? 'visible' : 'hidden';
       continuity.dataset.phase = phase;
       continuity.style.opacity = phase === 'off' ? '0' : '1';
       continuity.style.visibility = phase === 'off' ? 'hidden' : 'visible';
