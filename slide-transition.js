@@ -34,14 +34,25 @@
         rotation: noise(i + 7) * 180, spin: 170 + noise(i + 8) * 260,
       };
     });
-    let motion = null, generation = 0, running = false;
+    let motion = null, generation = 0, running = false, pendingAdvance = null;
     const cancel = () => {
-      generation++; motion?.kill(); motion = null; running = false;
+      generation++; motion?.kill(); motion = null; running = false; pendingAdvance = null;
       gsap.set(root, { autoAlpha: 0 }); stage.dataset.transition = 'idle';
+    };
+    const advance = () => {
+      const action = pendingAdvance;
+      pendingAdvance = null;
+      action?.();
+    };
+    const finish = () => {
+      const action = pendingAdvance;
+      cancel();
+      action?.();
     };
     const play = action => {
       cancel();
       if (reduced) { action(); return; }
+      pendingAdvance = action;
       const token = generation;
       const wind = { time: 0 };
       const render = () => leaves.forEach(item => {
@@ -64,12 +75,12 @@
       } });
       motion.to(wind, { time: 1.7, duration: 1.7, ease: 'none', onUpdate: render }, 0)
         .to(backdrop, { opacity: 1, duration: .25, ease: 'sine.inOut' }, .3)
-        .call(() => { if (token === generation) action(); }, [], .62)
+        .call(() => { if (token === generation) advance(); }, [], .62)
         .to(backdrop, { opacity: 0, duration: .55, ease: 'sine.out' }, .72)
         .to(lines, { opacity: .28, strokeDashoffset: 0, duration: .65, stagger: .035, ease: 'sine.out' }, .08)
         .to(lines, { opacity: 0, duration: .35, stagger: .025 }, .76);
     };
     cancel();
-    return { play, cancel, isRunning: () => running };
+    return { play, cancel, finish, isRunning: () => running };
   };
 })();

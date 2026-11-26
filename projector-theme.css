@@ -170,24 +170,12 @@ body.projector:not(.beam-focus) #rfImpScene rect[fill="#f79d65"] { fill: #d47a3d
 body.projector:not(.beam-focus) #shapPayoutScene rect[fill="#38d9a9"] { fill: #169b79 !important; }
 body.projector:not(.beam-focus) #shapPayoutScene rect[fill="#ff5c6c"] { fill: #d54662 !important; }
 
-/* Seleção do estrato central: a moldura e o pulso não dependem do preenchimento da copa. */
-#stage[data-scene-slide="14"] #bandLabels > text:nth-child(3) { fill: #ffd76e; font-weight: 700; }
-#stage[data-scene-slide="14"] .layerFocusSurface { animation: selectedLayerPulse 2.2s ease-in-out infinite alternate; }
-@keyframes selectedLayerPulse { from { fill-opacity: .14; } to { fill-opacity: .32; } }
-body.projector:not(.beam-focus) #scene #layerFocus .layerFocusHalo { stroke: #fff !important; }
-body.projector:not(.beam-focus) #scene #layerFocus .layerFocusEdge { stroke: #d29317 !important; }
-body.projector:not(.beam-focus) #scene #layerFocus .layerFocusSurface { fill: #f2bf4e; }
-body.projector:not(.beam-focus) #stage[data-scene-slide="14"] #bandLabels > text:nth-child(3) { fill: #80530e; }
-
 /* Mapa de amostragem: fundo claro e pontos de coleta azuis. A escala do mapa de LAI é preservada. */
 body.projector:not(.beam-focus) #scene #amzFill { fill: #dce9ef; }
 body.projector:not(.beam-focus) #scene #amzBorder { stroke: #5d8294 !important; stroke-width: 2.8; }
 body.projector:not(.beam-focus) #scene #amzDots742 circle { fill: #175f8a; stroke: #fff !important; stroke-width: .6; r: 3.6px; }
 body.projector:not(.beam-focus) #scene #spDot { fill: #246a9b !important; stroke: #fff !important; }
 body.projector:not(.beam-focus) #scene #spHalo { fill: rgba(36, 106, 155, .16); }
-@media (prefers-reduced-motion: reduce) {
-  #stage[data-scene-slide="14"] .layerFocusSurface { animation: none; }
-}
 
 /* Na demonstração do feixe, a iluminação original volta suavemente e os raios mantêm o brilho original. */
 body.projector { transition: background-color 1s ease; }

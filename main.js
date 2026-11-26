@@ -197,19 +197,6 @@
     if (i > 0) sliceEls.push(mk('ellipse', { cx: 0, cy: y, rx: 290, ry: 40, fill: 'none', stroke: '#eaf7d4', 'stroke-width': 2.5, 'stroke-dasharray': '6 6', opacity: 0.85 }, $('#sliceLines')));
   });
 
-  // O estrato central mantém um contorno próprio, visível mesmo com a timeline pausada.
-  const layerFocus = mk('g', { id: 'layerFocus' }, $('#tree'));
-  mk('rect', { x: -290, y: -436, width: 580, height: 72, fill: '#ffd76e', 'fill-opacity': .22, class: 'layerFocusSurface' }, layerFocus);
-  [-436, -364].forEach(y => {
-    mk('ellipse', { cx: 0, cy: y, rx: 290, ry: 40, fill: 'none', stroke: '#fff', 'stroke-width': 7, class: 'layerFocusHalo' }, layerFocus);
-    mk('ellipse', { cx: 0, cy: y, rx: 290, ry: 40, fill: 'none', stroke: '#ffd76e', 'stroke-width': 4, class: 'layerFocusEdge' }, layerFocus);
-  });
-  [-290, 290].forEach(x => {
-    mk('line', { x1: x, x2: x, y1: -436, y2: -364, stroke: '#fff', 'stroke-width': 7, class: 'layerFocusHalo' }, layerFocus);
-    mk('line', { x1: x, x2: x, y1: -436, y2: -364, stroke: '#ffd76e', 'stroke-width': 4, class: 'layerFocusEdge' }, layerFocus);
-  });
-  gsap.set(layerFocus, { autoAlpha: 0 });
-
   // feixe de luz (Beer-Lambert)
   const K = 0.5;
   let cum = 0;
@@ -2108,6 +2095,7 @@
 
   block('#fIAF1', 29.9, 36.2);
   caption('<b>LAI = 5</b>: em média, cada ponto do chão fica sob <b>5 camadas</b> de folhas.', 30.2, 36.2);
+  caption('Neste exemplo, o LAI de 5 significa que há <b>5 m² de folhas</b> para cada metro quadrado de solo.', 36.4, 42);
 
   block('#fIAF2', 36.4, 42);
 
@@ -2123,7 +2111,7 @@
   inOut('#h2', 45.2, 73, { x: -30 });
   tl.fromTo('#envelope', { autoAlpha: 0, scaleY: 0.3, transformOrigin: '50% 50%' }, { autoAlpha: 1, scaleY: 1, duration: 1.1, ease: 'power3.out' }, 45.8);
   inOut('#volLabel', 46.8, 72.8, { x: -16 });
-  caption('Em vez do chão, olhamos para o <b>volume ocupado pela copa</b>: 50 m³.', 45.6, 50);
+  caption('Agora a medida é pelo <b>volume da copa</b>. Neste exemplo, ela ocupa 50 m³.', 45.6, 50);
 
   tl.to(['#leaves', '#leavesBack'], { opacity: 0.3, duration: 0.8 }, 50)
     .to(['#blobs', '#blobsBack'], { opacity: 0.45, duration: 0.8 }, 50)
@@ -2161,48 +2149,44 @@
   tl.fromTo(labelEls, { autoAlpha: 0, x: -20 }, { autoAlpha: 1, x: 0, duration: 0.5, stagger: 0.3, ease: 'power3.out' }, 75.2);
 
   caption('No miolo da copa as folhas se concentram; no topo e na base, são mais esparsas.', 78.4, 83);
-  tl.to(labelEls[2], { scale: 1.2, duration: 0.4, repeat: 3, yoyo: true, transformOrigin: '0% 50%', ease: 'sine.inOut' }, 79.2)
-    .to(bandEls[2], { attr: { 'fill-opacity': 0.75 }, duration: 0.4, repeat: 3, yoyo: true, ease: 'sine.inOut' }, 79.2);
-  tl.to(layerFocus, { autoAlpha: 1, duration: .4 }, 78.7)
-    .to(layerFocus, { autoAlpha: 0, duration: .3 }, 83);
 
   tl.to(labelEls, { autoAlpha: 0.15, duration: 0.4 }, 83);
   block('#fLink1', 83.2, 91.2);
-  caption('Multiplicando o <b>LAD</b> pela espessura <b>0,5 m</b> de cada estrato e somando, voltamos ao <b>LAI = 5</b>!', 83.4, 91.2);
-
-  block('#fLink2', 91.4, 99);
-  caption('Ou de forma direta: <b>LAD médio × altura da copa</b> = 2 × 2,5 m = <b>5</b>.', 91.6, 99);
+  caption('Multiplique o <b>LAD</b> de cada camada por <b>0,5 m</b> e some as parcelas. O resultado é <b>LAI = 5</b>.', 83.4, 91.2);
 
   /* ---- Saída das relações entre LAI e LAD ---- */
   tl.to(['#envelope', '#bands', '#sliceLines', '#bandLabels'], { autoAlpha: 0, duration: 0.6 }, 99)
     .to(labelEls, { autoAlpha: 0, duration: 0.4 }, 99);
 
   /* ---- CENA 6 · Lei de Beer-Lambert (107.5–134 s) ---- */
-  tl.to('#tree', { x: TREE_X, duration: 1.6, ease: 'power3.inOut' }, 107.5)
-    .to('#sun', { x: TREE_X, y: 130, duration: 1.8, ease: 'power2.inOut' }, 107.5);
-  inOut('#h4', 108, 134, { x: -30 });
-  caption('A luz do sol nos ajuda: medimos quanta luz <b>atravessa</b> a copa.', 108.4, 112.4);
-  tl.to(['#envelope', '#sliceLines'], { autoAlpha: 0.55, duration: 0.8 }, 109.4);
+  const beamStart = 107.5;
+  const beamSpeed = 1.5;
+  const beamTime = time => beamStart + (time - beamStart) / beamSpeed;
+  tl.to('#tree', { x: TREE_X, duration: 1.6 / beamSpeed, ease: 'power3.inOut' }, beamStart)
+    .to('#sun', { x: TREE_X, y: 130, duration: 1.8 / beamSpeed, ease: 'power2.inOut' }, beamStart);
+  inOut('#h4', beamTime(108), 134, { x: -30 });
+  caption('Acompanhe o feixe do sol. Quanta luz consegue <b>atravessar</b> a copa?', beamTime(108.4), beamTime(112.4));
+  tl.to(['#envelope', '#sliceLines'], { autoAlpha: 0.55, duration: 0.8 / beamSpeed }, beamTime(109.4));
 
-  caption('Cada camada de folhas absorve parte da luz: ela diminui de forma <b>exponencial</b>.', 112.4, 117.8);
-  tl.to(beamSegs[0], { scaleY: 1, duration: 0.6, ease: 'power1.in' }, 112.8)
-    .to(beamLbls[0], { autoAlpha: 1, duration: 0.5 }, 112.9);
+  caption('Cada camada deixa passar só parte da luz que recebe. A próxima já recebe menos.', beamTime(112.4), beamTime(117.8));
+  tl.to(beamSegs[0], { scaleY: 1, duration: 0.6 / beamSpeed, ease: 'power1.in' }, beamTime(112.8))
+    .to(beamLbls[0], { autoAlpha: 1, duration: 0.5 / beamSpeed }, beamTime(112.9));
   for (let i = 1; i <= 5; i++) {
-    tl.to(beamSegs[i], { scaleY: 1, duration: 0.5, ease: 'none' }, 113.3 + (i - 1) * 0.7)
-      .fromTo(beamLbls[i], { autoAlpha: 0, x: -16 }, { autoAlpha: 1, x: 0, duration: 0.4, ease: 'power3.out' }, 113.5 + (i - 1) * 0.7);
+    tl.to(beamSegs[i], { scaleY: 1, duration: 0.5 / beamSpeed, ease: 'none' }, beamTime(113.3 + (i - 1) * 0.7))
+      .fromTo(beamLbls[i], { autoAlpha: 0, x: -16 }, { autoAlpha: 1, x: 0, duration: 0.4 / beamSpeed, ease: 'power3.out' }, beamTime(113.5 + (i - 1) * 0.7));
   }
-  tl.to(beamSegs[6], { scaleY: 1, duration: 0.6, ease: 'power1.out' }, 116.8)
-    .to(beamSpot, { scale: 1, duration: 0.5, ease: 'back.out(2)' }, 117.3)
-    .fromTo(beamLbls[6], { autoAlpha: 0, x: -16 }, { autoAlpha: 1, x: 0, duration: 0.5, ease: 'power3.out' }, 117.4);
-  caption('No chão chega só <b>8%</b> da luz que bateu no topo da copa.', 117.8, 120.6);
+  tl.to(beamSegs[6], { scaleY: 1, duration: 0.6 / beamSpeed, ease: 'power1.out' }, beamTime(116.8))
+    .to(beamSpot, { scale: 1, duration: 0.5 / beamSpeed, ease: 'back.out(2)' }, beamTime(117.3))
+    .fromTo(beamLbls[6], { autoAlpha: 0, x: -16 }, { autoAlpha: 1, x: 0, duration: 0.5 / beamSpeed, ease: 'power3.out' }, beamTime(117.4));
+  caption('No chão chega só <b>8%</b> da luz que bateu no topo da copa.', beamTime(117.8), 120.6);
 
   tl.to(beamLbls.slice(1, 6), { autoAlpha: 0.15, duration: 0.5 }, 120.6);
 
   block('#fBL1', 120.6, 127.4);
-  caption('Pela <b>Lei de Beer-Lambert</b>, invertemos a equação para achar <b>LAI ≈ 5</b>.', 120.8, 127.4);
+  caption('Coloque na equação a fração de luz que passou. Pela <b>lei de Beer–Lambert</b>, o LAI fica perto de <b>5</b>.', 120.8, 127.4);
 
   block('#fBL2', 127.6, 134);
-  caption('Sensores como o <b>LAI-2200</b> e fotos hemisféricas usam esse princípio óptico.', 127.8, 134);
+  caption('Repare no <b>k</b> da equação. Para a mesma área de folhas, um k maior deixa passar menos luz.', 127.8, 134);
 
   /* ---- CENA 7 · LiDAR na árvore (134–183 s) ---- */
   tl.to([...beamSegs, beamSpot], { scaleY: 0, duration: 0.6, transformOrigin: '50% 100%', ease: 'power2.in' }, 133.6)
@@ -2211,45 +2195,49 @@
     .to('#sun', { x: 130, y: 160, duration: 1.8 }, 134);
   inOut('#h5', 134.2, 183, { x: -30 });
   caption('O <b>LiDAR</b> segue a mesma ideia, mas troca a luz do sol por <b>pulsos de laser</b>.', 134.6, 138.6);
-  tl.to('#drone', { x: SWEEP_X0, duration: 2.6, ease: 'power2.out' }, 135.2);
+  const droneStepDuration = 3;
+  const droneSweepSpeed = 8.3 / droneStepDuration;
+  const droneSweepStart = 138.8;
+  const droneSweepTime = offset => droneSweepStart + offset / droneSweepSpeed;
+  const droneSweepDuration = 5 / droneSweepSpeed;
+  tl.to('#drone', { x: SWEEP_X0, duration: 2.6 / 1.4, ease: 'power2.out' }, 135.2);
   inOut('#lidarCount', 137.6, 148.2, { y: 20 });
 
-  caption('Nesta varredura, contamos <b>100 retornos</b>: <b>92 na copa</b> e <b>8 do solo</b>.', 138.6, 144);
-  const SWEEP_T0 = 138.8, SWEEP_DUR = 5;
-  tl.to('#drone', { x: SWEEP_X1, duration: SWEEP_DUR, ease: 'none' }, SWEEP_T0);
+  caption('Acompanhe a contagem da varredura. Dos <b>100 retornos</b>, 92 vêm da copa e 8 vêm do chão.', 138.6, droneSweepTime(5.2));
+  tl.to('#drone', { x: SWEEP_X1, duration: droneSweepDuration, ease: 'none' }, droneSweepStart);
   returnSamples.forEach((p, i) => {
-    const t = SWEEP_T0 + (i * SWEEP_DUR) / RETURN_COUNT;
-    tl.fromTo(p.line, { opacity: 0 }, { opacity: 0.9, duration: 0.04, ease: 'none' }, t)
-      .to(p.dot, { scale: 1, duration: 0.25, ease: 'back.out(3)' }, t + 0.05)
-      .to(p.line, { opacity: 0, duration: 0.3, ease: 'power1.out' }, t + 0.1);
+    const offset = i * 5 / RETURN_COUNT;
+    tl.fromTo(p.line, { opacity: 0 }, { opacity: 0.9, duration: 0.04 / droneSweepSpeed, ease: 'none' }, droneSweepTime(offset))
+      .to(p.dot, { scale: 1, duration: 0.25 / droneSweepSpeed, ease: 'back.out(3)' }, droneSweepTime(offset + 0.05))
+      .to(p.line, { opacity: 0, duration: 0.3 / droneSweepSpeed, ease: 'power1.out' }, droneSweepTime(offset + 0.1));
   });
   const counter = { n: 0 };
   const lcT = $('#lcTotal'), lcC = $('#lcCanopy'), lcG = $('#lcGround');
   tl.fromTo(counter, { n: 0 }, {
-    n: RETURN_COUNT, duration: SWEEP_DUR, ease: 'none',
+    n: RETURN_COUNT, duration: droneSweepDuration, ease: 'none',
     onUpdate: () => {
       const k = Math.min(RETURN_COUNT, Math.floor(counter.n + 0.0001));
       lcT.textContent = k; lcG.textContent = groundCum[k]; lcC.textContent = k - groundCum[k];
     },
-  }, SWEEP_T0);
+  }, droneSweepStart);
 
-  caption('Cada retorno vira um ponto: surge a <b>nuvem de pontos</b> da árvore.', 144, 148);
-  tl.to([...CROWN, '#wood'], { opacity: 0.12, duration: 1.2 }, 144.3)
-    .to('#drone', { x: 2150, y: 90, duration: 2, ease: 'power2.in' }, 145);
+  caption('Cada retorno vira um ponto. Juntos, eles desenham a <b>nuvem de pontos</b> da árvore.', droneSweepTime(5.2), 148);
+  tl.to([...CROWN, '#wood'], { opacity: 0.12, duration: 1.2 / droneSweepSpeed }, droneSweepTime(5.5))
+    .to('#drone', { x: 2150, y: 90, duration: 2 / droneSweepSpeed, ease: 'power2.in' }, droneSweepTime(6.2));
 
   block('#fLidar1', 148.4, 158.6);
-  caption('Neste exemplo, a razão entre <b>retornos do solo</b> e <b>total de retornos</b> é <b>0,08</b> — resultando em <b>LAI ≈ 5</b>.', 148.4, 158.6);
+  caption('Divida os <b>8 retornos do solo</b> pelos 100 da varredura. A fração é 0,08 e dá um <b>LAI próximo de 5</b>.', 148.4, 158.6);
   tl.to(groundDots, { scale: 1.8, duration: 0.35, repeat: 3, yoyo: true, stagger: 0.05, ease: 'sine.inOut' }, 148.8);
 
   tl.to(['#envelope', '#sliceLines'], { autoAlpha: 1, duration: 0.8 }, 159);
   inOut('#heightDim', 159.2, 183, { x: 16 });
-  tl.fromTo(lidarCalcEls, { autoAlpha: 0, x: -20 }, { autoAlpha: 1, x: 0, duration: 0.6, stagger: 0.28, ease: 'power3.out' }, 159.6);
-  caption('Em cada estrato de <b>0,5 m</b>, multiplicamos o <b>LAD por 0,5 m</b> para obter o <b>LAI da camada</b>.', 159.4, 170.5);
-  tl.to(lidarCalcEls, { scale: 1.08, duration: 0.35, repeat: 1, yoyo: true, stagger: 0.15, transformOrigin: '0% 50%' }, 161.5);
+  tl.to(lidarCalcEls, { autoAlpha: 1, duration: 0.28, ease: 'power1.out' }, 159.6);
+  caption('Agora olhe para cada camada. O <b>LAD vezes 0,5 m</b> dá a contribuição daquela camada para o LAI.', 159.4, 170.5);
 
   tl.to(lidarCalcEls, { autoAlpha: 0.18, duration: 0.5 }, 170.8);
   block('#fLidar2', 171, 183);
-  caption('Somando todas as camadas, temos <b>LAI = 5,0</b> — base de métodos como <b>MacArthur-Horn</b> e <b>voxels</b>.', 171.2, 183);
+  caption('Some as contribuições do topo até a base da copa. Juntas, as cinco parcelas dão <b>LAI = 5,0</b>.', 171.2, 177.3);
+  caption('O LAD mostra como as folhas se distribuem com a altura. A soma dá a <b>área de folhas por área de solo</b>.', 177.3, 183);
 
   /* ================= CENA 8 · PROJETO EBA: TRANSECTO 3D 12 KM × 300 M (183–207 s) ================= */
   // Transição da árvore única para a floresta amazônica em 3D
@@ -2269,14 +2257,20 @@
       { autoAlpha: 1, x: 100, y: 340, duration: .7, ease: 'power2.out' }, 186.8);
   inOut('#transectDims', 186.0, 196.5, { y: 14 });
   block('#fEBA1', 185.9, 196.5);
-  caption('Transecto do Projeto EBA: <b>12 km de comprimento × 300 m de largura</b>.', 184.2, 187.9);
+  caption('Da copa de uma árvore, passe para a faixa inteira. Esta tem <b>12 km</b> de comprimento e <b>300 m</b> de largura.', 184.2, 187.9);
 
   // A pausa em 187,7 s exige outro clique para iniciar a varredura.
-  tl.to(['#planeBeam', '#planeScanLine'], { autoAlpha: 1, duration: .18 }, 187.95)
-    .to('#airplane', { x: 880, y: 545, duration: 4.4, ease: 'none' }, 187.95)
-    .to(tPtEls, { scale: 1, duration: .25, stagger: { amount: 4.0 }, ease: 'back.out(2.5)' }, 188.15)
-    .to('#airplane', { autoAlpha: 0, x: 1100, y: 600, duration: .8, ease: 'power1.in' }, 192.35);
-  caption('Durante o sobrevoo, os <b>retornos LiDAR</b> descrevem a estrutura da floresta.', 187.95, 196.5);
+  const planeSweepSpeed = 1.7;
+  const planeSweepStart = 187.8;
+  const planeSweepTime = offset => planeSweepStart + offset / planeSweepSpeed;
+  const planeScanStart = planeSweepTime(.15);
+  const planeScanEnd = planeSweepTime(3.85);
+  tl.to(['#planeBeam', '#planeScanLine'], { autoAlpha: 1, duration: .18 / planeSweepSpeed }, planeScanStart)
+    .to('#airplane', { x: 880, y: 545, duration: planeScanEnd - planeScanStart, ease: 'none' }, planeScanStart)
+    .to(tPtEls, { scale: 1, duration: .25 / planeSweepSpeed, stagger: { amount: 3.3 / planeSweepSpeed }, ease: 'back.out(2.5)' }, planeSweepTime(.35))
+    .to('#airplane', { autoAlpha: 0, x: 1100, y: 600, duration: .8 / planeSweepSpeed, ease: 'power1.in' }, planeScanEnd);
+  caption('Enquanto o avião avança, os retornos do laser desenham a altura da vegetação ao longo da faixa.', planeScanStart, planeScanEnd);
+  caption('Juntos, os retornos da faixa servem para estimar <b>um LAI</b> para o transecto inteiro.', planeScanEnd, 196.5);
 
   // Slide 22: O transecto inteiro se contrai em um único ponto resumido com um LAI
   tl.to(tPtEls, { attr: { cx: 610, cy: 615 }, duration: 1.2, stagger: { amount: 0.35 }, ease: 'power3.inOut' }, 197)
@@ -2285,7 +2279,8 @@
     .fromTo('#singlePointTag', { autoAlpha: 0, y: 20 }, { autoAlpha: 1, y: 0, duration: 0.6, ease: 'power3.out' }, 198.5);
 
   block('#fEBA2', 198.4, 207);
-  caption('Todo o transecto de <b>12 km × 300 m</b> vira <b>um único ponto</b> no mapa, resumido por seu valor de <b>LAI</b>.', 197.2, 207);
+  caption('Veja a faixa virar um ponto no mapa. A posição é a do <b>centro da faixa</b>, e o LAI resume a faixa inteira.', 197.2, 202.3);
+  caption('É nessa posição que a área foliar da faixa se liga aos dados de chuva, solo e relevo.', 202.3, 207);
 
   /* ================= CENA 9 · 742 TRANSECTOS, 16 VARIÁVEIS, PILHA E TABELAS ABSTRATAS ================= */
   // Transição bonita do Slide 22 para o 23:
@@ -2325,7 +2320,8 @@
     }, 209.85);
 
   block('#fAmz742', 209.0, 219.5);
-  caption('O ponto do transecto é posicionado no <b>Bioma Amazônia</b> — seguido pelos demais, totalizando <b>742 pontos amostrais</b>.', 207.6, 219.5);
+  caption('Cada faixa vira um ponto. O desenho mostra como se distribuem as faixas. A análise usou <b>742 transectos</b>.', 207.6, 213.7);
+  caption('Repare nos espaços entre os pontos. Para estimar o LAI ali, entram em cena os dados ambientais.', 213.7, 219.5);
 
   // Slide 24: Apresenta o 1º estrato (Transecto) e a lista ampla das 16 variáveis ambientais
   tl.to('#amzVectorGroup', { autoAlpha: 0, duration: 0.6 }, 219.6)
@@ -2334,7 +2330,7 @@
 
   tl.fromTo('#sliceTransecto', { autoAlpha: 0, y: -30 }, { autoAlpha: 1, y: 0, duration: 0.7, ease: 'back.out(1.6)' }, 220.2)
     .fromTo(varItemEls, { autoAlpha: 0, x: 24 }, { autoAlpha: 1, x: 0, duration: 0.45, stagger: 0.06, ease: 'power3.out' }, 220.4);
-  caption('Para modelar o LAI na Amazônia, utilizamos <b>16 variáveis ambientais</b>.', 220.2, 224.8);
+  caption('Estas são as <b>16 variáveis</b> que acompanham cada faixa. Entre elas estão chuva, temperatura, relevo e solo.', 220.2, 224.8);
 
   // Slide 25: Cada nome de variável é sugado para a pilha e se torna uma variável preditora sob o Transecto
   varItemEls.forEach((el, i) => {
@@ -2353,7 +2349,8 @@
       }, t0 + 0.36);
   });
   block('#fStackDone', 228.0, 233.5);
-  caption('As <b>16 variáveis ambientais</b> se tornam <b>variáveis preditoras</b> empilhadas sob o <b>Transecto</b>.', 225.2, 233.5);
+  caption('Imagine cada variável em uma folha de mapa. Na pilha, a mesma posição corresponde ao mesmo lugar.', 225.2, 230.2);
+  caption('Na mesma posição da pilha, ficam a chuva, o relevo e os outros dados daquele lugar.', 230.2, 233.5);
 
   // Slide 26: Um ponto surge no centro do Transecto, atravessa todas as 16 camadas (acendendo os 16 pontos!) e gera a tabelinha abstrata
   tl.fromTo('#ptCenter', { autoAlpha: 0, scale: 0, transformOrigin: '50% 50%' }, { autoAlpha: 1, scale: 1, duration: 0.5, ease: 'back.out(2.5)' }, 233.8)
@@ -2366,7 +2363,8 @@
     .to(singleCells, { scale: 1, duration: 0.28, stagger: 0.04, ease: 'back.out(2)' }, 235.8);
 
   block('#fDrill1', 235.6, 243.0);
-  caption('O <b>ponto central do transecto</b> atravessa todas as <b>16 variáveis preditoras</b> e gera uma linha da tabela.', 233.8, 243.0);
+  caption('Siga o <b>ponto central da faixa</b> enquanto ele atravessa a pilha. Cada camada entrega um valor.', 233.8, 238.2);
+  caption('O LAI e os <b>16 valores ambientais</b> dessa faixa entram na mesma linha da tabela.', 238.2, 243.0);
 
   // Slide 27: O topo mostra vários mini-transectos separados (1 ponto por transecto!) atravessando as 16 camadas e gerando a tabela completa
   tl.to(['#tableSingleG', '#singleDrillG', '#ptCenter', '#sliceTransecto'], { autoAlpha: 0, duration: 0.45 }, 243.1)
@@ -2377,7 +2375,8 @@
     .to(fullRowEls, { autoAlpha: 1, y: 0, duration: 0.35, stagger: 0.08, ease: 'power2.out' }, 244.6);
 
   block('#fDrillAll', 244.6, 255.0);
-  caption('Repetindo para os <b>742 transectos (1 ponto por transecto)</b>, geramos a tabela com o <b>ID do transecto</b> e os valores capturados.', 243.4, 255.0);
+  caption('O processo se repete faixa por faixa. Com <b>742 transectos</b>, a tabela ganha 742 linhas.', 243.4, 249.4);
+  caption('Em cada linha ficam lado a lado o LAI da faixa e as condições ambientais daquele ponto.', 249.4, 255.0);
 
   /* ================= CENA 10 · RANDOM FOREST, RESULTADOS, SHAP E MAPA FINAL DE LAI ================= */
   tl.to('#envStack', { autoAlpha: 0, duration: 0.55 }, 255)
@@ -2409,7 +2408,8 @@
       .to(rfPredBadges[idx], { autoAlpha: 1, y: 0, duration: 0.75, ease: 'sine.out' }, t0 + 1.8);
   });
 
-  caption('O <b>Random Forest</b> cria centenas de <b>árvores de decisão</b> independentes, cada uma gerando uma estimativa de <b>LAI</b>.', 255.4, 262.1);
+  caption('Siga um ramo da árvore de decisão. Cada pergunta usa uma variável para separar as amostras em dois grupos.', 255.4, 259.4);
+  caption('No fim do ramo, a árvore dá uma estimativa de <b>LAI</b> para aquele ponto.', 259.4, 262.1);
 
   // Slide 29 (NOVO CLIQUE): As árvores recuam, as 3 predições sobem e o Resultado Final aparece expandido no centro da tela!
   const rfStems = rfPredBadges.map((b) => b._stem);
@@ -2420,7 +2420,7 @@
     .to(rfOutCurves, { strokeDashoffset: 0, opacity: 0.9, duration: 0.7, stagger: 0.1, ease: 'sine.inOut' }, 263.1)
     .to(rfFinalNodeG, { autoAlpha: 1, scale: 1, duration: 0.85, ease: 'back.out(1.3)' }, 263.3);
 
-  caption('Combinando a <b>média de todas as árvores</b> da floresta, obtemos o <b>valor final predito de LAI</b>!', 262.5, 269.5);
+  caption('Cada árvore dá um valor. A média dessas estimativas é a previsão do <b>Random Forest</b>.', 262.5, 269.5);
 
   // ================= SLIDE 30: AS 5 VARIÁVEIS MAIS IMPORTANTES DO RANDOM FOREST (269.6–281 s) =================
   tl.to('#rfAnimScene', { autoAlpha: 0, duration: 0.6, ease: 'sine.inOut' }, 269.6)
@@ -2438,7 +2438,8 @@
       onUpdate: () => { item.el.textContent = obj.v.toFixed(2).replace('.', ','); },
     }, 270.4 + i * 0.16);
   });
-  caption('<b>Precipitação Anual (37,81)</b> e <b>Evapotranspiração Potencial (37,53)</b> lideram a importância no Random Forest.', 270.2, 281.0);
+  caption('Repare nas duas maiores barras. A <b>precipitação anual</b> e a <b>evapotranspiração potencial</b> ficaram no topo.', 270.2, 275.8);
+  caption('Essas barras mostram quais variáveis pesaram mais nas previsões do modelo.', 275.8, 281.0);
 
   // ================= SLIDE 31: VALORES OBSERVADOS DE LAI (281–291 s) =================
   tl.to('#rfImpScene', { autoAlpha: 0, duration: 0.6, ease: 'sine.inOut' }, 281.1)
@@ -2451,7 +2452,8 @@
     .to(obsCurvePath[1], { autoAlpha: 1, duration: 0.8, ease: 'sine.out' }, 282.4)
     .to(obsConcG, { autoAlpha: 1, duration: 0.75, ease: 'sine.out' }, 282.7);
 
-  caption('Os valores observados de <b>LAI</b> variaram de <b>0,39 a 4,61</b>, com maior concentração entre <b>3,0 e 3,75</b>.', 281.7, 291.0);
+  caption('Veja as pontas da distribuição. Nas faixas do LiDAR, o LAI vai de <b>0,39 a 4,61</b>.', 281.7, 286.0);
+  caption('Os valores se concentram entre <b>3,0 e 3,75</b>. Há menos observações nas pontas do gráfico.', 286.0, 291.0);
 
   // ================= SLIDE 32: DESEMPENHO DO MODELO RANDOM FOREST (291–301 s) =================
   tl.to('#rfObsScene', { autoAlpha: 0, duration: 0.6, ease: 'sine.inOut' }, 291.1)
@@ -2460,7 +2462,8 @@
 
   tl.to(perfCards, { autoAlpha: 1, y: 0, duration: 0.75, stagger: 0.18, ease: 'sine.out' }, 291.8);
 
-  caption('O modelo <b>Random Forest</b> apresentou desempenho moderado na predição do LAI: <b>R² = 0,60</b>, <b>RMSE = 0,44</b> e <b>MAE = 0,32</b>.', 291.7, 301.0);
+  caption('Imagine separar um grupo de faixas para o teste. O LAI previsto é comparado ao de referência. O <b>R² foi de 0,60</b>.', 291.7, 296.4);
+  caption('O <b>RMSE foi de 0,44</b>, e o erro absoluto médio, de <b>0,32</b>. O desempenho foi moderado.', 296.4, 301.0);
 
   // ================= SLIDE 33: SHAP PARTE 1 — TEORIA DOS JOGOS COOPERATIVOS (301–311 s) =================
   tl.to('#rfPerfScene', { autoAlpha: 0, duration: 0.6, ease: 'sine.inOut' }, 301.1)
@@ -2472,7 +2475,8 @@
     .to(shapPlayerLines, { strokeDashoffset: 0, opacity: 0.9, duration: 0.7, stagger: 0.1, ease: 'sine.inOut' }, 302.4)
     .to(shapCoalitionBox, { autoAlpha: 1, scale: 1, duration: 0.75, ease: 'back.out(1.4)' }, 302.8);
 
-  caption('O <b>SHAP</b> usa a <b>Teoria dos Jogos Cooperativos</b>: as 16 variáveis são <b>jogadores</b> que se unem para predizer o LAI.', 301.7, 311.0);
+  caption('Imagine cada variável como uma jogadora. Todas participam de uma mesma previsão de <b>LAI</b>.', 301.7, 306.1);
+  caption('O <b>SHAP</b> estima a parte de cada jogadora na diferença entre a previsão e o valor de referência.', 306.1, 311.0);
 
   // ================= SLIDE 34: SHAP PARTE 2 — CONTRIBUIÇÃO DE CADA VARIÁVEL NO LAI (311–321 s) =================
   tl.to('#shapTheoryScene', { autoAlpha: 0, duration: 0.6, ease: 'sine.inOut' }, 311.1)
@@ -2484,7 +2488,7 @@
     .to(shapPayoutBars, { scaleX: 1, duration: 0.75, stagger: 0.14, ease: 'power3.out' }, 312.3)
     .to(shapPayoutCards, { autoAlpha: 1, y: 0, duration: 0.65, stagger: 0.15, ease: 'sine.out' }, 312.9);
 
-  caption('Cada variável empurra a predição para cima (<b style="color:#38d9a9">SHAP &gt; 0</b>) ou para baixo (<b style="color:#ff5c6c">SHAP &lt; 0</b>).', 311.7, 321.0);
+  caption('Acima de zero, a contribuição empurra a previsão para cima. Abaixo de zero, empurra para baixo.', 311.7, 321.0);
 
   // ================= SLIDE 35: EXEMPLO REAL EM TELA CHEIA — PRECIPITAÇÃO ANUAL (321–334 s) =================
   tl.to('#shapPayoutScene', { autoAlpha: 0, duration: 0.6, ease: 'sine.inOut' }, 321.1)
@@ -2520,7 +2524,8 @@
       .to(shapTransitionEls[1].dropLine, { scaleY: 1, duration: 0.6, ease: 'power2.out' }, 325.95)
       .to(shapTransitionEls[1].badgeG, { autoAlpha: 1, y: 0, duration: 0.6, ease: 'back.out(1.6)' }, 326.05);
   }
-  caption('Na <b>Precipitação Anual</b>, os dois pontos de transição (<b>≈ 2.080 mm</b> e <b>≈ 3.460 mm</b>) marcam a passagem entre efeito negativo e positivo.', 321.7, 334.0);
+  caption('Acompanhe a curva à medida que aumenta a <b>precipitação anual</b>. A contribuição muda junto com ela.', 321.7, 325.8);
+  caption('Perto de <b>2.080</b> e <b>3.460 mm por ano</b>, a curva cruza o zero. Nesses pontos, a contribuição troca de sinal.', 325.8, 334.0);
 
   // ================= SLIDES 36 A 39: AS 16 VARIÁVEIS EM 4 SLIDES AMPLOS (2x2 EM FUNDO BRANCO) =================
   tl.to('#shapSingleScene', { autoAlpha: 0, duration: 0.55, ease: 'sine.inOut' }, 334.1)
@@ -2528,10 +2533,10 @@
   inOut('#h10Grid', 334.5, 378.5, { x: -30 });
 
   const pageCaptions = [
-    'Curvas de dependência <b>SHAP</b> (1/4): <b>FAPAR</b>, <b>Elevação</b>, <b>Vento Zonal</b> e <b>Vento Meridional</b>.',
-    'Curvas de dependência <b>SHAP</b> (2/4): <b>Dias Limpos</b>, <b>Dias &gt; 20 mm</b>, <b>Raios</b> e <b>Precipitação Anual</b>.',
-    'Curvas de dependência <b>SHAP</b> (3/4): <b>Evap. Potencial</b>, <b>Sazonalidade da Prec.</b>, <b>Prec. Mês Máximo</b> e <b>Temp. Média</b>.',
-    'Curvas de dependência <b>SHAP</b> (4/4): <b>Sazonalidade Temp.</b>, <b>Temp. Máxima</b>, <b>Teor de Argila</b> e <b>Teor de Água</b>.',
+    ['A <b>fAPAR</b> é a fração da luz útil à fotossíntese que a vegetação absorve. A curva cruza o zero perto de 83%.', 'Compare as curvas do vento. Uma mostra o componente <b>leste–oeste</b>, e a outra, o <b>norte–sul</b>.'],
+    ['Na curva de <b>chuvas intensas</b>, repare no trecho do meio. Ali, a contribuição para o LAI previsto é positiva.', 'As curvas de dias limpos e de raios oscilam mais. Quando ficam perto de zero, a contribuição é pequena.'],
+    ['Siga a curva da <b>evapotranspiração potencial</b>. À medida que a demanda atmosférica por água sobe, a contribuição cai.', 'O mês mais úmido mostra o pico de chuva. A sazonalidade mostra como a chuva se distribui ao longo do ano.'],
+    ['Na curva da <b>argila</b>, os menores teores têm contribuições mais negativas. No meio do gráfico, a curva se aproxima de zero.', 'Já a curva de <b>água no solo</b> sobe e desce de forma mais irregular.'],
   ];
 
   shapGridPages.forEach((pg, pIdx) => {
@@ -2563,7 +2568,9 @@
         .to(sp.areaEl, { autoAlpha: 1, duration: 0.55, ease: 'sine.out' }, t0 + 1.45);
     });
 
-    caption(pageCaptions[pIdx], tStart, tStart + 10.4);
+    const [opening, continuation] = pageCaptions[pIdx];
+    caption(opening, tStart, tStart + 5.2);
+    caption(continuation, tStart + 5.2, tStart + 10.4);
   });
 
   // ================= SLIDE 40: LISTA DAS 16 VARIÁVEIS PARA EXTRAPOLAR NA AMAZÔNIA (378.5–383.5 s) =================
@@ -2573,7 +2580,7 @@
 
   tl.fromTo(amzTopSliceG, { autoAlpha: 0, y: -26 }, { autoAlpha: 1, y: 0, duration: 0.7, ease: 'back.out(1.6)' }, 379.2)
     .fromTo(amzVarItemEls, { autoAlpha: 0, x: 24 }, { autoAlpha: 1, x: 0, duration: 0.45, stagger: 0.06, ease: 'power3.out' }, 379.4);
-  caption('Para extrapolar o modelo para toda a <b>Amazônia</b>, reunimos novamente as <b>16 variáveis ambientais</b>.', 379.2, 383.5);
+  caption('Agora olhe além das faixas de voo. As mesmas <b>16 variáveis</b> dão ao modelo informações sobre esses lugares.', 379.2, 383.5);
 
   // ================= SLIDE 41: CADA VARIÁVEL É SUGADA E VIRA UMA CAMADA COM O FORMATO DA AMAZÔNIA (384–392 s) =================
   amzVarItemEls.forEach((el, i) => {
@@ -2591,7 +2598,7 @@
         autoAlpha: 1, y: 0, scale: 1, duration: 0.44, ease: 'back.out(1.8)',
       }, t0 + 0.36);
   });
-  caption('As <b>16 variáveis ambientais</b> se transformam em <b>camadas contínuas no formato do Bioma Amazônia</b>.', 384.0, 392.0);
+  caption('Esta pilha cobre a Amazônia brasileira. Em cada célula, os <b>16 mapas</b> descrevem o mesmo lugar.', 384.0, 392.0);
 
   // ================= SLIDE 42: PROCESSAMENTO DO MODELO RANDOM FOREST TREINADO (392.5–403 s) =================
   const predProg = { pct: 0 };
@@ -2608,7 +2615,8 @@
     }, 393.2)
     .to(amzPredDoneBadge, { autoAlpha: 1, scale: 1, duration: 0.6, ease: 'back.out(1.8)' }, 395.1);
 
-  caption('O modelo <b>Random Forest</b> treinado processa as <b>16 camadas da Amazônia</b> para estimar o LAI em toda a região.', 392.6, 403.0);
+  caption('Cada célula entrega seus valores ao <b>Random Forest</b>. O modelo devolve uma estimativa de LAI para aquele lugar.', 392.6, 398.1);
+  caption('Célula após célula, as previsões preenchem a grade de <b>100 m</b>.', 398.1, 403.0);
 
   // ================= SLIDE 43: MAPA CONTÍNUO DE LAI DA AMAZÔNIA GERADO DO LAI.TIF (403.5–416 s) =================
   tl.to('#amzPredScene', { autoAlpha: 0, duration: 0.65, ease: 'sine.inOut' }, 403.1);
@@ -2618,23 +2626,40 @@
     .fromTo(amzLegendG, { autoAlpha: 0, x: -507, y: -20 }, { autoAlpha: 1, x: -507, y: -20, duration: 0.8, ease: 'power2.out' }, 404.0)
     .to(amzMapNoteG, { autoAlpha: 1, y: 0, duration: 0.6, ease: 'power2.out' }, 404.4);
 
-  caption('O resultado final \u00e9 o <b>Mapa cont\u00ednuo de LAI de toda a Amaz\u00f4nia</b>!', 403.5, 408.5);
+  caption('As estimativas agora formam um mapa. A cor de cada lugar mostra o <b>LAI previsto</b> ali.', 403.5, 408.8);
 
   // SLIDE 44: titulo e texto somem - apenas mapa + legenda
   tl.to(amzMapNoteG, { autoAlpha: 0, duration: 0.4 }, 408.8)
     .to('#amzFinalMapCard', { x: 0, y: 0, scale: 1, duration: 0.9, ease: 'power2.inOut' }, 408.9)
     .to(amzLegendG, { x: 0, y: 0, duration: 0.9, ease: 'power2.inOut' }, 408.9);
+  caption('Compare uma cor do mapa com a escala. O valor indica a <b>área de folhas por metro quadrado de solo</b>.', 408.8, 412.0);
 
   // SLIDE 45: 10 pontos com seus valores de LAI
   tl.to(amzFinalPtsEls, { autoAlpha: 1, scale: 1, duration: 0.5, stagger: 0.28, ease: 'back.out(1.8)' }, 412.0);
+  caption('Os números que aparecem são exemplos de <b>LAI previsto</b>. Entre os pontos, a cor indica o valor estimado.', 412.0, 417.0);
   // Capa de espera, participantes e recorte precedem a sequência científica.
   const INTRO_DURATION = 46;
   tl.shiftChildren(INTRO_DURATION, true, 0);
-  window.addPresentationBookends(tl, INTRO_DURATION);
+  const { foliageAnimations, farewellGuest } = window.addPresentationBookends(tl, INTRO_DURATION, updateFarewellProgress);
   const sceneTransition = window.createSceneTransition();
 
-  /* ================= MODO APRESENTAÇÃO (PAUSA IMEDIATA AO FIM DE CADA ANIMAÇÃO) ================= */
-  // Cada slide pausa exatamente quando sua animação termina (t), e ao clicar avança direto para a saída (resume)
+  /* ================= MODO APRESENTAÇÃO ================= */
+  const SCENE_STARTS = new Map([[1, 0], [2, 3.2], [3, 10.2], [52, 17.2], [53, 26], [5, INTRO_DURATION], [25, INTRO_DURATION + 183.6]]);
+  const animationRanges = tl.getChildren(false, true, false)
+    .map(tween => ({ start: tween.startTime(), end: tween.endTime() }))
+    .concat(foliageAnimations);
+  function animationBounds(entry, limit) {
+    let animationStart = limit;
+    let animationEnd = entry;
+    for (const { start, end } of animationRanges) {
+      if (start >= limit || end <= entry) continue;
+      animationStart = Math.min(animationStart, Math.max(start, entry));
+      animationEnd = Math.max(animationEnd, Math.min(end, limit));
+    }
+    return { animationStart: Math.min(animationStart, animationEnd), animationEnd };
+  }
+
+  // t delimita a etapa no roteiro, e resume marca onde começa a próxima animação.
   const SCENE_STOPS = [
     { t: 2.5, resume: 3.2, slide: 1 }, // Capa de espera
     { t: 4.2, resume: 4.35, slide: 2 }, // Título, antes dos personagens
@@ -2643,11 +2668,8 @@
     { t: 8.0, resume: 10.2, slide: 2 }, // Clique: Josiane
     { t: 16.2, resume: 17.2, slide: 3 }, // Recorte da apresentação: LAI
     { t: 19.9, resume: 26.0, slide: 52 }, // Importância: lista completa, sem pausas entre os itens
-    { t: 28.9, resume: 29.2, slide: 53, phase: 'ready' }, // Mesma área foliar, antes da redistribuição
-    { t: 33.4, resume: 34.2, slide: 53 }, // Mesma área foliar, diferentes perfis de LAD
-    { t: 36.6, resume: 36.9, slide: 54, phase: 'ready' }, // Mesmo LAI: três copas antes da mudança de porte
-    { t: 41.3, resume: 42.2, slide: 54 }, // Mesmo LAI: copas baixas, altas e intermediárias
-    { t: 44.0, resume: 45.2, slide: 4 }, // Propósito e três itens já visíveis
+    { t: 28.9, resume: 29.2, slide: 53, phase: 'ready' }, // As três copas começam iguais
+    { t: 32, resume: INTRO_DURATION, slide: 53 }, // Redistribuição e crescimento na mesma etapa
     ...[
     { t: 6.3,   resume: 6.35  }, // 1. Árvore cresceu
     { t: 14.2,  resume: 16.3  }, // 2. Sombra de 20 m²
@@ -2660,16 +2682,16 @@
     { t: 67.3,  resume: 72.4  }, // 9. Nota sobre LAD
     { t: 80.9,  resume: 82.5  }, // 10. Copa dividida em estratos de 0,5 m
     { t: 84.8,  resume: 90.7  }, // 11. Soma LAD × 0,5 m = LAI
-    { t: 93.0,  resume: 107.6 }, // 12. Regra prática; próximo clique segue para Beer-Lambert
+    { t: 93.0,  resume: 107.6 }, // 12. Ponto de salto para Beer–Lambert, fora do catálogo
     { t: 8.0,   resume: 8.85  }, // 13. Resumo LAI vs LAD, após a árvore inicial
-    { t: 118.2, resume: 120.1 }, // 14. Feixe de luz (100% -> 8%)
+    { t: beamTime(118.2), resume: 120.1 }, // 14. Feixe de luz (100% -> 8%)
     { t: 121.9, resume: 126.9 }, // 15. Equação de Beer-Lambert
     { t: 129.2, resume: 133.4 }, // 16. Nota sobre k = 0,5 e sensores
-    { t: 147.1, resume: 147.7 }, // 17. Varredura LiDAR (100 retornos)
+    { t: droneSweepStart + droneStepDuration, resume: 147.7 }, // 17. Varredura LiDAR (100 retornos)
     { t: 150.7, resume: 158.1 }, // 18. P_lacunas = 0,08 -> LAI ≈ 5
     { t: 163.1, resume: 170.3 }, // 19. Perfil vertical: LAD × 0,5 m ao lado de cada estrato
     { t: 172.6, resume: 182.5 }, // 20. Soma dos estratos = 5,0
-    { t: 193.4, resume: 196.0 }, // 21. Transecto 3D (12 km x 300 m) no Projeto EBA
+    { t: planeSweepTime(4.8), resume: 196.0 }, // 21. Varredura aérea do transecto do Projeto EBA
     { t: 199.8, resume: 206.5 }, // 22. Transecto inteiro virando um único ponto resumido com um LAI
     { t: 212.3, resume: 219.0 }, // 23. Ponto do transecto vira o 1º ponto na Amazônia + surgem os demais (742)
     { t: 222.0, resume: 224.7 }, // 24. Apresentação das 16 variáveis ambientais + 1º estrato Transecto
@@ -2698,29 +2720,53 @@
       .flatMap(stop => {
         // As fontes ficam prontas e aguardam um clique antes de emitir luz.
         if (stop.slide === 11) return [{ t: INTRO_DURATION + 53.8, resume: INTRO_DURATION + 54.2, slide: 11, phase: 'ready' }, stop];
-        if (stop.slide === 18) return [{ t: INTRO_DURATION + 112.6, resume: INTRO_DURATION + 112.8, slide: 18, phase: 'ready' }, stop];
-        if (stop.slide === 21) return [{ t: INTRO_DURATION + 138.5, resume: INTRO_DURATION + 138.8, slide: 21, phase: 'ready' }, stop];
-        if (stop.slide === 25) return [{ t: INTRO_DURATION + 187.7, resume: INTRO_DURATION + 187.8, slide: 25, phase: 'ready' }, stop];
+        if (stop.slide === 18) return [{ t: INTRO_DURATION + beamTime(112.6), resume: INTRO_DURATION + beamTime(112.8), slide: 18, phase: 'ready' }, stop];
+        if (stop.slide === 21) return [{ t: INTRO_DURATION + 138.5, resume: INTRO_DURATION + droneSweepStart, slide: 21, phase: 'ready' }, stop];
+        if (stop.slide === 25) return [{ t: INTRO_DURATION + 187.7, resume: INTRO_DURATION + planeSweepStart, slide: 25, phase: 'ready' }, stop];
         return [stop];
       }),
-    { t: INTRO_DURATION + 421.6, resume: INTRO_DURATION + 422.0, slide: 50 }, // Obrigado / Dúvidas aguarda o clique para a despedida
-  ].sort((a, b) => a.t - b.t);
+  ].sort((a, b) => a.t - b.t).map((stop, index, stops) => {
+    const entry = Math.max(stops[index - 1]?.resume ?? 0, SCENE_STARTS.get(stop.slide) ?? 0);
+    const bounds = animationBounds(entry, stop.t);
+    // Uma legenda que entra após a animação ainda pode aparecer durante a leitura do slide.
+    const hasLaterCaption = scientificCaptions.some(({ start }) => {
+      const time = start + INTRO_DURATION;
+      return time > bounds.animationEnd && time <= stop.t;
+    });
+    return { ...stop, ...bounds, t: hasLaterCaption ? stop.t : bounds.animationEnd };
+  });
   // A ordem de apresentação é independente do tempo usado para montar cada cena.
   const SLIDE_ORDER = window.PRESENTATION_SLIDES.map(item => item.scene);
+  const lastScene = SLIDE_ORDER.at(-1);
+  const farewellScene = 51;
+  const farewellScenes = new Set([farewellScene, lastScene]);
+  const research = window.RESEARCH_SLIDES;
+  const showResearch = window.createResearchPanels($('#researchPanels'), (scene, beat) => {
+    const index = route.findIndex(step => step.scene === scene && step.beat === beat);
+    if (index !== -1) goToStep(index);
+  });
   // Superficie neutra apenas nos resultados; os IDs permanecem estaveis ao reordenar slides.
   const CLEAN_RESULT_SCENES = new Set([34, 35, 36, 39, 40, 41, 42, 43, 47, 48, 49]);
-  const SCENE_STARTS = new Map([[1, 0], [2, 3.2], [3, 10.2], [4, 42.2], [52, 17.2], [53, 26], [54, 34.2], [5, INTRO_DURATION], [25, INTRO_DURATION + 183.6], [50, INTRO_DURATION + 417]]);
-  const SLIDE_STOPS = SLIDE_ORDER.flatMap((scene, index) => SCENE_STOPS.flatMap((stop, sourceIndex) => {
+  const SCENE_SPEEDS = new Map([[14, 1.7], [24, 1.7], [53, 1.5]]);
+  const ALL_STEPS = SLIDE_ORDER.flatMap((scene, index) => research.has(scene)
+    ? research.get(scene).beats.map((_, beat) => ({ scene, slide: index + 1, beat }))
+    : SCENE_STOPS.flatMap((stop, sourceIndex) => {
     if (stop.slide !== scene) return [];
     const naturalEntry = sourceIndex ? SCENE_STOPS[sourceIndex - 1].resume + .11 : 0;
     // Um salto nunca começa na saída de outra cena independente.
     const entry = Math.max(naturalEntry, (SCENE_STARTS.get(scene) ?? 0) + .11);
     return [{ ...stop, scene, slide: index + 1, sourceIndex, entry }];
   }));
-  const orderedStopIndex = (time) => {
-    const sourceIndex = SCENE_STOPS.findIndex(stop => time <= stop.resume + .1);
-    return sourceIndex < 0 ? -1 : SLIDE_STOPS.findIndex(stop => stop.sourceIndex === sourceIndex);
-  };
+  // Os dois quadros finais usam o mesmo cenário, com animações independentes.
+  const lastEntry = SCENE_STOPS.at(-1).resume;
+  for (const scene of farewellScenes) {
+    ALL_STEPS.push({ t: tl.duration(), slide: SLIDE_ORDER.indexOf(scene) + 1, scene,
+      sourceIndex: SCENE_STOPS.length + (scene === farewellScene ? 0 : 1),
+      entry: lastEntry, ...animationBounds(lastEntry, tl.duration()) });
+  }
+  let route = ALL_STEPS;
+  let activeSlides = SLIDE_ORDER.map((_, index) => index + 1);
+  let stepIndex = 0;
 
   // Os dados interpolados já estão na posição correta após um seek silencioso.
   // Atualiza seus rótulos e curvas sem executar pausas de cenas intermediárias.
@@ -2733,89 +2779,156 @@
 
   const hint = $('#hint');
   const slideNum = $('#slideNum');
-  const totalSlides = Math.max(...SLIDE_STOPS.map((stop) => stop.slide)) + 1;
+  const stage = $('#stage');
+
+  function setProgressFill(stepProgress) {
+    fill.style.width = (route.length === 1 ? 1 : Math.max(0, stepIndex - 1 + stepProgress) / (route.length - 1)) * 100 + '%';
+  }
+
+  function updateFarewellProgress(progress) {
+    if (!farewellScenes.has(route[stepIndex].scene)) return;
+    setProgressFill(progress);
+    if (progress >= 1) setIcon();
+  }
 
   function updateSlideNum() {
     const t = tl.time();
-    const idx = orderedStopIndex(t);
-    const stop = SLIDE_STOPS[idx];
-    const current = stop ? stop.slide : totalSlides;
-    slideNum.textContent = `${current} / ${totalSlides}`;
-    $('#stage').dataset.slide = current;
-    $('#stage').dataset.sceneSlide = stop ? stop.scene : totalSlides;
-    $('#stage').classList.toggle('results-clean', CLEAN_RESULT_SCENES.has(stop?.scene));
+    const step = route[stepIndex];
+    const scene = farewellScenes.has(step.scene) ? step.scene : SCENE_STOPS.find(stop => t <= stop.resume + .1)?.slide ?? lastScene;
+    const researchSlide = research.get(step.scene);
+    studyNotes.sync(step.scene);
+    $('#stage').toggleAttribute('data-research', Boolean(researchSlide));
+    showResearch(step.scene, step.beat);
+    const displayedSlide = activeSlides.indexOf(step.slide) + 1;
+    slideNum.textContent = `${displayedSlide} / ${activeSlides.length}`;
+    const hash = `#${displayedSlide}`;
+    if (presentationReady && location.hash !== hash) history.replaceState(history.state, '', hash);
+    window.syncTalkClock(displayedSlide);
+    $('#stage').dataset.slide = step.slide;
+    $('#stage').dataset.sceneSlide = researchSlide ? step.scene : scene;
+    $('#stage').classList.toggle('results-clean', !researchSlide && CLEAN_RESULT_SCENES.has(scene));
     $('#stage').dataset.scenery = t >= INTRO_DURATION + 9.3 && t < INTRO_DURATION + 183 ? 'day' : 'plain';
     // A demonstração óptica usa a iluminação original para revelar a atenuação do feixe.
-    document.body.classList.toggle('beam-focus', t >= INTRO_DURATION + 107.5 && t < INTRO_DURATION + 134.4);
-    const stepProgress = stop ? clamp((t - stop.entry) / Math.max(.01, stop.t - stop.entry), 0, 1) : 1;
-    $('#fill').style.width = (stop ? Math.max(0, idx - 1 + stepProgress) / (SLIDE_STOPS.length - 1) : 1) * 100 + '%';
-    window.syncPresentationBookends(t);
+    document.body.classList.toggle('beam-focus', !researchSlide && t >= INTRO_DURATION + 107.5 && t < INTRO_DURATION + 134.4);
+    if (researchSlide) {
+      setProgressFill(1);
+      window.syncPresentationBookends(t, step.scene, true);
+      $('#stage').classList.remove('light-slide');
+      showCaption(researchSlide.beats[step.beat].caption);
+      return;
+    }
+    window.syncPresentationBookends(t, step.scene);
+    const { animationStart, animationEnd } = step;
+    if (farewellScenes.has(step.scene)) setProgressFill(farewellGuest.progress());
+    else setProgressFill(t + .000001 >= animationEnd ? 1
+      : clamp((t - animationStart) / (animationEnd - animationStart), 0, 1));
     if ($('#stage').dataset.scene === 'science') {
       const item = scientificCaptions.find(item => t >= item.start + INTRO_DURATION && t < item.end + INTRO_DURATION);
-      const el = $('#presentationCaption');
-      const html = item?.html || '';
-      if (el.innerHTML !== html) el.innerHTML = html;
-      el.hidden = !html;
+      showCaption(item?.html ?? '');
     }
   }
 
-  const showHint = () => { hint.innerHTML = '<span>▶</span>'; hint.classList.add('on'); updateSlideNum(); };
+  function showCaption(html) {
+    const el = $('#presentationCaption');
+    if (el.innerHTML !== html) el.innerHTML = html;
+    el.hidden = !html;
+  }
+
+  const showHint = () => { hint.classList.toggle('on', stepIndex < route.length - 1); updateSlideNum(); };
   const hideHint = () => { hint.classList.remove('on'); updateSlideNum(); };
   SCENE_STOPS.forEach((s) => tl.addPause(s.t, () => { showHint(); setIcon(); }));
 
   const btnPlay = $('#btnPlay'), bar = $('#bar'), fill = $('#fill'), ui = $('#ui'), btnCC = $('#btnCC');
   const ICON_PLAY = '<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>';
   const ICON_NEXT = '<svg viewBox="0 0 24 24"><path d="M4 5v14l11-7zM16 5h2v14h-2z" fill="currentColor"/></svg>';
-  const atEnd = () => tl.progress() >= 1;
+  const isAnimating = () => {
+    const current = route[stepIndex];
+    return (farewellScenes.has(current.scene) && farewellGuest.canAdvance())
+      || (!tl.paused() && tl.time() + .000001 < current.animationEnd);
+  };
   function setIcon() {
-    const paused = tl.paused() || atEnd();
+    const paused = !isAnimating();
     btnPlay.innerHTML = paused ? ICON_PLAY : ICON_NEXT;
-    $('#stage').dataset.playback = paused ? 'paused' : 'playing';
+    btnPlay.disabled = paused && stepIndex === route.length - 1;
+    stage.dataset.playback = paused ? 'paused' : 'playing';
   }
 
   function next() {
-    if (!presentationReady || atEnd() || sceneTransition.isRunning()) return;
+    if (!presentationReady) return;
+    if (sceneTransition.isRunning()) {
+      sceneTransition.finish();
+      return;
+    }
+    const current = route[stepIndex];
+    if (farewellScenes.has(current.scene)) {
+      if (!farewellGuest.canAdvance() && isAnimating()) goToStep(stepIndex);
+      if (farewellGuest.advance()) setIcon();
+      else if (route[stepIndex + 1]) goToStep(stepIndex + 1);
+      return;
+    }
+    const playing = isAnimating();
+    if (playing && current.scene !== 3) {
+      goToStep(stepIndex);
+      return;
+    }
+    const following = route[stepIndex + 1];
+    if (!following) return;
     // Após a entrada dos três participantes, um clique apresenta a brincadeira.
-    if (tl.paused() && window.playPeopleClock?.()) {
+    if (current.scene === 2 && window.playPeopleClock?.()) {
       hideHint(); setIcon(); return;
     }
-    if (tl.paused()) {
-      const cur = SLIDE_STOPS.find((s) => Math.abs(tl.time() - s.t) < 0.25);
-      const following = cur && SLIDE_STOPS[SLIDE_STOPS.indexOf(cur) + 1];
-      const advance = () => {
-        // O seek prepara a cena sem disparar callbacks das cenas atravessadas.
-        const entry = following && following.sourceIndex !== cur.sourceIndex + 1
-          ? following.entry : cur?.resume;
-        if (entry != null && entry > 0) seekTimeline(entry);
-        hideHint();
-        tl.play();
-        setIcon();
-      };
-      if (cur?.slide === 3 && following?.slide === 4) sceneTransition.play(advance);
-      else advance();
-    } else {
-      const nxt = SCENE_STOPS.find((s) => s.t > tl.time() + 0.05);
-      if (nxt != null) { seekTimeline(nxt.t); showHint(); }
-      else { seekTimeline(tl.duration()); hideHint(); }
-    }
+    const advance = () => {
+      // Quadros de pesquisa e saltos no catálogo abrem prontos, sem passar por slides ocultos.
+      if (research.has(following.scene) || following.slide > current.slide + 1) {
+        goToStep(stepIndex + 1);
+        return;
+      }
+      const entry = following.sourceIndex === current.sourceIndex + 1 ? current.resume : following.entry;
+      stepIndex++;
+      seekTimeline(entry);
+      hideHint();
+      tl.timeScale(SCENE_SPEEDS.get(following.scene) ?? 1).play();
+      setIcon();
+    };
+    if (!playing && current.scene === 3 && following.slide === 4) sceneTransition.play(advance);
+    else advance();
+  }
+
+  function goToStep(index) {
+    stepIndex = index;
+    window.resetPeopleClock?.();
+    const step = route[index];
+    if (research.has(step.scene)) tl.pause();
+    else seekTimeline(step.t);
+    showHint();
     setIcon();
+  }
+  function goToSlide(slide) {
+    const index = route.findIndex(step => step.slide === slide);
+    if (index < 0) return false;
+    sceneTransition.cancel();
+    goToStep(index);
+    return true;
+  }
+  function restoreSlideFromHash() {
+    const match = /^#(?:slide-)?([1-9]\d*)$/.exec(location.hash);
+    return match ? goToSlide(activeSlides[Number(match[1]) - 1]) : false;
   }
   function prev() {
     if (!presentationReady) return;
     sceneTransition.cancel();
-    window.resetPeopleClock?.();
-    const currentIndex = orderedStopIndex(tl.time());
-    const prevStop = SLIDE_STOPS[(currentIndex < 0 ? SLIDE_STOPS.length : currentIndex) - 1];
-    const move = () => {
-      seekTimeline(prevStop ? prevStop.t : 0); showHint(); setIcon();
-    };
-    move();
+    const leavingTree = route[stepIndex].scene === lastScene;
+    goToStep(Math.max(0, stepIndex - 1));
+    if (leavingTree && route[stepIndex].scene === farewellScene) farewellGuest.advance();
   }
   function restart() {
     if (!presentationReady) return;
     sceneTransition.cancel();
+    window.resetTalkClock();
+    if (route[0].slide !== 1) { goToStep(0); return; }
+    stepIndex = 0;
     window.resetPeopleClock?.();
-    seekTimeline(0); hideHint(); tl.play(); setIcon();
+    seekTimeline(0); hideHint(); tl.timeScale(1).play(); setIcon();
   }
 
   function toggleCaptions() {
@@ -2824,34 +2937,62 @@
     btnCC.setAttribute('aria-pressed', String(!off));
   }
 
-  SLIDE_STOPS.forEach(({ t, slide, phase }, index) => {
-    const d = document.createElement('div');
-    d.className = 'tick';
-    d.dataset.stop = t;
-    d.dataset.slide = slide;
-    d.dataset.phase = phase || 'complete';
-    d.style.left = (index / (SLIDE_STOPS.length - 1)) * 100 + '%';
-    bar.appendChild(d);
-  });
-  tl.eventCallback('onUpdate', () => {
+  function applySlides(slides) {
+    const current = route[stepIndex];
+    activeSlides = slides;
+    route = ALL_STEPS.filter(step => slides.includes(step.slide));
+    const ticks = route.map(({ t, slide, phase }, index) => {
+      const tick = document.createElement('div');
+      tick.className = 'tick';
+      if (t != null) tick.dataset.stop = t;
+      tick.dataset.step = index;
+      tick.dataset.slide = slide;
+      tick.dataset.phase = phase || 'complete';
+      tick.style.left = `${index / Math.max(1, route.length - 1) * 100}%`;
+      return tick;
+    });
+    bar.replaceChildren(fill, ...ticks);
+    const index = route.indexOf(current);
+    if (index === -1) {
+      const nextVisible = route.findIndex(step => step.slide > current.slide);
+      goToStep(nextVisible === -1 ? route.length - 1 : nextVisible);
+      return true;
+    }
+    stepIndex = index;
     updateSlideNum();
+    setIcon();
+    return false;
+  }
+  tl.eventCallback('onUpdate', () => {
+    if (stage.dataset.playback === 'playing' && !isAnimating()) {
+      showHint();
+      setIcon();
+    } else updateSlideNum();
   });
   tl.eventCallback('onComplete', () => { hideHint(); setIcon(); updateSlideNum(); });
 
+  const pausePlayback = () => {
+    sceneTransition.cancel();
+    const playing = !tl.paused() && tl.progress() < 1;
+    tl.pause();
+    setIcon();
+    return playing;
+  };
+  const resumePlayback = () => { tl.play(); setIcon(); };
   const overview = window.createSlideOverview({
-    totalSlides,
     getCurrentSlide: () => Number($('#stage').dataset.slide),
-    pause: () => { sceneTransition.cancel(); const playing = !tl.paused(); tl.pause(); setIcon(); return playing; },
-    resume: () => { tl.play(); setIcon(); },
+    pause: pausePlayback,
+    resume: resumePlayback,
     select: (slide) => {
-      sceneTransition.cancel();
-      window.resetPeopleClock?.();
-      const stop = SLIDE_STOPS.find(s => s.slide === slide);
-      seekTimeline(stop ? stop.t : tl.duration());
-      if (stop) showHint(); else hideHint();
-      setIcon();
-      $('#stage').focus({ preventScroll: true });
+      goToSlide(slide);
+      stage.focus({ preventScroll: true });
     },
+    applySlides,
+  });
+  const studyNotes = window.createStudyNotes({
+    current: () => window.PRESENTATION_SLIDES[route[stepIndex].slide - 1],
+    pause: pausePlayback,
+    resume: resumePlayback,
   });
 
   $('#stage').addEventListener('click', (e) => {
@@ -2862,7 +3003,7 @@
   });
   btnPlay.addEventListener('click', next);
   window.addEventListener('people-clock-complete', () => {
-    if ($('#stage').dataset.slide === '2') { showHint(); setIcon(); }
+    if (route[stepIndex].scene === 2) { showHint(); setIcon(); }
   });
   $('#btnPrev').addEventListener('click', prev);
   $('#btnRestart').addEventListener('click', restart);
@@ -2870,31 +3011,36 @@
   bar.addEventListener('click', (e) => {
     if (!presentationReady) return;
     sceneTransition.cancel();
-    window.resetPeopleClock?.();
     const r = bar.getBoundingClientRect();
-    const stop = e.target.closest('.tick')?.dataset.stop;
-    const nearest = Math.round(clamp((e.clientX - r.left) / r.width, 0, 1) * (SLIDE_STOPS.length - 1));
-    const time = stop == null ? SLIDE_STOPS[nearest].t : Number(stop);
-    seekTimeline(time);
-    showHint(); setIcon();
+    const index = e.target.closest('.tick')?.dataset.step;
+    const nearest = Math.round(clamp((e.clientX - r.left) / r.width, 0, 1) * (route.length - 1));
+    goToStep(index == null ? nearest : Number(index));
   });
   const toggleFs = () => {
     if (!document.fullscreenElement) document.documentElement.requestFullscreen?.();
     else document.exitFullscreen?.();
   };
   $('#btnFs').addEventListener('click', toggleFs);
+  window.addEventListener('hashchange', () => {
+    if (presentationReady && !restoreSlideFromHash()) restart();
+  });
   window.addEventListener('keydown', (e) => {
     if (!presentationReady) return;
     const typing = e.target.matches('input, textarea, [contenteditable="true"]');
-    if (e.code === 'KeyG' && !typing) { e.preventDefault(); overview.toggle(); return; }
+    if (e.code === 'KeyG' && !typing && !studyNotes.isOpen()) { e.preventDefault(); overview.toggle(); return; }
     if (overview.isOpen()) return;
+    if (e.code === 'KeyI' && !typing) { e.preventDefault(); studyNotes.toggle(); return; }
+    if (studyNotes.isOpen()) {
+      if (e.code === 'Escape') { e.preventDefault(); studyNotes.toggle(); }
+      return;
+    }
     if (['Space', 'ArrowRight', 'PageDown', 'Enter', 'ArrowDown'].includes(e.code)) { e.preventDefault(); next(); }
     if (['ArrowLeft', 'PageUp', 'ArrowUp'].includes(e.code)) { e.preventDefault(); prev(); }
     if (e.code === 'KeyF') toggleFs();
     if (e.code === 'KeyC') toggleCaptions();
     if (e.code === 'Home') { e.preventDefault(); restart(); }
     if (e.code === 'End') {
-      e.preventDefault(); sceneTransition.cancel(); window.resetPeopleClock?.(); seekTimeline(tl.duration()); hideHint(); setIcon();
+      e.preventDefault(); sceneTransition.cancel(); goToStep(route.length - 1);
     }
   });
   let hideT;
@@ -2909,12 +3055,9 @@
   const ready = () => {
     if (presentationReady) return;
     wrapEnvironmentalVariables();
-    seekTimeline(0);
-    hideHint();
-    updateSlideNum();
+    applySlides(overview.activeSlides());
     presentationReady = true;
-    tl.play(0, true);
-    setIcon();
+    if (!restoreSlideFromHash()) restart();
     $('#wrap').removeAttribute('inert');
     $('#wrap').setAttribute('aria-busy', 'false');
     document.documentElement.classList.add('presentation-ready');

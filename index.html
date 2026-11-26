@@ -15,17 +15,16 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,600&family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css?v=013e5def23bf" />
-  <link rel="stylesheet" href="projector-theme.css?v=cc93cc03ce25" />
-  <link rel="stylesheet" href="slide-overview.css?v=95177ca3dce3" />
-  <link rel="stylesheet" href="foliage-intro.css?v=b8d4687f226b" />
+  <link rel="stylesheet" href="style.css?v=31c886d45669" />
+  <link rel="stylesheet" href="projector-theme.css?v=ed4573651ba4" />
+  <link rel="stylesheet" href="slide-overview.css?v=f762acd38825" />
+  <link rel="stylesheet" href="foliage-intro.css?v=bf726dd3393d" />
+  <link rel="stylesheet" href="workshop.css?v=e4754eff6e52" />
 </head>
 <body class="no-captions">
 <main id="wrap" inert aria-busy="true">
+  <div id="presentationCard">
   <div id="stage" data-scene="bookend" data-slide="1" tabindex="-1">
-    <header id="foliageComparisonHeader" class="foliageHeader" hidden>
-      <h2><span id="sameLaiPrefix">Mesmo <em>LAI</em>,</span><span class="comparisonTitleEnding"><span id="arrangementTitleEnding">diferentes distribuições de <em>LAD</em></span><span id="sizeTitleEnding">diferentes alturas</span></span></h2>
-    </header>
     <svg id="scene" style="opacity:0" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
       <defs>
         <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
@@ -418,59 +417,37 @@
         </svg>
       </section>
 
-      <section id="foliageImportanceSlide" class="bookend foliageIntro fx" aria-label="Por que estudar o LAI?">
-        <header class="foliageHeader"><h2>Por que estudar o <em>LAI?</em></h2></header>
+      <section id="foliageImportanceSlide" class="bookend foliageIntro fx" aria-labelledby="foliageImportanceTitle">
+        <header class="foliageHeader"><h2 id="foliageImportanceTitle">Por que <em>mapear</em> a área foliar?</h2></header>
         <svg id="importanceTreeDiagram" viewBox="0 0 1920 1080" role="img" aria-label="Árvore ilustrando a área foliar e os processos da floresta"><g id="importanceTreeArtwork"></g></svg>
         <div class="foliageReasons">
-          <article class="foliageReason" data-reason="0"><span class="foliageReasonNumber">01</span><h3>Fotossíntese e carbono</h3></article>
-          <article class="foliageReason" data-reason="1"><span class="foliageReasonNumber">02</span><h3>Produtividade florestal</h3></article>
-          <article class="foliageReason" data-reason="2"><span class="foliageReasonNumber">03</span><h3>Regulação hídrica</h3></article>
-          <article class="foliageReason" data-reason="3"><span class="foliageReasonNumber">04</span><h3>Microclima</h3></article>
-          <article class="foliageReason" data-reason="4"><span class="foliageReasonNumber">05</span><h3>Respostas ao clima</h3></article>
+          <article class="foliageReason">
+            <h3>Sob a copa</h3>
+            <p>As folhas filtram a luz e ajudam a regular a <strong>temperatura</strong> e a <strong>umidade</strong> do sub-bosque.</p>
+          </article>
+          <article class="foliageReason">
+            <h3>Trocas com a atmosfera</h3>
+            <p>As folhas liberam <strong>vapor de água</strong> e assimilam <strong>carbono</strong> que pode sustentar o crescimento.</p>
+          </article>
         </div>
       </section>
 
-      <section id="foliageArrangementSlide" class="bookend foliageIntro fx" aria-label="Mesmo LAI, diferentes distribuições de LAD" data-arrangement="equal">
-        <svg id="arrangementDiagram" viewBox="0 0 1920 1080" role="img" aria-label="Duas árvores com a mesma área foliar e diferentes distribuições verticais de folhas"><g id="arrangementArtwork"></g></svg>
-        <p class="foliageTreeLabel arrangementLabel arrangementLeft">Folhas no topo</p>
-        <p class="foliageTreeLabel arrangementLabel arrangementRight">Folhas nos estratos</p>
-      </section>
-
-      <section id="foliageSizeSlide" class="bookend foliageIntro fx" aria-label="Mesmo LAI, diferentes alturas" data-size-phase="equal">
-        <svg id="sizeDiagram" viewBox="0 0 1920 1080" role="img" aria-label="Três árvores de mesma largura, área de solo e área foliar, com alturas diferentes e seus perfis verticais de LAD na mesma escala"><g id="sizeArtwork"></g></svg>
-        <p class="foliageTreeLabel sizeLabel sizeLow">Altura menor</p>
-        <p class="foliageTreeLabel sizeLabel sizeMiddle">Altura média</p>
-        <p class="foliageTreeLabel sizeLabel sizeTall">Altura maior</p>
-      </section>
-
-      <section id="researchContributionSlide" class="bookend researchIntro fx" aria-label="Propósito e contribuições da pesquisa">
-        <svg class="researchLeafMark" viewBox="0 0 160 120" aria-hidden="true"><path d="M26 100Q64 58 132 22" fill="none" stroke="#92a878" stroke-width="2.5"/><path d="M48 80Q20 22 83 13Q94 58 48 80Z" fill="#dce8ce"/><path d="M73 66Q108 83 144 43Q100 24 73 66Z" fill="#b8cea3"/><path d="M48 80L78 22M73 66L136 47" stroke="#8eaa75" stroke-width="2" fill="none"/></svg>
-        <h2>Propósito da pesquisa</h2>
-        <div class="researchHeadingRule" aria-hidden="true"></div>
-        <div class="researchBenefits">
-          <article class="researchBenefit"><span class="benefitNumber">01</span><p><strong>Avançar</strong> na caracterização estrutural das florestas e das relações entre área foliar e ambiente.</p></article>
-          <article class="researchBenefit"><span class="benefitNumber">02</span><p><strong>Gerar</strong> informações para modelar processos ecossistêmicos e avaliar respostas às mudanças ambientais.</p></article>
-          <article class="researchBenefit"><span class="benefitNumber">03</span><p><strong>Disponibilizar</strong> mapas de LAI como entrada para novas modelagens ambientais.</p></article>
+      <section id="foliageComparisonSlide" class="bookend foliageIntro fx" aria-labelledby="foliageComparisonTitle">
+        <header class="foliageHeader">
+          <h2 id="foliageComparisonTitle">Mesmo <em>LAI</em>, copas diferentes</h2>
+          <p>A área foliar e a área de solo são iguais nas três árvores.</p>
+        </header>
+        <div class="foliageTreeLabels">
+          <p>Copa de referência</p>
+          <p>Folhas redistribuídas</p>
+          <p>Copa alta e redistribuída</p>
         </div>
       </section>
 
-      <section id="closingSlide" class="bookend fx" aria-label="Obrigado! Dúvidas?">
-        <svg id="closingForest" viewBox="0 0 1920 1080" aria-hidden="true">
-          <g id="closingLeafParticles"></g>
-          <g id="closingLeafWreath"></g>
-          <g id="closingWindLines"></g>
-          <g id="closingWindLeaves"></g>
-        </svg>
-        <div class="closingCopy">
-          <h2 id="closingThanks" aria-label="Obrigado!"><span id="closingBirdPerch" aria-hidden="true">O</span><span aria-hidden="true">b</span><span aria-hidden="true">r</span><span aria-hidden="true">i</span><span aria-hidden="true">g</span><span aria-hidden="true">a</span><span aria-hidden="true">d</span><span aria-hidden="true">o</span><span aria-hidden="true">!</span></h2>
-          <div class="closingRule"></div>
-          <p id="closingQuestions">Dúvidas<span>?</span></p>
-        </div>
-        <svg id="closingBirdScene" class="bookendBirdScene" viewBox="0 0 1920 1080" aria-hidden="true"></svg>
-      </section>
-
-      <section id="farewellSlide" class="bookend fx" aria-label="Até a próxima!">
-        <h2 id="farewellTitle">Até a próxima!</h2>
+      <section id="farewellSlide" class="bookend fx" aria-labelledby="farewellTitle">
+        <svg id="farewellFronds" viewBox="0 0 1920 1080" aria-hidden="true"></svg>
+        <h2 id="farewellTitle"><span id="farewellToolsTitle">Ferramentas <em>da pesquisa</em></span><span id="farewellThanksTitle" hidden>Obrigado! <em>Dúvidas?</em></span></h2>
+        <svg id="farewellTree" viewBox="0 0 1920 1080" role="img" aria-label="Árvore formada pelos símbolos da pesquisa, com visitas de animais e uma cena de Gustavo fugindo de uma onça" aria-hidden="true"></svg>
         <div id="farewellSymbols" aria-label="TreeLab e ferramentas da pesquisa">
           <img class="farewellSymbol" data-symbol="treelab" src="assets/farewell-symbols/treelab.png" alt="TreeLab" />
           <img class="farewellSymbol" data-symbol="r" src="assets/farewell-symbols/r.jpg" alt="R" />
@@ -590,14 +567,6 @@
         </div>
       </div>
 
-      <div id="fLink2" class="block fx">
-        <div class="callout">
-          <div class="calloutTitle">Regra prática</div>
-          <div class="eq midEq"><span class="sym">LAI</span> = <span class="sym">LAD</span><sub>médio</sub> × altura da copa</div>
-          <div class="eq bigEq">= 2 m²/m³ × 2,5 m = <span class="res">5</span></div>
-        </div>
-      </div>
-
       <!-- Parte 4: Beer-Lambert -->
       <div id="fBL1" class="block fx">
         <div class="callout">
@@ -608,7 +577,8 @@
 
       <div id="fBL2" class="block fx">
         <div class="callout">
-          <div class="calloutTitle">O coeficiente <b>k</b></div>
+          <div class="calloutTitle">O coeficiente de extinção <b>k</b></div>
+          <p class="bigNote">Para a mesma área de folhas, quanto maior o <b>k</b>, menos luz atravessa a copa.</p>
           <p class="bigNote"><b>k ≈ 0,5</b> para folhas com ângulos aleatórios e sol a pino.</p>
           <p class="bigNote">Sensores ópticos (como o <b>LAI-2200</b>) e <b>fotos hemisféricas</b> usam esse princípio.</p>
         </div>
@@ -665,7 +635,7 @@
 
       <div id="fAmz742" class="block fx">
         <div class="calloutTitle"><span class="resSm" id="cnt742">742</span> pontos amostrais</div>
-        <p class="bigNote">Cada ponto no mapa representa um transecto LiDAR do <b>Projeto EBA</b> resumido pelo seu valor de <span class="sym">LAI</span>.</p>
+        <p class="bigNote">Cada transecto do <b>Projeto EBA</b> fornece um valor de <span class="sym">LAI</span>. O mapa ilustra a distribuição de faixas no bioma.</p>
       </div>
 
       <!-- Textos limpos (sem fundo preto) para o stack das 16 variáveis e tabelas abstratas -->
@@ -692,9 +662,11 @@
 
       <div id="captions"><div id="presentationCaption" class="caption" hidden></div></div>
 
-      <div id="slideNum">1 / 54</div>
+      <div id="slideNum">1 / 61</div>
       <div id="hint" title="Clique ou aperte Espaço / → para avançar"><span>▶</span></div>
     </div>
+
+    <div id="researchPanels" hidden></div>
 
     <!-- Controles discretos -->
     <div id="ui">
@@ -706,17 +678,29 @@
         <svg viewBox="0 0 24 24"><path d="M12 5V2L7 6l5 4V7a5 5 0 1 1-5 5H5a7 7 0 1 0 7-7z" fill="currentColor"/></svg>
       </button>
       <div id="bar"><div id="fill"></div></div>
-      <button id="btnSlides" type="button" aria-label="Miniaturas dos slides" aria-haspopup="dialog" title="Miniaturas dos slides (G)">
+      <button id="btnSlides" type="button" aria-label="Miniaturas e perfis da apresentação" aria-haspopup="dialog" title="Miniaturas e perfis da apresentação (G)">
         <svg viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="7" height="6" rx="1"/><rect x="14" y="4" width="7" height="6" rx="1"/><rect x="3" y="14" width="7" height="6" rx="1"/><rect x="14" y="14" width="7" height="6" rx="1"/></g></svg>
       </button>
       <button id="btnTheme" type="button" aria-label="Mudar para tema claro" aria-pressed="false" title="Mudar para tema claro">
         <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.4 1.4m11.2 11.2L19 19M5 19l1.4-1.4M17.6 6.4L19 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
       </button>
       <button id="btnCC" type="button" aria-label="Ativar/Desativar legendas" aria-pressed="false" title="Ativar/Desativar legendas (C)">CC</button>
+      <button id="btnStudyNotes" type="button" aria-label="Virar slide para ver as notas de estudo" aria-controls="studyNotes" aria-expanded="false" title="Virar slide para ver as notas de estudo (I)">i</button>
       <button id="btnFs" type="button" aria-label="Tela cheia" title="Tela cheia (F)">
         <svg viewBox="0 0 24 24"><path d="M4 4h6v2H6v4H4zM14 4h6v6h-2V6h-4zM4 14h2v4h4v2H4zM18 14h2v6h-6v-2h4z" fill="currentColor"/></svg>
       </button>
     </div>
+  </div>
+  <section id="studyNotes" aria-labelledby="studyNotesTitle" inert>
+    <header class="studyHeader">
+      <div><p>Notas de estudo</p><h2 id="studyNotesTitle"></h2></div>
+      <button id="closeStudyNotes" type="button" title="Voltar ao slide (Esc)">↶ <span>Voltar ao slide</span></button>
+    </header>
+    <div id="studyNotesCopy" tabindex="0" role="region" aria-label="Texto das notas de estudo"></div>
+  </section>
+  </div>
+  <div id="talkClock" class="talkClock">
+    <span id="talkProgress" class="talkProgress" role="progressbar" aria-label="Tempo de apresentação"><span></span></span>
   </div>
 </main>
 
@@ -726,29 +710,65 @@
       <div><p class="overviewEyebrow">NAVEGAÇÃO</p><h2 id="slideOverviewTitle">Escolha um slide</h2></div>
       <button id="closeSlideOverview" type="button" aria-label="Fechar miniaturas" title="Fechar (Esc)">×</button>
     </header>
+    <div class="overviewProfiles">
+      <label for="slideProfile">Perfil</label>
+      <select id="slideProfile" aria-describedby="slideProfileCount">
+        <option value="full">Completo</option>
+        <option value="short">Resumido</option>
+        <option value="custom">Personalizado</option>
+      </select>
+      <span id="slideProfileCount" aria-live="polite"></span>
+      <div id="slideProfileActions" hidden>
+        <button id="selectAllSlides" type="button">Marcar todos</button>
+        <button id="copyShortProfile" type="button">Usar seleção do Resumido</button>
+      </div>
+    </div>
+    <details id="talkSettings" class="talkSettings">
+      <summary>Cronômetro <span id="talkStatus"></span></summary>
+      <form id="talkClockForm">
+        <div class="talkFields">
+          <label>Duração (min:seg)<input id="talkDuration" type="text" inputmode="text" maxlength="6" pattern="[0-9]{1,3}:[0-5][0-9]" value="12:00" required /></label>
+          <label><span class="timeSwatch blue"></span> Azul (s restantes)<input id="talkBlue" type="number" min="1" step="1" value="120" required /></label>
+          <label><span class="timeSwatch orange"></span> Laranja (s restantes)<input id="talkOrange" type="number" min="1" step="1" value="60" required /></label>
+          <label><span class="timeSwatch red"></span> Vermelho (s restantes)<input id="talkRed" type="number" min="1" step="1" value="30" required /></label>
+        </div>
+        <div class="talkActions">
+          <button type="submit">Salvar configuração</button>
+          <button id="pauseTalkClock" type="button" disabled>Pausar</button>
+          <button id="resetTalkClock" type="button" disabled>Zerar</button>
+          <p id="talkClockError" role="alert" hidden></p>
+          <p id="talkClockSaved" role="status" hidden>Configuração salva.</p>
+        </div>
+      </form>
+    </details>
     <div class="overviewToolbar">
       <label for="slideSearch">Buscar</label><input id="slideSearch" type="search" placeholder="Título ou número do slide" autocomplete="off" />
-      <span id="slideSearchCount" role="status">54 slides</span>
+      <span id="slideSearchCount" role="status">61 slides</span>
     </div>
     <div id="slideThumbGrid" class="slideThumbGrid"></div>
     <p id="slideSearchEmpty" hidden>Nenhum slide encontrado.</p>
-    <footer class="overviewFooter">Clique em uma miniatura para abrir. <span>G · miniaturas &nbsp; Esc · fechar</span></footer>
+    <footer class="overviewFooter"><p id="slideOverviewHelp">Clique em uma miniatura para abrir.</p> <span>G · miniaturas e perfis &nbsp; Esc · fechar</span></footer>
   </div>
 </dialog>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="amz_data.js?v=06d093c88f0d"></script>
 <script src="shap_data.js?v=5254de7cb7d0"></script>
-<script src="perching-bird.js?v=5c7ccc31222b"></script>
-<script src="closing-life-tree.js?v=4cf7d0e03e5b"></script>
+<script src="perching-bird.js?v=264a38fbad8d"></script>
 <script src="cover-ambient.js?v=3c1a9693e1b7"></script>
-<script src="people-clock.js?v=1d56be0c2baa"></script>
-<script src="closing-guest.js?v=71ed1378306e"></script>
-<script src="foliage-intro.js?v=b01d5b0ff724"></script>
-<script src="bookends.js?v=569e7f0e19a9"></script>
+<script src="people-clock.js?v=33c3f85b0c13"></script>
+<script src="farewell-ground-fauna.js?v=2e390ed4d971"></script>
+<script src="farewell-tree.js?v=9d06cc13ad14"></script>
+<script src="closing-guest.js?v=52917dcf34b5"></script>
+<script src="foliage-intro.js?v=b8e5a00e5681"></script>
+<script src="bookends.js?v=1f437fead8ac"></script>
 <script src="projector-theme.js?v=d73ce17c23a6"></script>
-<script src="slide-overview.js?v=cc4c3be25c74"></script>
-<script src="slide-transition.js?v=1134202be452"></script>
-<script src="main.js?v=09e4cc085ba5"></script>
+<script src="beer-lambert-slides.js?v=2182f1349a2c"></script>
+<script src="research-slides.js?v=5d6d461663e5"></script>
+<script src="study-notes.js?v=5250a4cd7005"></script>
+<script src="talk-clock.js?v=6cb1e3763aea"></script>
+<script src="slide-overview.js?v=6f68cbe8a5f1"></script>
+<script src="slide-transition.js?v=c949cb86034a"></script>
+<script src="main.js?v=dac3dc261876"></script>
 </body>
 </html>

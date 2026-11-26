@@ -45,8 +45,7 @@
       phase('idle');
     };
     const trigger = () => {
-      if (!ready || played) return false;
-      if (busy) return true;
+      if (!ready || played || busy) return false;
       // Toda execução começa com as mesmas poses e transformações, mesmo após interrupção.
       reset();
       const thisRun = runId;

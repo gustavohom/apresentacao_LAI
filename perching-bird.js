@@ -6,7 +6,7 @@
     Object.entries(attrs).forEach(([name, value]) => element.setAttribute(name, value));
     parent.appendChild(element); return element;
   };
-  window.createPerchingBird = ({ scene, id, perchSelector }) => {
+  window.createPerchingBird = ({ scene, id, perchSelector, perchPoint, scale = 1.15, wait = 4.2, speed = 1 }) => {
     const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
     const bird = make('g', { id, 'data-bird-state': 'resting' }, scene);
     const defs = make('defs', {}, bird);
@@ -38,6 +38,7 @@
     make('path', { d: 'M-7-14L-6-2L-15 1M-6-2L3 0M12-15L13-2L5 1M13-2L22 0' }, feet);
 
     const perch = () => {
+      if (perchPoint) return perchPoint;
       const letter = document.querySelector(perchSelector);
       const r = letter.getBoundingClientRect(), s = scene.getBoundingClientRect();
       const style = getComputedStyle(letter), size = Number.parseFloat(style.fontSize);
@@ -58,10 +59,10 @@
     let loop;
     const state = value => { bird.dataset.birdState = value; };
     const stop = () => { loop?.kill(); flap.pause(0); gsap.set(bird, { autoAlpha: 0 }); state('resting'); };
+    const arrive = wait, land = arrive + 3.85, leave = land + 6.6;
     const start = () => {
       stop();
       let p = perch();
-      const scale = 1.15;
       const updatePerch = () => {
         p = perch();
         bird.dataset.perchX = p.x.toFixed(2); bird.dataset.perchY = p.y.toFixed(2);
@@ -74,8 +75,7 @@
         }, [], 2.4);
         return;
       }
-      const arrive = 4.2, land = 8.05, leave = 14.65;
-      loop = gsap.timeline({ repeat: -1, repeatDelay: 12, repeatRefresh: true });
+      loop = gsap.timeline({ repeat: -1, repeatDelay: 12, repeatRefresh: true }).timeScale(speed);
       loop.set(bird, { autoAlpha: 0, x: -190, y: Math.max(140, p.y - 160), scale, rotation: -5 }, 0)
         .set(foldedWing, { autoAlpha: 0 }, 0).set(feet, { autoAlpha: 0 }, 0)
         .set(head, { rotation: 0 }, 0).set(eye, { scaleY: 1 }, 0)
@@ -100,6 +100,6 @@
         .to(bird, { autoAlpha: 0, duration: .3 }, leave + 4)
         .call(() => { flap.pause(); state('resting'); }, [], leave + 4.3);
     };
-    return { start, stop };
+    return { start, stop, departureDelay: leave / speed };
   };
 })();
